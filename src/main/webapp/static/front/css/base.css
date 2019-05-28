@@ -1,0 +1,79 @@
+@charset "utf-8";
+/* CSS Document */
+*{margin:0;padding:0}
+body{font-family:微软雅黑,Arial, Helvetica, sans-serif;font-size:12px;color:#333; background:#f1f2f7;}
+table,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;outline:0;font-size:100%;font-style:normal;text-decoration:none}
+table{border-collapse:collapse;border-spacing:0}
+img{border:0; padding:0; margin:0}
+h3{font-size:14px}
+a:focus, a:hover { color:#0875d0; text-decoration:none; }
+a{ color:#333;text-decoration: none;}
+a:hover{ text-decoration:underline;}
+ul li{list-style:none}
+.clear{clear:both;overflow:hidden;font-size:0;height:0;}
+input{ vertical-align:middle}
+.fl{ float:left}
+.fr{ float:right}
+html{ height:100%}
+
+/*---------------------------------------------头部--------------------------------------------------------*/
+.top{ width:100%; height:115px; position:absolute; left:0; top:0; right:0;}
+.top .top_01{ height:56px; background:#29485a}
+.top .top_01 .logo{ margin:9px 0 0 16px; float:left; width:337px; display: inline; height:43px; background:url(../images/LOGO.png) no-repeat; overflow:hidden}
+.top .top_01 .rt_info{ font-size:12px; color:#fff; width:480px; float:right; line-height:56px;}
+.top .top_01 .rt_info .wlc{ width:180px; float:left; text-align:center}
+.top .top_01 .rt_info .xiaoxi{ width:20px; height:20px; padding:7px; float:left; background: url(../images/icon.png) center center no-repeat #3f5b6b; background-position:7px 7px; position:relative; margin-top:9px; border:1px solid #325c73; border-radius:8px; cursor:pointer}
+.top .top_01 .rt_info .xiaoxi span{ position:absolute; display: block; width:17px; height:17px; background:#d39100; text-align:center; line-height:17px;border-radius:5px; top:-5px; right:-5px}
+.top .top_01 .rt_info ul{ width:240px; float:left}
+.top .top_01 .rt_info ul li{ float:left; margin-left:20px;}
+.top .top_01 .rt_info ul li a{background:url(../images/icon.png) left center no-repeat; padding:2px 0 2px 25px;}
+.top .top_01 .rt_info ul li a:hover{ text-decoration:none}
+.top .top_01 .rt_info ul li .sz{ background-position:0 -36px;}
+.top .top_01 .rt_info ul li .gw{ background-position:0 -70px;}
+.top .top_01 .rt_info ul li .tc{ background-position:0 -102px;}
+.top .top_01 .rt_info a{ color:#fff}
+.top .top_02{ height:59px; background:#ededed; box-shadow:0px 5px 7px #c1c1c1}
+.top .top_02 .search{ float:left; background:#f5f5f5; border:1px solid #cfcfcf; padding:5px 10px 3px;border-radius:20px; margin:15px 22px 0 10px; box-shadow:inset 0 3px 3px #e0e0e0}
+.top .top_02 .search .put {height:20px; line-height:20px; display:block; float:left;}
+.top .top_02 .search .put .put1{ background:#f5f5f5; border:none; color:#999; height:20px; line-height:20px; width:124px; font-family:"微软雅黑"}
+.top .top_02 .search .but {height:20px; line-height:20px; display:block;float:left}
+.top .top_02 .search .but .but1{background:url(../images/sousuo.png) no-repeat; width:20px; height:20px; border:none; cursor:pointer}
+.top .top_02 .title{ background:url(../images/titleBG.png) left center no-repeat; padding-left:95px; float:left; height:59px; line-height:59px}
+
+/*---------------------------------------------左边--------------------------------------------------------*/
+.left{ width:198px; position:absolute; height: auto;left:0; top:115px; bottom:39px; background:#ececec;box-shadow:12px 0px 12px #d6d6d6;}
+.left .admin{ height:104px; background:#224255; color:#fff; border-bottom:1px solid #113448;box-shadow:0px 6px 16px #b0b0b4;width:198px;}
+.left .admin a{ color:#fff}
+.left .admin .img{ background:url(../images/txBG.png) no-repeat #e8f9ff; width:46px; height:44px; padding:4px;border-radius:5px; background-position:4px 4px; margin:26px 0 0 12px; display:inline; float:left}
+.left .admin  dl{ width:110px; margin:30px 0 0 12px; display:inline; float:left}
+.left .admin  dl dt{ color:#e9f9ff; font-size:14px}
+.left .admin  dl dd{ margin-top:8px}
+.left .admin  dl dd span{ padding-right:10px}
+.left .admin  dl dd a{ padding-left:10px}
+.nav{ border-top:1px solid #447897;}
+.nav li{ height:56px; line-height:54px; width:198px; font-size:14px; font-weight:bold; overflow:hidden;}
+.nav li a{ padding-left:56px; display: block; overflow:hidden}
+.nav li a:hover{text-decoration:none}
+.nav li a.wdzm{ background:url(../images/icon_01.png) left center no-repeat; background-position:16px 21px;}
+.nav li a.wdzm:hover,.nav li.on a.wdzm{ background:url(../images/wdzm.png); color:#e8f9ff; }
+.nav li a.bmgl{ background:url(../images/icon_02.png) left center no-repeat; background-position:13px 19px;}
+.nav li a.bmgl:hover,.nav li.on a.bmgl{ background:url(../images/bmgl.png); color:#e8f9ff; }
+.nav li a.jsgl{ background:url(../images/icon_03.png) left center no-repeat; background-position:13px 19px;}
+.nav li a.jsgl:hover,.nav li.on a.jsgl{ background:url(../images/jsgl.png); color:#e8f9ff; }
+.nav li a.zygl{ background:url(../images/icon_04.png) left center no-repeat; background-position:13px 22px;}
+.nav li a.zygl:hover,.nav li.on a.zygl{ background:url(../images/zygl.png); color:#e8f9ff; }
+.nav li a.kqgl{ background:url(../images/icon_05.png) left center no-repeat; background-position:13px 19px;}
+.nav li a.kqgl:hover,.nav li.on a.kqgl{ background:url(../images/kqgl.png); color:#e8f9ff; }
+.nav li a.xzgl{ background:url(../images/icon_06.png) left center no-repeat; background-position:16px 19px;}
+.nav li a.xzgl:hover,.nav li.on a.xzgl{ background:url(../images/xzgl.png); color:#e8f9ff; }
+.nav li a.yggl{ background:url(../images/icon_07.png) left center no-repeat; background-position:16px 20px;}
+.nav li a.yggl:hover,.nav li.on a.yggl{ background:url(../images/yggl.png); color:#e8f9ff; }
+.nav li a.ccgl{ background:url(../images/icon_08.png) left center no-repeat; background-position:16px 18px;}
+.nav li a.ccgl:hover,.nav li.on a.ccgl{ background:url(../images/ccgl.png); color:#e8f9ff; }
+.nav li a.wzgl{ background:url(../images/icon_09.png) left center no-repeat; background-position:16px 18px;}
+.nav li a.wzgl:hover,.nav li.on a.wzgl{ background:url(../images/wzgl.png); color:#e8f9ff; }
+
+/*---------------------------------------------底部--------------------------------------------------------*/
+.bottom{ width:100%; height:39px; line-height:39px; color:#fff; background:#00273e; position:absolute; left:0; bottom:0; right:0;}
+.bottom span{ float:right; padding-right:20px}
+.bottom p{ margin-left:20px}
