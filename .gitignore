@@ -44,6 +44,9 @@ adc_ucenter/dubbo_ucenter.cache.lock
 server/target/
 */target/
 target/
+out/
+out/*
+*/out/
 .idea/
 */.idea/
 *.iws

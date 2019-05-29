@@ -75,7 +75,7 @@
     </servlet>
     <servlet-mapping>
     	<servlet-name>timelineServlet</servlet-name>
-    	<url-pattern>/</url-pattern>
+    	<url-pattern>/r/*</url-pattern>
     </servlet-mapping>
 	<session-config>
 		<session-timeout>30</session-timeout>
@@ -83,7 +83,7 @@
 	
     
     <welcome-file-list>
-        <welcome-file>/</welcome-file>
+        <welcome-file>/static/timeline.html</welcome-file>
     </welcome-file-list>
 
 	<!-- tell the web server the index page is  not default .-->

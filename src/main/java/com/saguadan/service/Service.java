@@ -8,9 +8,8 @@ public abstract class Service {
     /**
      * @return 用于唯一定义服务的名字. 项目全局唯一，和界面交互时，用于确认页面需要使用的那个服务来处理自己的请求.
      */
-    public  abstract String name();
+    public abstract   String name();
 
-//    public abstract Service getService(String name);
 
     public abstract Object doService(Object... params);
 

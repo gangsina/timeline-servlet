@@ -1,5 +1,6 @@
 package com.saguadan.listener;
 
+import com.saguadan.service.HelloWorldService;
 import com.saguadan.service.RootService;
 import com.saguadan.service.TimelineEventService;
 
@@ -17,9 +18,10 @@ import com.saguadan.service.TimelineEventService;
      */
     public void registerServiceAll() {
         TimelineEventService timelineEventService = new TimelineEventService();
+        HelloWorldService helloWorldService = new HelloWorldService();
 
 
-
+        serivce.registerService(helloWorldService);
         serivce.registerService(timelineEventService);
     }
 }

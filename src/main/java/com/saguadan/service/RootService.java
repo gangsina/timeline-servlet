@@ -8,6 +8,9 @@ import java.util.Map;
  * @Date 2019/5/22 17:02.
  */
 public class RootService extends Service{
+
+    public static final String DEFAULT_NAME = "helloWorldService";
+
     private static RootService rootService = new RootService();
     private RootService() { }
     public static RootService get() {
@@ -35,7 +38,11 @@ public class RootService extends Service{
      * @return
      */
     public Service getService(String name) {
-        return serviceMap.get(name);
+        if (serviceMap.containsKey(name)) {
+            return serviceMap.get(name);
+        }else{
+            return serviceMap.get(DEFAULT_NAME);
+        }
     }
 
 

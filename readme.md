@@ -1,3 +1,7 @@
+[TOC]
+
+
+
 # timeline软件设定
 
 ## jdk
@@ -14,7 +18,7 @@ json文件, 每个时间线一个json文件。
 
 \'${user.dir}'/timeline/\${name}.json
 
-[TOC]
+
 
 
 
@@ -35,12 +39,12 @@ com.saguadan.jdbc
 
 #### 	系统启动数据加载
 
-​		加载存储中所有的json到内存。
+​		加载存储中所有的json到内存(考虑还是按需要加载)。
 
 #### 	 系统程序设计
 
 ​		利用上下文在启动注册器，注册所有的业务类。 业务类需要暴漏自己到注册器（com.saguadan.service.RegisterStatic）， 上下文启动注册器。
 
-#### ​	交互与转发
+#### 	交互与转发
 
 ​	MainServlet 从http head中获取头参数 serviceController 来定位 提供服务器的**业务控制器**. **业务控制器**,类似于struct2的控制器,用来处理一些简单的业务和整合服务资源.
