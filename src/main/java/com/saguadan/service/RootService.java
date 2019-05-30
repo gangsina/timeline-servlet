@@ -21,7 +21,7 @@ public class RootService extends Service{
     /**
      * 用于存放实例对象
      */
-    private Map<String, Service> serviceMap = new HashMap<>();
+    private Map<String, Service> serviceMap = new HashMap<String, Service>();
 
 
     /**

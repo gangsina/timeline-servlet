@@ -1,6 +1,7 @@
 package com.saguadan.servlet;
 
 import com.bentengwu.utillib.String.StrUtils;
+import com.bentengwu.utillib.UtilConversion;
 import com.bentengwu.utillib.json.JsonUtil;
 import com.saguadan.service.RootService;
 import com.saguadan.service.Service;
@@ -13,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * TODO 以后可以把这个servlet作为总路口，然后分流到其他项目业务类。
+ *  以后可以把这个servlet作为总路口，然后分流到其他项目业务类。
  * @Author <a href="bentengwu@163.com">thender.xu</a>
  * @Date 2019/5/22 16:47.
  */
@@ -32,6 +33,12 @@ public class MainServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Object beforeRet =  before(req,resp);
 
+        if (beforeRet instanceof Exception) {
+            Exception ex = UtilConversion.convert(Exception.class, beforeRet);
+            logger.warn("before(req,resp)-->{}",ex.getMessage());
+            //TODO do something!
+        }
+
         String serviceController = req.getHeader("serviceController");
         Service _service = serivce.getService(serviceController);
         Object result = null;
@@ -49,16 +56,23 @@ public class MainServlet extends HttpServlet {
         String dataType = StrUtils.getString(req.getHeader("data_type"),"json");
         String method = req.getMethod();
         logger.debug("method:{}, data_type:{}",method,dataType);
+
+
+        Object retObj  = new RuntimeException("Not Support Yet!!");
         if (method.equals("get")) {
-            return new RuntimeException("Not Support Yet!!");
+            //todo something
         } else if (method.equals("post")) {
             try {
-                return JsonUtil.jsonToMap(req.getInputStream());
+                if(dataType.equals("json")){
+                    retObj =  JsonUtil.jsonToMap(req.getInputStream());
+                }
             } catch (Exception ex) {
-                return ex;
+                retObj =  ex;
             }
         }
-        return null;
+
+
+        return retObj;
     }
 
     //TODO 请求业务后的处理

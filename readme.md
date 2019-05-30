@@ -43,8 +43,16 @@ com.saguadan.jdbc
 
 #### 	 系统程序设计
 
+##### http header
+
+| header name       | memo                                                         |
+| ----------------- | ------------------------------------------------------------ |
+| serviceController | 用于指定提供服务的控制器,如果不存在对应的控制器,则使用默认控制器. |
+| data_type         | 指明数据格式.默认是json.   约定有如下数据格式: json/xml/form/string/bytes |
+|                   |                                                              |
+
 ​		利用上下文在启动注册器，注册所有的业务类。 业务类需要暴漏自己到注册器（com.saguadan.service.RegisterStatic）， 上下文启动注册器。
 
 #### 	交互与转发
 
-​	MainServlet 从http head中获取头参数 serviceController 来定位 提供服务器的**业务控制器**. **业务控制器**,类似于struct2的控制器,用来处理一些简单的业务和整合服务资源.
+​	MainServlet 从http head中提取头参数 serviceController 来定位 提供服务器的**业务控制器**. **业务控制器**,类似于struct2的控制器,用来处理一些简单的业务和整合服务资源.
