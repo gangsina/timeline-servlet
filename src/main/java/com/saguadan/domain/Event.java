@@ -3,6 +3,7 @@ package com.saguadan.domain;
 import com.bentengwu.utillib.reflection.UtilReflection;
 
 /**
+ * 时间线中的事件
  * @Author <a href="bentengwu@163.com">thender.xu</a>
  * @Date 2019/5/30 13:27.
  */
