@@ -14,12 +14,10 @@ Tomcat
 
 ## 存储
 
-json文件, 每个时间线一个json文件。
+timelines.serialzation 统一存放所有的时间线信息(用序列化存储,避免解析带来的麻烦). 类似一个索引文件,存放所有的时间线信息.
+不同的时间线信息放在根目录的其他文件中.一个时间线一个文件.
 
-\'${user.dir}'/timeline/\${name}.json
-
-
-
+\'${user.dir}\'/.timeline/timelines.serialzation
 
 
 ## 代码结构

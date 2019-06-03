@@ -83,7 +83,7 @@
 	
     
     <welcome-file-list>
-        <welcome-file>/static/timeline.html</welcome-file>
+        <welcome-file>/static/1.html</welcome-file>
     </welcome-file-list>
 
 	<!-- tell the web server the index page is  not default .-->
