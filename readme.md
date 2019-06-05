@@ -45,9 +45,11 @@ com.saguadan.jdbc
 
 | header name       | memo                                                         |
 | ----------------- | ------------------------------------------------------------ |
-| serviceController | 用于指定提供服务的控制器,如果不存在对应的控制器,则使用默认控制器. |
+| service_controller | 用于指定提供服务的控制器,如果不存在对应的控制器,则使用默认控制器. |
 | data_type         | 指明数据格式.默认是json.   约定有如下数据格式: json/xml/form/string/bytes |
-|                   |                                                              |
+| fmt                | 指明将上行的数据格式转换为什么类型. 默认是转化为map.  map/json/string |
+| opt   | 在需要的时候可以带上opt,来分流执行. crudl c增加-->save()  r查看 get()  u修改 save() d删除 delete() l 列表. list() |
+
 
 ​		利用上下文在启动注册器，注册所有的业务类。 业务类需要暴漏自己到注册器（com.saguadan.service.RegisterStatic）， 上下文启动注册器。
 

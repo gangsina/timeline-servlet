@@ -3,6 +3,8 @@ package com.saguadan.listener;
 import com.saguadan.service.HelloWorldService;
 import com.saguadan.service.RootService;
 import com.saguadan.service.TimelineEventService;
+import com.saguadan.service.TimelineInfoService;
+import com.saguadan.service.persistence.PersistenceService;
 
 /**
  * 这个类用于注册统一注册所有的服务到RootService
@@ -15,13 +17,22 @@ import com.saguadan.service.TimelineEventService;
 
     /**
      * 在容器启动的时候加载
+     * PS: 在实例中存在被引用的要先注册.
      */
     public void registerServiceAll() {
+        PersistenceService persistenceService = new PersistenceService();
+        serivce.registerService(persistenceService);
+
         TimelineEventService timelineEventService = new TimelineEventService();
-        HelloWorldService helloWorldService = new HelloWorldService();
-
-
-        serivce.registerService(helloWorldService);
         serivce.registerService(timelineEventService);
+
+        TimelineInfoService timelineInfoService = new TimelineInfoService();
+        serivce.registerService(timelineInfoService);
+
+        HelloWorldService helloWorldService = new HelloWorldService();
+        serivce.registerService(helloWorldService);
+
+
+
     }
 }

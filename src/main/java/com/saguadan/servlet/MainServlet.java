@@ -1,8 +1,12 @@
 package com.saguadan.servlet;
 
+import com.bentengwu.utillib.CommonUtils;
 import com.bentengwu.utillib.String.StrUtils;
 import com.bentengwu.utillib.UtilConversion;
+import com.bentengwu.utillib.UtilLogger;
 import com.bentengwu.utillib.json.JsonUtil;
+import com.bentengwu.utillib.stream.StreamUtil;
+import com.saguadan.Ret;
 import com.saguadan.service.RootService;
 import com.saguadan.service.Service;
 import org.slf4j.LoggerFactory;
@@ -36,14 +40,19 @@ public class MainServlet extends HttpServlet {
         if (beforeRet instanceof Exception) {
             Exception ex = UtilConversion.convert(Exception.class, beforeRet);
             logger.warn("before(req,resp)-->{}",ex.getMessage());
-            //TODO do something!
+            _return(resp, beforeRet, null, after(req, resp, beforeRet, null));
+            return;
         }
 
-        String serviceController = req.getHeader("serviceController");
+        String serviceController = req.getHeader("service_controller");
         Service _service = serivce.getService(serviceController);
         Object result = null;
         if (null != _service) {
-            result = _service.doService(req,resp,beforeRet);
+            try {
+                result = _service.doService(req, resp, beforeRet);
+            } catch (Exception ex) {
+                UtilLogger.log(logger,ex,"业务处理异常");
+            }
         }
 
         Object afterRet = after(req,resp,beforeRet,result);
@@ -54,17 +63,22 @@ public class MainServlet extends HttpServlet {
     //TODO 请求业务控制前的处理
     Object before(HttpServletRequest req, HttpServletResponse resp) {
         String dataType = StrUtils.getString(req.getHeader("data_type"),"json");
+        String fmt = StrUtils.getString(req.getHeader("fmt"), "map");
         String method = req.getMethod();
         logger.debug("method:{}, data_type:{}",method,dataType);
 
 
         Object retObj  = new RuntimeException("Not Support Yet!!");
-        if (method.equals("get")) {
+        if (method.equalsIgnoreCase("get")) {
             //todo something
-        } else if (method.equals("post")) {
+        } else if (method.equalsIgnoreCase("post")) {
             try {
-                if(dataType.equals("json")){
-                    retObj =  JsonUtil.jsonToMap(req.getInputStream());
+                if (fmt.equalsIgnoreCase("map") && dataType.equals("json")) {
+                    retObj = JsonUtil.jsonToMap(req.getInputStream());
+                } else if (fmt.equalsIgnoreCase("json") && dataType.equals("json")) {
+                    retObj = JsonUtil.toJson(req.getInputStream());
+                } else if (fmt.equalsIgnoreCase("string") && dataType.equals("json")) {
+                    retObj = StreamUtil.read(req.getInputStream()).toString();
                 }
             } catch (Exception ex) {
                 retObj =  ex;
@@ -75,19 +89,39 @@ public class MainServlet extends HttpServlet {
         return retObj;
     }
 
-    //TODO 请求业务后的处理
+
+    // 请求业务后的处理
     Object after(HttpServletRequest req, HttpServletResponse resp,Object beforeRet, Object result) {
-        return null;
+        if (result == null) {
+            return new Ret(StrUtils.splitFirst("-2,result is null",","));
+        }
+
+        //格式化直接返回字符串的情况. 目前支持String -> Ret
+        if (result instanceof String && result != null) {
+            String retStr = StrUtils.getString(result);
+            String[] args = StrUtils.splitFirst(retStr, ",");
+            return new Ret(args);
+        }else {
+            return new Ret("1").setData(result);
+        }
     }
 
     //返回数据的处理.
     Object _return(HttpServletResponse resp,Object beforeRet, Object result,Object afterRet) {
-        if (result == null) {
-            result = "Not Support Yet!!";
-        }
-
         try {
-            resp.getWriter().write(result.toString());
+            //Object --> json string
+            String retStr = "";
+            if (afterRet != null) {
+//                retStr = JsonUtil.toJsonStr(afterRet);
+                retStr = CommonUtils.mapper.writeValueAsString(afterRet);
+            }else{
+//                retStr = JsonUtil.toJsonStr(result);
+                retStr = CommonUtils.mapper.writeValueAsString(result);
+            }
+            logger.debug("Response : {}",retStr);
+            System.out.println(retStr);
+            resp.setContentType("text/html; charset=utf-8");
+            resp.getWriter().write(retStr);
             resp.getWriter().flush();
             resp.getWriter().close();
             return "success";

@@ -23,8 +23,9 @@ public class TimelineInfo extends   _domain{
         return timelineName;
     }
 
-    public void setTimelineName(String timelineName) {
+    public TimelineInfo setTimelineName(String timelineName) {
         this.timelineName = timelineName;
+        return this;
     }
 
     public String getFileName() {
@@ -40,23 +41,26 @@ public class TimelineInfo extends   _domain{
         return updateTimes;
     }
 
-    public void setUpdateTimes(long updateTimes) {
-        this.updateTimes = updateTimes;
+    public TimelineInfo setUpdateTimes() {
+        ++ this.updateTimes ;
+        return this;
     }
 
     public long getSize() {
         return size;
     }
 
-    public void setSize(long size) {
+    public TimelineInfo setSize(long size) {
         this.size = size;
+        return this;
     }
 
     public int getEventCounts() {
         return eventCounts;
     }
 
-    public void setEventCounts(int eventCounts) {
+    public TimelineInfo setEventCounts(int eventCounts) {
         this.eventCounts = eventCounts;
+        return this;
     }
 }

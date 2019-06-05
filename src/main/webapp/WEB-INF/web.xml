@@ -12,16 +12,16 @@
 <!--        <param-value>classpath*:/applicationContext.xml</param-value>-->
 <!--    </context-param>-->
     
-<!--    <context-param>-->
-<!--        <param-name>log4jConfigLocation</param-name>-->
-<!--        <param-value>classpath:log4j.properties</param-value>-->
-<!--    </context-param>-->
+    <context-param>
+        <param-name>log4jConfigLocation</param-name>
+        <param-value>classpath:log4j.properties</param-value>
+    </context-param>
 
 	<!--Spring默认刷新Log4j配置文件的间隔,单位为秒-->
-<!--	<context-param>-->
-<!--		<param-name>log4jRefreshInterval</param-name>-->
-<!--		<param-value>100</param-value>-->
-<!--	</context-param> -->
+	<context-param>
+		<param-name>log4jRefreshInterval</param-name>
+		<param-value>100</param-value>
+	</context-param>
 
 <!--	<listener>-->
 <!--	   <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>-->

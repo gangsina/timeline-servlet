@@ -34,7 +34,11 @@ public class Timeline extends _domain {
         return events;
     }
 
-    public void setEvents(Set<Event> events) {
-        this.events = events;
+    public Timeline setEvents(Set<Event> events) {
+        this.events = events; return this;
+    }
+
+    public int getEventCount() {
+        return events == null ? 0 : events.size();
     }
 }

@@ -15,6 +15,6 @@ public class HelloWorldService extends Service{
 
     @Override
     public Object doService(Object... params) {
-        return "Hello World!";
+        return "-1,Hello World!";
     }
 }
