@@ -56,3 +56,9 @@ com.saguadan.jdbc
 #### 	交互与转发
 
 ​	MainServlet 从http head中提取头参数 serviceController 来定位 提供服务器的**业务控制器**. **业务控制器**,类似于struct2的控制器,用来处理一些简单的业务和整合服务资源.
+
+
+
+####技术参考
+采用的富文本编辑器参考地址 .
+http://kindeditor.net/doc3.php

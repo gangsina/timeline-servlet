@@ -15,6 +15,8 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * 用于对持久化操作的支持.
@@ -46,7 +48,7 @@ public class PersistenceService extends Service {
             _timelines = new Timelines();
             _timelines.registerTimelineInfo(info, true);
 
-//            flushTimeline(info.getFileName(), timeline);
+            flushTimeline(info.getFileName(), timeline);
         } else {
             //加载时间线实例集合和默认时间线
             _timelines = UtilSerialization.unSerialization(new File(TIMELINE_INFOS_FILEPATH), Timelines.class);
@@ -141,20 +143,37 @@ public class PersistenceService extends Service {
     }
 
     /**
-     * 刷新堆中的时间线实例到磁盘
+     * 刷新堆中的时间线实例到磁盘. 异步执行. 延迟10ms
      *
      * @param timeline 时间线实例
      * @return
      */
-    public PersistenceService flushTimeline( String filename,Timeline timeline) {
+    public PersistenceService flushTimeline(final String filename,final Timeline timeline) {
         logger.info("Flush {} To Disk!", timeline.getTitle());
-        File timelineFile = newFile(filename);
-        UtilSerialization.serialization(timeline, timelineFile);
-        timelines.getTimelineInfoByFilename(filename)
-                .setEventCounts(timeline.getEventCount()).setSize(timelineFile.length())
-                .setUpdateTimes();
-        flushTimelines(false);
-        UtilSleep.sleep(10);
+        Runnable _runyourneed = new Runnable() {
+            @Override
+            public void run() {
+                logger.info("{},{}", filename, timeline);
+                UtilSleep.sleep(10);
+                File timelineFile = newFile(filename);
+                UtilSerialization.serialization(timeline, timelineFile);
+
+                for (int i = 0; i < 1000; i++) {//避免第一次初始化的时候,还没拿到对应的对象.通过本循环等待.
+                    if (timelines != null) {
+                        break;
+                    }
+                    UtilSleep.sleep(10);
+                }
+
+                timelines.getTimelineInfoByFilename(filename)
+                        .setEventCounts(timeline.getEventCount()).setSize(timelineFile.length())
+                        .setUpdateTimes();
+                flushTimelines(false);
+            }
+        };
+        ExecutorService exe =  Executors.newSingleThreadExecutor();
+        exe.execute(_runyourneed);
+        exe.shutdown();
         return this;
     }
 

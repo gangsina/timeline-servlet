@@ -35,6 +35,10 @@ var _opt_d = "d";
 
 var _url_r =base_url+"/r/1";//请求地址.
 
+
+
+
+
 var _assert = '1';
 
 function assertAlert(message) {
@@ -47,6 +51,12 @@ function assertConsole(message) {
 	if(_assert=='1'){
 		console.log(message);
 	}
+}
+
+
+
+function go(url) {
+	window.location.href = url;
 }
 
 

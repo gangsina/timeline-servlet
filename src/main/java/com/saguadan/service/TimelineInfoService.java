@@ -1,5 +1,6 @@
 package com.saguadan.service;
 
+import com.bentengwu.utillib.String.StrUtils;
 import com.bentengwu.utillib.UtilConversion;
 import com.bentengwu.utillib.UtilLogger;
 import com.bentengwu.utillib.json.JsonUtil;
@@ -54,6 +55,9 @@ public class TimelineInfoService extends CRUDControllerService<TimelineInfo> {
     protected TimelineInfo save(Object... params) {
         String paramStrJson = UtilConversion.convert(String.class,params[2]);
         TimelineInfo bean = JsonUtil.toBean(paramStrJson, TimelineInfo.class);
+        if (bean.getFileName().equalsIgnoreCase("-1")) {
+            bean.setFileName(StrUtils.getRandomNumLetters(10));
+        }
          return persistenceService.saveTimelineInfo(bean).find(bean.getFileName());
     }
 

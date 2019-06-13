@@ -4,6 +4,7 @@ import com.bentengwu.utillib.CommonUtils;
 import com.bentengwu.utillib.String.StrUtils;
 import com.bentengwu.utillib.UtilConversion;
 import com.bentengwu.utillib.UtilLogger;
+import com.bentengwu.utillib.code.EncodeUtils;
 import com.bentengwu.utillib.json.JsonUtil;
 import com.bentengwu.utillib.stream.StreamUtil;
 import com.saguadan.Ret;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.Charset;
 
 /**
  *  以后可以把这个servlet作为总路口，然后分流到其他项目业务类。
@@ -78,7 +80,8 @@ public class MainServlet extends HttpServlet {
                 } else if (fmt.equalsIgnoreCase("json") && dataType.equals("json")) {
                     retObj = JsonUtil.toJson(req.getInputStream());
                 } else if (fmt.equalsIgnoreCase("string") && dataType.equals("json")) {
-                    retObj = StreamUtil.read(req.getInputStream()).toString();
+                    String tempRet = new String(StreamUtil.read(req.getInputStream()).toString());
+                    retObj = new String(tempRet.getBytes(Charset.forName("ISO-8859-1")),"utf-8");
                 }
             } catch (Exception ex) {
                 retObj =  ex;
