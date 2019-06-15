@@ -67,7 +67,8 @@ function _load_timelineinfo_success(data) {
             $("span[name='updateTimes']").html(retData.updateTimes);
             $("span[name='size']").html(retData.size);
             $("span[name='createDate']").html(retData.createDate);
-            $("input[name='filename']").html(retData.fileName);
+
+            $("input[name='filename']").val(retData.fileName);
             $("input[name='timelineName']").val(retData.timelineName);
             editor.html(retData.memo);
             $("#timelineinfo-detail").css("display","block");
@@ -171,6 +172,7 @@ function inputTimelineInfo() {
     if(params.fileName != '-1'){
         opt = _opt_u;
     }
+
     _input_timelineinfo(params,opt);
 }
 
