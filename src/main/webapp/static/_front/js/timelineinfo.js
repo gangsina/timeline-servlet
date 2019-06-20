@@ -135,6 +135,7 @@ function _load_list(service) {
 /*访问timeline界面*/
 function viewTimeline(filename) {
     assertConsole("View Timeline :" + filename);
+    go('timeline.html?filename=' + filename);
 }
 
 /*跳转到查看详情页*/

@@ -95,9 +95,15 @@ public class MainServlet extends HttpServlet {
 
     // 请求业务后的处理
     Object after(HttpServletRequest req, HttpServletResponse resp,Object beforeRet, Object result) {
+        String retFormat = StrUtils.getString(req.getHeader("ret_format"), "y");
+        if (!retFormat.equalsIgnoreCase("y")) {
+            return null; //不需要对结果集做格式化操作。
+        }
+
         if (result == null) {
             return new Ret(StrUtils.splitFirst("-2,result is null",","));
         }
+
 
         //格式化直接返回字符串的情况. 目前支持String -> Ret
         if (result instanceof String && result != null) {

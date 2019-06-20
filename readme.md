@@ -49,7 +49,7 @@ com.saguadan.jdbc
 | data_type         | 指明数据格式.默认是json.   约定有如下数据格式: json/xml/form/string/bytes |
 | fmt                | 指明将上行的数据格式转换为什么类型. 默认是转化为map.  map/json/string |
 | opt   | 在需要的时候可以带上opt,来分流执行. crudl c增加-->save()  r查看 get()  u修改 save() d删除 delete() l 列表. list() |
-
+| ret_format    |   用于约定返回的时候，是否通过对结果做统一处理 ，改变原先的返回数据结构，增加上返回码和返回消息等。 如果不传，认为是需要的。|
 
 ​		利用上下文在启动注册器，注册所有的业务类。 业务类需要暴漏自己到注册器（com.saguadan.service.RegisterStatic）， 上下文启动注册器。
 
