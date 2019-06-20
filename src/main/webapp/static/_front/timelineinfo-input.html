@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>saguadan</title>
+<link type="text/css" href="css/base-ywlt.css" rel="stylesheet" media="screen">
+<script type="text/javascript" src="js/jquery-1.7.min.js"></script>
+<script type="text/javascript" src="js/globalparams.js"></script>
+<script type="text/javascript" src="js/getUrlParam.js"></script>
+<script type="text/javascript" src="js/ywlt.js"></script>
+
+<!--编辑器-->
+<style>
+form {margin: 0;}
+textarea {display: block;}
+</style>
+<link rel="stylesheet" href="editor/themes/default/default.css" />
+<script charset="utf-8" src="editor/kindeditor-min.js"></script>
+<script charset="utf-8" src="editor/lang/zh_CN.js"></script>
+<script type="text/javascript" src="js/timelineinfo.js"></script>
+<script>
+			var editor;
+			KindEditor.ready(function(K) {
+				editor = K.create('textarea[name="memo"]', {
+					allowFileManager : true
+				});
+				K('input[name=getHtml]').click(function(e) {
+					alert(editor.html());
+				});
+				K('input[name=isEmpty]').click(function(e) {
+					alert(editor.isEmpty());
+				});
+				K('input[name=getText]').click(function(e) {
+					alert(editor.text());
+				});
+				K('input[name=selectedHtml]').click(function(e) {
+					alert(editor.selectedHtml());
+				});
+				K('input[name=setHtml]').click(function(e) {
+					editor.html('<h3>Hello KindEditor</h3>');
+				});
+				K('input[name=setText]').click(function(e) {
+					editor.text('<h3>Hello KindEditor</h3>');
+				});
+				K('input[name=insertHtml]').click(function(e) {
+					editor.insertHtml('<strong>插入HTML</strong>');
+				});
+				K('input[name=appendHtml]').click(function(e) {
+					editor.appendHtml('<strong>添加HTML</strong>');
+				});
+				K('input[name=clear]').click(function(e) {
+					editor.html('');
+				});
+			});
+
+
+    $(init());
+    /* To load the data when in*/
+    function init() {
+        loadInputTimelineInfo();
+    }
+
+</script>
+</head>
+<body>
+<div class="toper">
+     <div class="top">
+          <div class="logo"><a href="#"><img src="images/ywlt-logo.png" alt="saguadan" width="167" height="48" /></a></div>
+          <div class="nav">
+               <ul>
+                  <li><a href="#">首页</a></li>
+                  <li><a href="#">活动</a></li>
+                  <li><a href="index.html" class="on">时间轴</a></li>
+                  <li><a href="#">吃喝玩乐</a></li>
+               </ul>
+          </div>
+          <div class="exit">
+               <a href="#" rel="" title="入口"><img src="images/exit.png" width="35" height="21" /></a>
+               <div class="tck_02" style="display:none">
+                    <div class="sanj"></div>
+                    <ul>
+                       <li><a href="#" rel="" title=""><i>go></i>官网</a></li>
+                       <li><a href="#" rel="" title=""><i>go></i>入口1</a></li>
+                       <li><a href="#" rel="" title=""><i>go></i>入口2</a></li>
+                       <li style=" border:none"><a href="#" rel="" title=""><i>go></i>saguadan内外</a></li>
+                    </ul>
+               </div>
+          </div>
+          <div class="search">
+              <span class="put"><input type="text" name="name" value="请输入关键字"  onfocus="if (value =='请输入关键字'){value =''}" onblur="if (value ==''){value='请输入关键字'}"  class="put1"/></span>
+              <span class="but"><button type="button" class="but1"></button></span>
+           </div>
+           <!--未登录状态-->
+          <div class="login" style="display:none"><a href="#" rel="" title="">登录</a></div>
+          <!--登录状态-->
+          <div class="login_02">
+                <a href="#" rel="" title="人物头像"><img src="images/tx-01.png" width="38" height="38" /></a>
+                <div class="tck_01" style="display:none">
+                     <div class="sanj"></div>
+                     <ul>
+                        <li class="gezx"><a href="#" rel="" title="">个人中心</a></li>
+                        <li class="wdtz"><a href="#" rel="" title="">我发布的帖子</a></li>
+                        <li class="wdwz"><a href="#" rel="" title="">我的文章</a></li>
+                        <li class="sspp"><a href="index.html" rel="" title="">我的时间轴</a></li>
+                        <li class="tcdl"><a href="#" rel="" title="">退出登录</a></li>
+                     </ul>
+                </div>
+          </div>
+     </div>
+</div>
+<div class="main">
+         <div class="bxzt">
+              <div class="tit_06"><a href="#">saguadan</a> ›  <a href="index.html">时间轴</a> › 编辑基本信息 </div>
+              <div class="bxEditor">
+                  <div class="demo">
+                    <dl class="label1">
+                        <dt>给我取个名字吧:</dt>
+                    </dl>
+                    <div class="inPut"><input type="text" name="timelineName" placeholder="" autofocus class="put" /><span>还可以输入80以内个字符</span></div>
+                  </div>
+                  <div id="timelineinfo-detail" class="demo" style="display: none"> <!-- class="demo" to show it -->
+                      <i>事件数:   &nbsp;&nbsp;</i><span name="eventCounts"></span><i> ;&nbsp;  </i>
+                      <i>修改次数:  &nbsp;&nbsp;</i><span name="updateTimes"></span><i> ;&nbsp; </i>
+                      <i>大小:     &nbsp;&nbsp; </i><span name="size"></span><i>; &nbsp; </i>
+                      <i>创建时间: &nbsp;&nbsp; </i><span name="createDate"></span><i>;&nbsp; </i>
+                  </div>
+                  <div class="img_01">
+                        <textarea name="memo" style="width:938px;height:210px;visibility:hidden;"></textarea>
+                  </div>
+                  <!--<div class="yzm">-->
+                       <!--<label>验证码</label><input type="text" name="name" placeholder="" autofocus id="yzmput" /><a href="#" class="f5">刷新</a>-->
+                       <!--<div class="tck_03" style="display:none">-->
+                         <!--<p>输入下图中的字符</p>-->
+                         <!--<img src="images/yzm.png" width="127" height="50" />-->
+                       <!--</div>-->
+                  <!--</div>-->
+                  <div class="fbhf">
+                       <button type="button" class="btn_01" onclick="inputTimelineInfo()">确定</button>
+                       <button type="button" class="btn_02" onclick="go('index.html')">取消</button>
+                  </div>
+             </div>
+        </div>
+        <div class="foot">saguadan   2014-2019版权所有    浙ICP备13003501浙公网安备13003501</div>
+</div>
+<div class="toTop" id="roll_top"><img src="images/BackTop.png" width="30" height="16" /></div>
+
+<div style="display: none">
+    <input id="h-filename" name="filename" value="-1"/>
+</div>
+</body>
+</html>
