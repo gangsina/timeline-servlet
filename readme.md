@@ -59,6 +59,52 @@ com.saguadan.jdbc
 
 
 
-####技术参考
-采用的富文本编辑器参考地址 .
+#### 技术参考
+
+##### timeline
+
+```
+#构造timelinejs3的几种方法。
+https://timeline.knightlab.com/docs/instantiate-a-timeline.html
+
+#
+```
+
+
+
+###### 采用的富文本编辑器参考地址 .
+
 http://kindeditor.net/doc3.php
+
+
+
+###### 右击事件参考
+
+<http://www.jq22.com/yanshi2747>  ![1561038911173](readme.assets/1561038911173.png)
+
+
+
+###### 编辑选择事件参考
+
+<http://www.jq22.com/yanshi15758>
+
+
+
+拖拽
+
+<http://www.jq22.com/webqd6043>
+
+<http://www.jq22.com/webqd5574>
+
+
+
+粒子效果
+
+<http://www.jq22.com/webqd5566>
+
+
+
+
+
+
+

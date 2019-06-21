@@ -1,18 +1,25 @@
 package com.saguadan.domain;
 
-import java.util.List;
 import java.util.Set;
 
 /**
- * 时间线的结构
+ * 时间线(轴)的结构
  * @Author <a href="bentengwu@163.com">thender.xu</a>
  * @Date 2019/5/30 13:32.
  */
 public class Timeline extends _domain {
     private String scale;
     private Title title;
+    private Eras eras;
     private Set<Event> events;
 
+    public Eras getEras() {
+        return eras;
+    }
+
+    public void setEras(Eras eras) {
+        this.eras = eras;
+    }
 
     public String getScale() {
         return scale;

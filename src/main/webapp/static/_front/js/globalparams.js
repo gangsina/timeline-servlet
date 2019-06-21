@@ -37,8 +37,6 @@ var _url_r =base_url+"/r/1";//请求地址.
 
 
 
-
-
 var _assert = '1';
 
 function assertAlert(message) {

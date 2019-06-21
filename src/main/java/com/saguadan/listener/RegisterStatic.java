@@ -1,9 +1,6 @@
 package com.saguadan.listener;
 
-import com.saguadan.service.HelloWorldService;
-import com.saguadan.service.RootService;
-import com.saguadan.service.TimelineEventService;
-import com.saguadan.service.TimelineInfoService;
+import com.saguadan.service.*;
 import com.saguadan.service.persistence.PersistenceService;
 
 /**
@@ -29,9 +26,11 @@ import com.saguadan.service.persistence.PersistenceService;
         TimelineInfoService timelineInfoService = new TimelineInfoService();
         serivce.registerService(timelineInfoService);
 
+        TimelineService timelineService = new TimelineService();
+        serivce.registerService(timelineService);
+
         HelloWorldService helloWorldService = new HelloWorldService();
         serivce.registerService(helloWorldService);
-
 
 
     }

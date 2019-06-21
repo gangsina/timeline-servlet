@@ -1,6 +1,10 @@
 package com.saguadan.service;
 
+import com.bentengwu.utillib.UtilConversion;
 import com.saguadan.SoftProperties;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @Author <a href="bentengwu@163.com">thender.xu</a>
@@ -16,4 +20,16 @@ public abstract class Service extends SoftProperties {
     public abstract Object doService(Object... params);
 
 
+    public HttpServletRequest getRequest(Object... params) {
+        return (HttpServletRequest)params[0];
+    }
+
+
+    public HttpServletResponse getResponse(Object... params) {
+        return (HttpServletResponse)params[1];
+    }
+
+    public <T> T getParam(Class<T> _class,int index,Object... params) {
+        return UtilConversion.convert(_class, params[index]);
+    }
 }

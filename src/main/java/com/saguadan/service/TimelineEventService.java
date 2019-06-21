@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 用于处理时间轴中的事件操作。
  * @Author <a href="bentengwu@163.com">thender.xu</a>
  * @Date 2019/5/22 17:41.
  */
@@ -25,8 +26,6 @@ public class TimelineEventService extends Service {
         Object ret = null;
         JSONObject retJSON = new JSONObject();
         Map map =  UtilConversion.convert(HashMap.class, params[2]);
-
-
 
 
 

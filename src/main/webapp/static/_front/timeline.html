@@ -13,14 +13,15 @@
     <link rel="stylesheet" href="../css/fonts/font.default.css?v1">
     <!-- Style-->
     <style>
-      html, body {
+      html, body ,div{
       	height:100%;
       	width:100%;
       	padding: 0px;
       	margin: 0px;
       }
       .tl-timeline {
-      	
+        height: 100%;
+        width: 100%;
       }
       
     </style>
@@ -31,20 +32,130 @@
     -->
   </head>
   <body>
-    <div id="timeline"></div>
+    <div id="timeline" class="tl-timeline"></div>
     <!-- JavaScript-->
     <script type="text/javascript" src="js/jquery-1.7.min.js"></script>
     <script type="text/javascript" src="js/jquery.blockUI.js"></script>
     <script type="text/javascript" src="js/globalparams.js"></script>
+    <script type="text/javascript" src="js/getUrlParam.js"></script>
     <script type="text/javascript" src="js/ajax_abstract.js"></script>
-
     <script src="js/timelinejs3/timeline.js"></script>
-    <script>
-        var json = new Object();
-        var timeline = new TL.Timeline('timeline', json, {
-            theme_color: "#288EC3",
-            ga_property_id: "UA-27829802-4"
-        });
-    </script>
+    <script type="text/javascript" src="js/timeline-inpput.js"></script>
+
+
+
+    <!-- input event html-->
+    <link type="text/css" href="css/base-pc1.css" rel="stylesheet" media="screen">
+    <div id="event_form" class="main" style="display: none">
+
+
+      <div class="right">
+        <div class="title">
+          <h3>xx事件-group/text/background/autolink</h3>
+        </div>
+        <div class="mmcent">
+          <ul>
+            <li class="li2">group：<input type="text" name="name" class="put" value=""></li>
+            <li class="li1">请输入group</li>
+
+            <li class="li2">text.headline：<input type="password" name="name" class="put" value=""></li>
+            <li class="li1">请输入 headline</li>
+            <li class="li2">text.text：<input type="text" name="name" class="put" value=""></li>
+            <li class="li1">请输入 text</li>
+
+            <li class="li2">background：<input type="password" name="name" class="put" value=""></li>
+            <li class="li1">请输入 background </li>
+            <li class="li2">autolink：<input type="password" name="name" class="put" value=""></li>
+            <li class="li1">请输入 autolink </li>
+            <li class="li2">unique_id：<input type="password" name="name" class="put" value=""></li>
+            <li class="li1">请输入 unique_id </li>
+          </ul>
+
+        </div>
+      </div>
+      <div class="right">
+        <div class="title">
+          <h3>xx事件-start_date</h3>
+
+          <div class="clear"></div>
+        </div>
+        <div class="mmcent">
+          <ul>
+            <li class="li2">year：<input type="text" name="name" class="put" value=""></li>
+            <li class="li1">请输入年 eg: 1900</li>
+            <li class="li2">month：<input type="text" name="name" class="put" value=""></li>
+            <li class="li1">请输入月 eg: 12</li>
+            <li class="li2">day：<input type="text" name="name" class="put" value=""></li>
+            <li class="li1">请输入天 eg: 31</li>
+            <li class="li2">hour：<input type="text" name="name" class="put" value=""></li>
+            <li class="li1">请输入小时，[0,24)</li>
+            <li class="li2">minute：<input type="text" name="name" class="put" value=""></li>
+            <li class="li1">请输入分钟,[0,59]</li>
+            <li class="li2">second：<input type="text" name="name" class="put" value=""></li>
+            <li class="li1">请输入秒[0,59)</li>
+            <li class="li2">millisecond：<input type="text" name="name" class="put" value=""></li>
+            <li class="li1">请输入毫秒</li>
+            <li class="li2">format：<input type="text" name="name" class="put" value="yyyy-mm-dd"></li>
+            <li class="li1">请输入显示格式，eg: yyyy-mm-dd</li>
+          </ul>
+        </div>
+      </div>
+      <div class="right">
+        <div class="title">
+          <h3>xx事件-end_date</h3>
+
+          <div class="clear"></div>
+        </div>
+        <div class="mmcent">
+          <ul>
+
+
+            <li class="li2">year：<input type="text" name="name" class="put" value="" /></li>
+            <li class="li1">请输入年 eg: 1900</li>
+            <li class="li2">month：<input type="text" name="name" class="put" value=""/></li>
+            <li class="li1">请输入月 eg: 12</li>
+            <li class="li2">day：<input type="text" name="name" class="put" value=""/></li>
+            <li class="li1">请输入天 eg: 31</li>
+            <li class="li2">hour：<input type="text" name="name" class="put" value=""/></li>
+            <li class="li1">请输入小时，[0,24)</li>
+            <li class="li2">minute：<input type="text" name="name" class="put" value=""/></li>
+            <li class="li1">请输入分钟,[0,59]</li>
+            <li class="li2">second：<input type="text" name="name" class="put" value=""/></li>
+            <li class="li1">请输入秒[0,59]</li>
+            <li class="li2">millisecond：<input type="text" name="name" class="put" value="" /></li>
+            <li class="li2">format：<input type="text" name="name" class="put" value="yyyy-mm-dd"/></li>
+            <li class="li1">请输入显示格式，eg: yyyy-mm-dd</li>
+          </ul>
+        </div>
+      </div>
+      <div class="right">
+        <div class="title">
+          <h3>xx事件-media</h3>
+
+          <div class="clear"></div>
+        </div>
+        <div class="mmcent">
+          <ul>
+            <li class="li2">caption：<input type="text" name="name" class="put" value=""></li>
+            <li class="li1">请输入caption</li>
+            <li class="li2">credit：<input type="text" name="name" class="put" value=""></li>
+            <li class="li1">请输入credit</li>
+            <li class="li2">url：<input type="text" name="name" class="put" value=""></li>
+            <li class="li1">请输入url</li>
+            <li class="li2">thumb：<input type="text" name="name" class="put" value=""></li>
+            <li class="li1">请输入thumb</li>
+          </ul>
+          <div class="mmxgBTN2">
+            <button type="button">确&nbsp;认</button>
+            <button type="button" class="qx">取&nbsp;消</button>
+          </div>
+        </div>
+      </div>
+
+
+
+
+      <div class="clear"></div>
+    </div>
   </body>
 </html>

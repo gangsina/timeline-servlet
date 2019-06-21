@@ -3,21 +3,30 @@ package com.saguadan.domain;
 import com.bentengwu.utillib.reflection.UtilReflection;
 
 /**
- * 时间线中的事件
+ * 核心结构模型
+ * 时间线中的事件.
  * @Author <a href="bentengwu@163.com">thender.xu</a>
  * @Date 2019/5/30 13:27.
+ *
+ * 参考地址：
+ *https://timeline.knightlab.com/docs/json-format.html#json-slide
+ *
  */
+
 public class Event extends _domain{
     String unique_id = null;
-    String type = null;
+    boolean autolink;
     Background background =null;
-    TimelineDatetime date = null;
+    String display_date;
+    String group;
+    Media media = null;
+    Text text = null;
     TimelineDatetime start_date = null;
     TimelineDatetime end_date = null;
-    Text text = null;
-    Media media = null;
-    Location location = null;
 
+    TimelineDatetime date = null;
+    String type = null;
+    Location location = null;
 
 
 
@@ -92,6 +101,30 @@ public class Event extends _domain{
         this.location = location;
     }
 
+
+    public boolean isAutolink() {
+        return autolink;
+    }
+
+    public void setAutolink(boolean autolink) {
+        this.autolink = autolink;
+    }
+
+    public String getDisplay_date() {
+        return display_date;
+    }
+
+    public void setDisplay_date(String display_date) {
+        this.display_date = display_date;
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
+    }
 
     public String getUnique_id() {
         return unique_id;

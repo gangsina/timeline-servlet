@@ -109,11 +109,14 @@ function _load_list(service) {
                                 createDate = createDate.substring(0, createDate.length-2);
                             }
                         }
+
+                        var filename = element.fileName;
+                        
                         var _doc_p_tit1 = "<span class=\"p_tit1\">"+element.timelineName+"</span><br>";
                         var _doc_p_tit2 = "<span class=\"p_tit2\">"+createDate+"</span>";
 
-                        var _doc_pop_tit = "<div class=\"pop_tit\" style=\"display: none;\" onclick='viewInputTimelineInfo(\""+element.fileName+"\")'>"+_doc_p_tit1 + _doc_p_tit2 + "</div>";
-                        var _doc_img = "<img src=\"images/03.png\"/>";
+                        var _doc_pop_tit = "<div class=\"pop_tit\" style=\"display: none;\" onclick='viewInputTimelineInfo(\""+filename+"\")'>"+_doc_p_tit1 + _doc_p_tit2 + "</div>";
+                        var _doc_img = "<img onclick='viewTimeline(\""+filename+"\")' src=\"images/03.png\"/>";
 
                         var _doc_zp_box = "<div class=\"zp_box\">"+_doc_pop_tit + _doc_img +"</div>";
                         $(".zp_list").append(_doc_zp_box);
@@ -146,7 +149,7 @@ function viewInputTimelineInfo(filename) {
 
 function loadInputTimelineInfo(){
     var _v_filename = _req_params.parm("filename");
-    assertConsole("+++++++[inputTimelineinfo.html]++++++++loadInputTimelineInfo");
+    assertConsole("+++++++[timelineinfo-input.html]++++++++loadInputTimelineInfo");
     assertConsole(_v_filename);
     if(_v_filename=='-1' || _v_filename=='undefined'){
         //认为是新增页面,不需要做处理.
@@ -160,7 +163,7 @@ function loadInputTimelineInfo(){
 
 /* 提交 */
 function inputTimelineInfo() {
-    assertConsole("+++++++[inputTimelineinfo.html]++++++++inputTimelineInfo");
+    assertConsole("+++++++[timelineinfo-input.html]++++++++inputTimelineInfo");
 
     editor.sync();
     var params = new  Object();
