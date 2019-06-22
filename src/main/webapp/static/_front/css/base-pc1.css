@@ -55,8 +55,7 @@ input{ vertical-align:middle}
 
 /*---------------------------------------------左边--------------------------------------------------------*/
 .main{ width:80%;height: 80%; margin:0 auto; overflow: auto}
-.right{ width:100%;
-    height: 75em; float:left; background:#fff; padding-bottom:70px; box-shadow:0px 5px 6px #cbcbcb; position:relative; }
+.right{ width:100%; height: 75em; float:left; background:#fff; padding-bottom:70px; box-shadow:0px 5px 6px #cbcbcb; position:relative; overflow: hidden;}
 .left .fhsy{ position:absolute; top:0; left:-5px; width:28px; height:103px}
 .left .tx{ width:103px; margin:12px auto; text-align:center}
 .left .tx img{ width:103px; height:103px; border-radius:50%}

@@ -40,114 +40,119 @@
     <script type="text/javascript" src="js/getUrlParam.js"></script>
     <script type="text/javascript" src="js/ajax_abstract.js"></script>
     <script src="js/timelinejs3/timeline.js"></script>
-    <script type="text/javascript" src="js/timeline-inpput.js"></script>
+    <script type="text/javascript" src="js/timeline-input.js"></script>
 
 
 
     <!-- input event html-->
     <link type="text/css" href="css/base-pc1.css" rel="stylesheet" media="screen">
+    <link type="text/css" href="css/timeline.html.css" rel="stylesheet" media="screen">
     <div id="event_form" class="main" style="display: none">
 
 
-      <div class="right">
+      <div class="right timeline-1">
         <div class="title">
-          <h3>xx事件-group/text/background/autolink</h3>
+          <h3>xx事件-group/text/autolink/unique_id</h3>
         </div>
         <div class="mmcent">
           <ul>
-            <li class="li2">group：<input type="text" name="name" class="put" value=""></li>
-            <li class="li1">请输入group</li>
-
-            <li class="li2">text.headline：<input type="password" name="name" class="put" value=""></li>
-            <li class="li1">请输入 headline</li>
-            <li class="li2">text.text：<input type="text" name="name" class="put" value=""></li>
-            <li class="li1">请输入 text</li>
-
-            <li class="li2">background：<input type="password" name="name" class="put" value=""></li>
-            <li class="li1">请输入 background </li>
-            <li class="li2">autolink：<input type="password" name="name" class="put" value=""></li>
-            <li class="li1">请输入 autolink </li>
-            <li class="li2">unique_id：<input type="password" name="name" class="put" value=""></li>
-            <li class="li1">请输入 unique_id </li>
+            <li class="li2">group：<input type="text" name="group" class="put" value=""></li>
+            <li class="li1">Any text. If present, Timeline will organize events with the same value for group to be in the same row or adjacent rows, separate from events in other groups. The common value for the group will be shown as a label at the left edge of the navigation.</li>
+            <li class="li2">text.headline：<input type="text" name="text.headline" class="put" value=""></li>
+            <li class="li1">Any text. HTML markup is OK. Blank is also OK.</li>
+            <li class="li2">text.text：<input type="text" name="text.text" class="put" value=""></li>
+            <li class="li1">Any text. HTML markup is OK. Blank is OK. Not used for era objects.</li>
+            <li class="li2">display_date：<input type="text" name="background" class="put" value=""></li>
+            <li class="li1">A string which will be used when Timeline displays the date for this. If used, override's display_date values set on the start or end date for this event, which is useful if you want to control how the two dates relate to each other. </li>
+            <li class="li2">autolink：<input type="text" name="autolink" class="put" value=""></li>
+            <li class="li1">A boolean value (true or false). Defaults to true, which means that Timeline will scan text fields and automatically add  tags so that links and email addresses are "clickable." If set to false, you may still manually apply the tags in the appropriate fields when you want links. Autolinking applies to the text field in a text object and the caption and credit fields in a media object. </li>
+            <li class="li2">unique_id：<input type="text" name="unique_id" class="put" value=""></li>
+            <li class="li1">A string value which is unique among all slides in your timeline. If not specified, TimelineJS will construct an ID based on the headline, but if you later edit your headline, the ID will change. Unique IDs are used when the hash_bookmark option is used, and can also be used with the timeline.goToId() method to programmatically move the timeline to a specific slide. </li>
           </ul>
-
         </div>
       </div>
-      <div class="right">
+      <div class="right timeline-date1">
         <div class="title">
-          <h3>xx事件-start_date</h3>
-
-          <div class="clear"></div>
+          <h3>xx事件-start_date(*)</h3>
         </div>
         <div class="mmcent">
           <ul>
-            <li class="li2">year：<input type="text" name="name" class="put" value=""></li>
-            <li class="li1">请输入年 eg: 1900</li>
-            <li class="li2">month：<input type="text" name="name" class="put" value=""></li>
-            <li class="li1">请输入月 eg: 12</li>
-            <li class="li2">day：<input type="text" name="name" class="put" value=""></li>
-            <li class="li1">请输入天 eg: 31</li>
-            <li class="li2">hour：<input type="text" name="name" class="put" value=""></li>
-            <li class="li1">请输入小时，[0,24)</li>
-            <li class="li2">minute：<input type="text" name="name" class="put" value=""></li>
-            <li class="li1">请输入分钟,[0,59]</li>
-            <li class="li2">second：<input type="text" name="name" class="put" value=""></li>
-            <li class="li1">请输入秒[0,59)</li>
-            <li class="li2">millisecond：<input type="text" name="name" class="put" value=""></li>
-            <li class="li1">请输入毫秒</li>
-            <li class="li2">format：<input type="text" name="name" class="put" value="yyyy-mm-dd"></li>
-            <li class="li1">请输入显示格式，eg: yyyy-mm-dd</li>
+            <li class="li2">year(*)：<input type="text" name="start_date.year" class="put start_date" value=""></li>
+            <li class="li1">A number. Don't use commas. BCE years should be negative numbers. Don't use the letters "BC", "BCE" or any others. eg: 1900</li>
+            <li class="li2">month：<input type="text" name="start_date.month" class="put start_date" value=""></li>
+            <li class="li1">A number from 1-12 (Javascript experts don't outsmart yourselves: Timeline corrects for Javascript's strange use of "0" for "January", etc.) eg: 12</li>
+            <li class="li2">day：<input type="text" name="start_date.day" class="put start_date" value=""></li>
+            <li class="li1">A number eg: 31</li>
+            <li class="li2">hour：<input type="text" name="start_date.hour" class="put start_date" value=""></li>
+            <li class="li1">A number from 0-23，[0,24)</li>
+            <li class="li2">minute：<input type="text" name="start_date.minute" class="put start_date" value=""></li>
+            <li class="li1">A number from 0-59,[0,59]</li>
+            <li class="li2">second：<input type="text" name="start_date.second" class="put start_date" value=""></li>
+            <li class="li1">A number from 0-59, [0,59)</li>
+            <li class="li2">millisecond：<input type="text" name="start_date.millisecond" class="put start_date" value=""></li>
+            <li class="li1">A number</li>
+            <li class="li2">format：<input type="text" name="start_date.format" class="put start_date" value="yyyy-mm-dd"></li>
+            <li class="li1">[display_date] A string for presenting the date. Useful if Timeline's date formatting doesn't fit your needs.，eg: yyyy-mm-dd</li>
           </ul>
         </div>
       </div>
-      <div class="right">
+      <div class="right timeline-date2">
         <div class="title">
           <h3>xx事件-end_date</h3>
-
-          <div class="clear"></div>
         </div>
         <div class="mmcent">
           <ul>
-
-
-            <li class="li2">year：<input type="text" name="name" class="put" value="" /></li>
-            <li class="li1">请输入年 eg: 1900</li>
-            <li class="li2">month：<input type="text" name="name" class="put" value=""/></li>
-            <li class="li1">请输入月 eg: 12</li>
-            <li class="li2">day：<input type="text" name="name" class="put" value=""/></li>
-            <li class="li1">请输入天 eg: 31</li>
-            <li class="li2">hour：<input type="text" name="name" class="put" value=""/></li>
-            <li class="li1">请输入小时，[0,24)</li>
-            <li class="li2">minute：<input type="text" name="name" class="put" value=""/></li>
-            <li class="li1">请输入分钟,[0,59]</li>
-            <li class="li2">second：<input type="text" name="name" class="put" value=""/></li>
-            <li class="li1">请输入秒[0,59]</li>
-            <li class="li2">millisecond：<input type="text" name="name" class="put" value="" /></li>
-            <li class="li2">format：<input type="text" name="name" class="put" value="yyyy-mm-dd"/></li>
-            <li class="li1">请输入显示格式，eg: yyyy-mm-dd</li>
+            <li class="li2">year：<input type="text" name="end_date.year" class="put end_date" value="" /></li>
+            <li class="li2">month：<input type="text" name="end_date.month" class="put end_date" value=""/></li>
+            <li class="li2">day：<input type="text" name="end_date.day" class="put end_date" value=""/></li>
+            <li class="li2">hour：<input type="text" name="end_date.hour" class="put end_date" value=""/></li>
+            <li class="li2">minute：<input type="text" name="end_date.minute" class="put end_date" value=""/></li>
+            <li class="li2">second：<input type="text" name="end_date.second" class="put end_date" value=""/></li>
+            <li class="li2">millisecond：<input type="text" name="end_date.millisecond" class="put end_date" value="" /></li>
+            <li class="li2">format：<input type="text" name="end_date.format" class="put end_date" value="yyyy-mm-dd"/></li>
           </ul>
         </div>
       </div>
-      <div class="right">
+      <div class="right timeline-background">
         <div class="title">
-          <h3>xx事件-media</h3>
+          <h3>xx事件-background</h3>
+        </div>
+        <div class="mmcent">
+          <ul>
+            <li class="li2">color：<input type="text" name="background.color" class="put" value=""></li>
+            <li class="li2">opacity：<input type="text" name="background.opacity" class="put" value=""></li>
+            <li class="li2">url：<input type="text" name="background.url" class="put" value=""></li>
+          </ul>
+        </div>
+      </div>
+      <div class="right timeline-media">
+        <div class="title">
+          <h3>xx事件-media(optional)</h3>
 
           <div class="clear"></div>
         </div>
         <div class="mmcent">
           <ul>
-            <li class="li2">caption：<input type="text" name="name" class="put" value=""></li>
-            <li class="li1">请输入caption</li>
-            <li class="li2">credit：<input type="text" name="name" class="put" value=""></li>
-            <li class="li1">请输入credit</li>
-            <li class="li2">url：<input type="text" name="name" class="put" value=""></li>
-            <li class="li1">请输入url</li>
-            <li class="li2">thumb：<input type="text" name="name" class="put" value=""></li>
-            <li class="li1">请输入thumb</li>
+            <li class="li2">url：<input type="text" name="media.url" class="put media" value=""></li>
+            <li class="li1">(optional*) In most cases, a URL (see media type documentation for complete details)</li>
+            <li class="li2">caption：<input type="text" name="media.caption" class="put media" value=""></li>
+            <li class="li1">Any text. HTML markup is OK.</li>
+            <li class="li2">credit：<input type="text" name="media.credit" class="put media" value=""></li>
+            <li class="li1">Any text. HTML markup is OK.</li>
+            <li class="li2">thumb：<input type="text" name="media.thumb" class="put media" value=""></li>
+            <li class="li1">[thumbnail] A URL for an image to use in the timenav marker for this event. If omitted, Timeline will use an icon based on the type of media. Not relevant for title slides, because they do not have a marker.</li>
+            <li class="li2">alt：<input type="text" name="media.alt" class="put media" value=""></li>
+            <li class="li1">An alt tag for your image. If none is provided, the caption, if any, will be used.</li>
+            <li class="li2">title：<input type="text" name="media.title" class="put media" value=""></li>
+            <li class="li1">A title for your image. If none is provided, the caption, if any, will be used.</li>
+            <li class="li2">link：<input type="text" name="media.link" class="put media" value=""></li>
+            <li class="li1">Optional URL to use as the href for wrapping the media with an < a > tag</li>
+            <li class="li2">link_target：<input type="text" name="media.link_target" class="put media" value=""></li>
+            <li class="li1">Optional target to be associated with link if used.</li>
           </ul>
           <div class="mmxgBTN2">
-            <button type="button">确&nbsp;认</button>
-            <button type="button" class="qx">取&nbsp;消</button>
+            <button type="button" id="save-input-timeline" onclick="_save_input_timeline()">确&nbsp;认</button>
+            <button type="button" class="qx" id="cancel-input-timeline" onclick="_display_input_dialog()">取&nbsp;消</button>
           </div>
         </div>
       </div>
@@ -155,7 +160,8 @@
 
 
 
-      <div class="clear"></div>
+
+      <div id="test-timeline" class="clear"></div>
     </div>
   </body>
 </html>

@@ -57,6 +57,95 @@ com.saguadan.jdbc
 
 ​	MainServlet 从http head中提取头参数 serviceController 来定位 提供服务器的**业务控制器**. **业务控制器**,类似于struct2的控制器,用来处理一些简单的业务和整合服务资源.
 
+#### 开发命名规范
+
+##### HTML部分文件名
+
+业务名-list.html、业务名-input.html、业务名-view.html 。
+
+###### 按钮ID规范
+
+```
+#列表页搜索按钮
+id="search-list-业务名"
+#编辑、添加页.
+##确认、保存
+id="save-input-业务名"
+##取消
+id="cancel-input-业务名"
+#详情页
+id="back-view-业务名"
+```
+
+
+
+##### js文件名
+
+业务名-list.js、业务名-input.js、业务名-view.js
+
+
+
+#### Q&A
+
++ 事例中的event和 API文档中的字段不一致，何解？
+
+```json
+###API中的字段访问如下。
+https://timeline.knightlab.com/docs/json-format.html#json-slide
+
+官方文档中没有type、location等2个字段。
+
+{
+            "start_date": {
+                "year":			"1900",
+                "month":		"01",
+                "day": 			"05",
+                "hour": 		"",
+                "minute": 		"",
+                "second": 		"",
+                "millisecond": 	"",
+                "format": 		""
+            },
+            "end_date": {
+                "year":			"1900",
+                "month":		"06",
+                "day": 			"07",
+                "hour": 		"",
+                "minute": 		"",
+                "second": 		"",
+                "millisecond": 	"",
+                "format": 		""
+            },
+            "location": {
+                "icon": "http://maps.gstatic.com/intl/en_us/mapfiles/ms/micons/blue-pushpin.png",
+                "lat": 39.491711,
+                "line": true,
+                "lon": -91.79326,
+                "name": "Florida, Missouri",
+                "zoom": 12
+            },
+            "background": {
+                "color": "#999999",
+                "opacity": 50,
+                "url": null
+            },
+            "media": {
+                "caption": "Twain caricatured by Spy for Vanity Fair, 1908",
+                "credit": "Vanity Fair",
+                "url": "http://knightlab.northwestern.edu/wp-content/uploads/2013/03/Northwestern_University_KnightLab_Logo1.png",
+                "thumb": 	"http://knightlab.northwestern.edu/wp-content/uploads/2013/03/Northwestern_University_KnightLab_Logo1.png"
+            },
+            "text": {
+                "headline": "Mark Twain JSON",
+                "text": "Samuel Langhorne Clemens (November 30, 1835 \u2013 April 21, 1910), better known by his pen name Mark Twain, was an American author and humorist. He wrote The Adventures of Tom Sawyer (1876) and its sequel, Adventures of Huckleberry Finn (1885), the later often called \"the Great American Novel.\""
+            },
+            "type": "overview"
+        }
+
+
+
+```
+
 
 
 #### 技术参考
@@ -69,8 +158,6 @@ https://timeline.knightlab.com/docs/instantiate-a-timeline.html
 
 #
 ```
-
-
 
 ###### 采用的富文本编辑器参考地址 .
 
@@ -103,6 +190,10 @@ http://kindeditor.net/doc3.php
 <http://www.jq22.com/webqd5566>
 
 
+
+其他js参考。
+
+<https://yanhaijing.com/javascript/2015/05/09/diff-between-keys-getOwnPropertyNames-forin/>
 
 
 
