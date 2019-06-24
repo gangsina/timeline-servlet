@@ -170,17 +170,7 @@ html, body {
          timeline.goTo(parseInt($('#slide_index').val()));
     });
     $('#getData').click(function(event) {
-        console.log(timeline.getCurrentSlide().data);
-        var _data = {};
-        Object.assign(_data, timeline.getCurrentSlide().data);
-        // timeline.removeId(timeline.getCurrentSlide().data.unique_id);
-        // _data.text.headline = '我要改你的值，你同意吗？';
-        // _data.unique_id = _data.unique_id + "1";
-        // timeline.add(_data);
-        // timeline.updateDisplay();
-        // timeline.goToId(_data.unique_id);
-        console.log(Object.keys(_data));
-        console.log(Object.keys(_data.media));
+        console.log(timeline.getData(parseInt($('#slide_index').val())));
     });
     $('#getSlide').click(function(event) {
         console.log(timeline.getSlide(parseInt($('#slide_index').val())));

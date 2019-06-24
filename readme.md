@@ -87,6 +87,28 @@ id="back-view-业务名"
 
 #### Q&A
 
++ 编辑当前slide的data后，如何生效？就是如何改变原来的值？
+
+  ```js
+  ...
+  /**
+  处理的办法目前将原先的数据读取出来，复制给一个新的对象。然后通过unique_id将原先的slide删除。然后加入一个新的slide。
+  
+  note： 这有个问题，获取过来的数据存在null的情况，而timeline没有对null做兼容。我的需求是读取数据并展现到页面，这个问题并不会发生。而且我从页面读取数据的时候，会获取到""，所以问题不大。
+  **/
+  		var _data = {};
+          Object.assign(_data, timeline.getCurrentSlide().data);
+          timeline.removeId(timeline.getCurrentSlide().data.unique_id);
+          _data.text.headline = '我要改你的值，你同意吗？';
+          
+          timeline.add(_data);
+          timeline.updateDisplay();
+  		timeline.goToId(_data.unique_id);
+  ...
+  ```
+
+  
+
 + 事例中的event和 API文档中的字段不一致，何解？
 
 ```json
@@ -150,6 +172,14 @@ https://timeline.knightlab.com/docs/json-format.html#json-slide
 
 #### 技术参考
 
+##### jquery.hotkeys
+
+```
+https://github.com/tzuryby/jquery.hotkeys
+```
+
+​	It's cool!!
+
 ##### timeline
 
 ```
@@ -197,5 +227,9 @@ http://kindeditor.net/doc3.php
 
 
 
+##### 流水记录
 
+2019年6月24日16:31:29
 
+	+ 点击下一个可以获取到change事件，读取到unique_id的值。
+	+ 测试发现，可以通过timeline.getCurrentSlide().data 来获取当前选中滑块的数据。这样我就可以通过绑定快捷键的方式，来编辑当前滑块了。 
