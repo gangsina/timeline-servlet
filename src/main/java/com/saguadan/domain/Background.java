@@ -6,7 +6,7 @@ package com.saguadan.domain;
  */
 public class Background extends _domain{
     private String color;
-    private int opacity;
+    private String opacity;
     private String url;
 
     public String getColor() {
@@ -17,11 +17,11 @@ public class Background extends _domain{
         this.color = color;
     }
 
-    public int getOpacity() {
+    public String getOpacity() {
         return opacity;
     }
 
-    public void setOpacity(int opacity) {
+    public void setOpacity(String opacity) {
         this.opacity = opacity;
     }
 

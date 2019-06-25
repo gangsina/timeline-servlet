@@ -52,8 +52,6 @@
     <script src="js/timelinejs3/timeline.js"></script>
     <script type="text/javascript" src="js/timeline-input.js"></script>
 
-
-
     <!-- input event html-->
     <link type="text/css" href="css/base-pc1.css" rel="stylesheet" media="screen">
     <link type="text/css" href="css/timeline.html.css" rel="stylesheet" media="screen">
@@ -162,7 +160,7 @@
           </ul>
           <div class="mmxgBTN2">
             <button type="button" id="save-input-timeline" onclick="_save_input_timeline()">确&nbsp;认</button>
-            <button type="button" class="qx" id="cancel-input-timeline" onclick="_display_input_dialog()">取&nbsp;消</button>
+            <button type="button" class="qx" id="cancel-input-timeline" onclick="_hide_input_dialog()">取&nbsp;消</button>
           </div>
         </div>
       </div>
@@ -173,5 +171,8 @@
 
       <div id="test-timeline" class="clear"></div>
     </div>
+  <div style="display: none">
+    <input id="h-filename" name="filename" value="-1"/>
+  </div>
   </body>
 </html>

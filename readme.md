@@ -33,15 +33,17 @@ com.saguadan.jdbc
 
 
 
+### 
+
 ### 软件加载流程
 
 #### 	系统启动数据加载
 
 ​		加载存储中所有的json到内存(考虑还是按需要加载)。
 
-#### 	 系统程序设计
+### 	 系统程序设计
 
-##### http header
+#### http header
 
 | header name       | memo                                                         |
 | ----------------- | ------------------------------------------------------------ |
@@ -53,9 +55,70 @@ com.saguadan.jdbc
 
 ​		利用上下文在启动注册器，注册所有的业务类。 业务类需要暴漏自己到注册器（com.saguadan.service.RegisterStatic）， 上下文启动注册器。
 
+​	note：如果存在引用关系，需要先注册被引用的对象。
+
+#### 接口描述
+
+##### 统一 接口地址约定
+
+```url
+http[s]://ip:port/[projectName/]r/*
+
+##[] 为可选的意思。根据实际情况设定。
+```
+
+##### 统一下行数据格式约定为json
+
+```json
+{
+code:""
+message:""
+data:""
+}
+/**
+code 为业务码（返回码）。 具体查看 ##返回码
+message 为提示信息。
+data 为一个json格式的数据。为业务处理程序返回的内容。
+
+note:因为程序的追求比较简单，给自己弄一个timeline的小程序用用。没有做验签等复杂的设计。
+**/
+```
+
+
+
+##### 接口：保存事件数据、保存整个时间轴数据
+
+```
+##上行
+###http header
+service_controller:"timelineService"
+opt:"u"
+fmt:"string"
+data_type:"json"
+ret_format:"y"
+###post data
+filename: 对应持久化的文件名。
+event: js object. 从页面元素中读取的所有字段组成的一个js对象。提交前会被转化为json。
+_class:  event/timeline. 当提交event的时候为event，当提交整个timeline的时候，为timeline
+
+
+##下行（约定下行只对data做描述，除非有必要才对code做描述）
+data:
+{
+_class : 用于回显
+event	: 用于回显，当_class = "event"时才有.
+timeline : 用于回显， 当_class = "timeline" 时才有.
+}
+
+```
+
+
+
 #### 	交互与转发
 
 ​	MainServlet 从http head中提取头参数 serviceController 来定位 提供服务器的**业务控制器**. **业务控制器**,类似于struct2的控制器,用来处理一些简单的业务和整合服务资源.
+
+
 
 #### 开发命名规范
 
@@ -170,7 +233,18 @@ https://timeline.knightlab.com/docs/json-format.html#json-slide
 
 
 
-#### 技术参考
+### 返回码
+
+| 返回码 | 原因描述                                                     |
+| ------ | ------------------------------------------------------------ |
+| 1      | 操作成功                                                     |
+| -1     | 处理失败。                                                   |
+| -2     | 业务处理返回null时候，系统检测到null值后，统一设置返回码为-2 |
+|        |                                                              |
+
+
+
+## 技术参考
 
 ##### jquery.hotkeys
 
@@ -227,9 +301,20 @@ http://kindeditor.net/doc3.php
 
 
 
-##### 流水记录
+## 流水记录
 
 2019年6月24日16:31:29
 
 	+ 点击下一个可以获取到change事件，读取到unique_id的值。
 	+ 测试发现，可以通过timeline.getCurrentSlide().data 来获取当前选中滑块的数据。这样我就可以通过绑定快捷键的方式，来编辑当前滑块了。 
+
+2019年6月25日10:46:30
+
+- 把提交保存event事件的内容和提交整个timeline的内容放在同一个方法中处理。opt 都用u.
+
+
+
+## TODO
+
+- [ ] 提交event data到服务端
+- [ ]

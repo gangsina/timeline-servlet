@@ -8,6 +8,24 @@ package com.saguadan.domain;
 public class TimelineFix extends _domain {
     private String filename;
     private Timeline timeline;
+    private Event event;
+    private String _class; // event/timeline. 当提交event的时候为event，当提交整个timeline的时候，为timeline
+
+    public Event getEvent() {
+        return event;
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
+    }
+
+    public String get_class() {
+        return _class;
+    }
+
+    public void set_class(String _class) {
+        this._class = _class;
+    }
 
     public String getFilename() {
         return filename;

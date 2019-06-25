@@ -1,5 +1,6 @@
 package com.saguadan.domain;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -8,10 +9,10 @@ import java.util.Set;
  * @Date 2019/5/30 13:32.
  */
 public class Timeline extends _domain {
-    private String scale;
-    private Title title;
-    private Eras eras;
-    private Set<Event> events;
+    private String scale="";
+    private Title title = new Title();
+    private Eras eras=new Eras();
+    private Set<Event> events = new HashSet<>();
 
     public Eras getEras() {
         return eras;

@@ -14,16 +14,16 @@ package com.saguadan.domain;
  */
 public class Location extends  _domain{
     String icon;
-    double lat=0;
-    boolean line;
-    double lon =0;
+    String lat;
+    String line;
+    String lon ;
     String name;
-    int zoom=8;
+    String zoom;
 
     public Location() {
     }
 
-    public Location(String icon, double lat, boolean line, double lon, String name, int zoom) {
+    public Location(String icon, String lat, String line, String lon, String name, String zoom) {
         this.icon = icon;
         this.lat = lat;
         this.line = line;
@@ -40,27 +40,27 @@ public class Location extends  _domain{
         this.icon = icon;
     }
 
-    public double getLat() {
+    public String getLat() {
         return lat;
     }
 
-    public void setLat(double lat) {
+    public void setLat(String lat) {
         this.lat = lat;
     }
 
-    public boolean isLine() {
+    public String getLine() {
         return line;
     }
 
-    public void setLine(boolean line) {
+    public void setLine(String line) {
         this.line = line;
     }
 
-    public double getLon() {
+    public String getLon() {
         return lon;
     }
 
-    public void setLon(double lon) {
+    public void setLon(String lon) {
         this.lon = lon;
     }
 
@@ -72,11 +72,11 @@ public class Location extends  _domain{
         this.name = name;
     }
 
-    public int getZoom() {
+    public String getZoom() {
         return zoom;
     }
 
-    public void setZoom(int zoom) {
+    public void setZoom(String zoom) {
         this.zoom = zoom;
     }
 }

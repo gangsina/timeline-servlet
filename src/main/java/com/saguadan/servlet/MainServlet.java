@@ -5,19 +5,24 @@ import com.bentengwu.utillib.String.StrUtils;
 import com.bentengwu.utillib.UtilConversion;
 import com.bentengwu.utillib.UtilLogger;
 import com.bentengwu.utillib.code.EncodeUtils;
+import com.bentengwu.utillib.file.PathUtil;
 import com.bentengwu.utillib.json.JsonUtil;
 import com.bentengwu.utillib.stream.StreamUtil;
 import com.saguadan.Ret;
 import com.saguadan.service.RootService;
 import com.saguadan.service.Service;
+import org.apache.commons.io.FileUtils;
+import org.apache.log4j.PropertyConfigurator;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.Properties;
 
 /**
  *  以后可以把这个servlet作为总路口，然后分流到其他项目业务类。
@@ -28,16 +33,26 @@ public class MainServlet extends HttpServlet {
     protected final static org.slf4j.Logger logger = LoggerFactory.getLogger(MainServlet.class);
     RootService serivce = RootService.get();
 
+    static {
+        loadLog4j();
+    }
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        logger.info("The MainServlet is Init()!!");
+
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doPost(req, resp);
     }
 
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Object beforeRet =  before(req,resp);
+        logger.info("可以认为是上行数据: {}", beforeRet);
 
         if (beforeRet instanceof Exception) {
             Exception ex = UtilConversion.convert(Exception.class, beforeRet);
@@ -81,7 +96,7 @@ public class MainServlet extends HttpServlet {
                     retObj = JsonUtil.toJson(req.getInputStream());
                 } else if (fmt.equalsIgnoreCase("string") && dataType.equals("json")) {
                     String tempRet = new String(StreamUtil.read(req.getInputStream()).toString());
-                    retObj = new String(tempRet.getBytes(Charset.forName("ISO-8859-1")),"utf-8");
+                    retObj = new String(tempRet.getBytes(Charset.forName("ISO-8859-1")),"utf-8").trim();
                 }
             } catch (Exception ex) {
                 retObj =  ex;
@@ -127,7 +142,7 @@ public class MainServlet extends HttpServlet {
 //                retStr = JsonUtil.toJsonStr(result);
                 retStr = CommonUtils.mapper.writeValueAsString(result);
             }
-            logger.debug("Response : {}",retStr);
+            logger.info("Response : {}",retStr);
             System.out.println(retStr);
             resp.setContentType("text/html; charset=utf-8");
             resp.getWriter().write(retStr);
@@ -136,6 +151,21 @@ public class MainServlet extends HttpServlet {
             return "success";
         } catch (Exception ex) {
             return ex;
+        }
+    }
+
+
+   static void loadLog4j() {
+        String log4j = PathUtil.getClassPath() +"log4j.properties";
+        log4j = StrUtils.trimStart(log4j, "file:/");
+        Properties properties = new Properties();
+
+        try {
+            System.out.println(FileUtils.readFileToString(new File(log4j)));
+            properties.load(FileUtils.openInputStream(new File(log4j)));
+            PropertyConfigurator.configure(properties);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 

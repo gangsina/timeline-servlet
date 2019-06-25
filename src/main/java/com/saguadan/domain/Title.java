@@ -6,8 +6,8 @@ package com.saguadan.domain;
  * @Date 2019/5/30 13:37.
  */
 public class Title extends _domain{
-    private Media media;
-    private Text text;
+    private Media media = new Media();
+    private Text text = new Text();
 
     public Title() {
     }

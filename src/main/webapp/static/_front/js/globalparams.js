@@ -51,7 +51,19 @@ function assertConsole(message) {
 	}
 }
 
+var _help = "请联系管理员bentengwu@163.com或稍后再试!";
 
+function _help(msg) {
+	if (msg) {
+		return msg + ","+_help;
+	}else{
+		return _help;
+	}
+}
+
+function _alertHelp(msg) {
+	alert(_help(msg));
+}
 
 function go(url) {
 	window.location.href = url;
