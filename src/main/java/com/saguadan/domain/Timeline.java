@@ -9,16 +9,19 @@ import java.util.Set;
  * @Date 2019/5/30 13:32.
  */
 public class Timeline extends _domain {
+
+    private static final long serialVersionUID = 775281028019453502L;
+
     private String scale="";
     private Title title = new Title();
-    private Eras eras=new Eras();
+    private Set<Eras> eras = new HashSet<>();
     private Set<Event> events = new HashSet<>();
 
-    public Eras getEras() {
+    public Set<Eras> getEras() {
         return eras;
     }
 
-    public void setEras(Eras eras) {
+    public void setEras(Set<Eras> eras) {
         this.eras = eras;
     }
 

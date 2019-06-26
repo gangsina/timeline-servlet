@@ -66,7 +66,10 @@ public class TimelineService extends CRUDControllerService<Timeline> {
                 timeline.getTitle().getText().setText(timelineInfo.getMemo());
             }
             Event event = timelineFix.getEvent();
-            timeline.getEvents().add(event);
+            if (!timeline.getEvents().add(event)) {
+                timeline.getEvents().remove(event);
+                timeline.getEvents().add(event);
+            }
         } else if (timelineFix.get_class().equals("timeline")) {
             timeline = timelineFix.getTimeline();
         }else{

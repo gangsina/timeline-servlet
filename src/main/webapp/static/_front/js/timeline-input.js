@@ -1,15 +1,39 @@
 /*
 *这个文件用来处理timeline.html文件的前端逻辑。
 * */
+//加载js------------------------------------------------------------------------------
+// _loadScript(["js/jquery-1.7.1.js",
+//     "js/jquery.hotkeys.js",
+//     "js/jquery.blockUI.js",
+//     "js/ajax_abstract.js",
+//     "js/getUrlParam.js",
+//     "js/globalparams.js",
+//     "js/timelinejs3/timeline.js"]);
+//
+// function _loadScript(js) {
+//     js.forEach(function (element) {
+//         var script = document.createElement("script");
+//         script.language = "javascript";
+//         script.src = "http://localhost/timeline/static/_front/"+element;
+//         console.log(script.src);
+//         document.getElementsByTagName("head")[0].appendChild(script);
+//     })
+// }
+
+//当前页面全局参数-----------------------------------------------------------------------
 
 //处理业务控制器
 var _timelineService = "timelineService";
+
 //时间轴数据实例
 var _timeline = null;
 
 //用于精确表示操作所处的页面. view : 查看timeline界面； input: 编辑event事件交互界面.
 var _timeline_page_index  = "view";
 
+var _expresses = [{"oldStr":new RegExp("start_date.data.","g"),"newStr":"start_date."},
+        {"oldStr":new RegExp("end_date.data.","g"),"newStr":"end_date."}];
+//on ready操作 ----------------------------------------------------------------------------
 $(function () {
     var filename = _req_params.parm("filename");
     assertConsole("Position: timeline.html: filename:" + filename);
@@ -27,7 +51,7 @@ $(function () {
     _binding_hotkeys();
 })
 
-
+// 业务方法----------------------------------------------------------------------------------
 
 //加载时间线 2019年6月20日15:02:07
 function _load_timeline(filename){
@@ -96,6 +120,10 @@ function _input_event2timeline(type) {
         }
     }
 
+    if (!$("input[name='unique_id']").val()) {
+        //生成随机的unique_id.
+        $("input[name='unique_id']").val(_getCurrentDate()+"-"+randomStr(6))
+    }
     _display_input_dialog();
 
 }
@@ -111,31 +139,18 @@ function _save_input_timeline() {
     _set_value2obj_byDocName(newEvent, 'autolink', 'autolink');
     _set_value2obj_byDocName(newEvent, 'unique_id', 'unique_id');
 
-    _set_value2multiObj_byDocName(newEvent, 'start_date', ['year','month','day','minute','second','millisecond','format']);
-    _set_value2multiObj_byDocName(newEvent, 'end_date', ['year','month','day','minute','second','millisecond','format']);
+    _set_value2multiObj_byDocName(newEvent, 'start_date', ['year','month','day','hour','minute','second','millisecond','format']);
+    _set_value2multiObj_byDocName(newEvent, 'end_date', ['year','month','day','hour','minute','second','millisecond','format']);
     _set_value2multiObj_byDocName(newEvent, 'text', ['headline','text']);
     _set_value2multiObj_byDocName(newEvent, 'background', ['color','opacity','url']);
     _set_value2multiObj_byDocName(newEvent, 'media', ['url', 'caption', 'credit', 'thumb', 'alt', 'title', 'link', 'link_target']);
 
-    assertConsole("++++++++++++++++++++++++++++");
+    assertCut1();
     assertConsole("提交的newEventn内容：");
     assertConsole(newEvent);
-    assertConsole("+++++++++++++++++++++++++++++");
+    assertCut1();
 
-    // if (_timeline == null) {
-    //     var events = [newEvent];
-    //     var timelineObj = Object.create(null);
-    //     timelineObj.events = events;
-    //
-    //     assertConsole(JSON.stringify(timelineObj));
-    //     _timeline = new TL.Timeline('timeline',  JSON.parse(JSON.stringify(timelineObj)));
-    // }else {
-    //     _timeline.add(JSON.stringify(newEvent));
-    // }
-    // _timeline.updateDisplay();
-    // _hide_input_dialog();
-
-    //todo 持久化保存.
+    //持久化保存.
     //需要提交的data
     var p_data = Object.create(null);
     p_data.filename = $("#h-filename").val();
@@ -202,6 +217,7 @@ function _newTimeline(timelineJson) {
 
 /**
  *@description  将事件加入到页面显示的时间轴中。仅在页面操作，不涉及后台交互。
+ * 如果原先已经存在unique_id,则先删除再插入.
  *@author thender email: bentengwu@163.com
  *@date 2019/6/25 12:00
  *@param 满足timelineJS3事件格式的数据
@@ -216,9 +232,25 @@ function _add2timeline(newEvent) {
         assertConsole(JSON.stringify(timelineObj));
         _timeline = new TL.Timeline('timeline',  JSON.parse(JSON.stringify(timelineObj)));
     }else {
+        _deleteEvent(newEvent.unique_id);
         _timeline.add(newEvent);
     }
     _timeline.updateDisplay();
+    _timeline.goToId(newEvent.unique_id);
+
+}
+
+/**
+ *@description  根据unique_id删除对应的event事件.
+ *@author thender email: bentengwu@163.com
+ *@date 2019/6/26 16:15
+ *@param unique_id 唯一标识一个event.
+ *@return void
+ **/
+function _deleteEvent(unique_id) {
+    if (_timeline) {
+        _timeline.removeId(unique_id);
+    }
 }
 
 /**
@@ -291,11 +323,20 @@ function _hide_input_dialog() {
  *
  * note: 仅设置_data对象（不包含父对象的可枚举属性）中可枚举的属性。
  */
-function _set_value2doc(_data,prefix) {
+function _set_value2doc(_data, prefix) {
+    assertConsole("_set_value2doc: ");
+    assertConsole("_data-->");
+    assertConsole(_data);
+    assertConsole("prefix-->");
+    assertConsole(prefix);
+    assertCut1();
+    assertConsole(typeof _data);
+
     var _prefix = "";
-    if (prefix != null && prefix!='' && prefix !=undefined && prefix != 'undefined') {
+    if (prefix != null && prefix != '' && prefix != undefined && prefix != 'undefined') {
         _prefix = prefix + '.';
     }
+
     if (typeof _data == 'object') {
         Object.keys(_data).forEach(function (element) {
             var val = _data[element];
@@ -304,9 +345,12 @@ function _set_value2doc(_data,prefix) {
             }
             _set_value2doc(val, _prefix + element);
         });
-    }else {
-        _set_value2doc_byname(prefix, _data);
+    } else {
+        // _set_value2doc_byname(prefix, _data);
+        _set_value2doc_bynameExpress(prefix, _data, _expresses);
     }
+
+    assertCut2();
 }
 
 /**
@@ -321,12 +365,33 @@ function _set_value2doc_byname(_name,_val) {
     assertConsole(_name);
     assertConsole("_val-->");
     assertConsole(_val);
-    assertConsole("----------}");
+    assertCut1();
 
     var _$doc = $("[name='" + _name + "']");
     if (_$doc) {
         _$doc.val(_val);
     }
+    assertCut2();
+}
+
+/**
+ *@description  原先简单的根据name设定值，不能满足需要按照简单规则批量修改名字的情况
+ *@author thender email: bentengwu@163.com
+ *@date 2019/6/26 15:23
+ * @param _name name属性为_name的doc
+ * @param _val  一个值，用于对某个doc赋值用.
+ * @param _express_array 为空时，直接采用精确匹配。
+ *@return void
+ **/
+function _set_value2doc_bynameExpress(_name, _val, _express_array) {
+    var newName = _name;
+    if (_express_array) {
+        _express_array.forEach(function (_express) {
+            newName = newName.replace(_express.oldStr, _express.newStr);
+        });
+    }
+    _set_value2doc_byname(newName, _val);
+    assertCut2();
 }
 
 /**
@@ -343,7 +408,7 @@ function _set_value2obj(obj, _field_name, _value) {
     assertConsole("_field_name-->" + _field_name);
     assertConsole("_input_name-->" );
     assertConsole(_value);
-    assertConsole("----------}");
+    assertCut1();
 
     var descriptor = Object.create(null);
     descriptor.writable = true;
@@ -354,6 +419,7 @@ function _set_value2obj(obj, _field_name, _value) {
         descriptor.value = "";
     }
     Object.defineProperty(obj, _field_name, descriptor);
+    assertCut2();
 }
 
 /**
@@ -370,8 +436,7 @@ function _set_value2obj_byDocName(obj, _field_name, _input_name) {
     assertConsole(obj);
     assertConsole("_field_name-->" + _field_name);
     assertConsole("_input_name-->" + _input_name);
-    assertConsole("----------}");
-
+    assertCut1();
 
     var _value = $("input[name='" + _input_name + "']").val();
 
@@ -381,6 +446,7 @@ function _set_value2obj_byDocName(obj, _field_name, _input_name) {
     //     assertConsole("pass !!  "+_input_name+" 's value is empty " );
     // }
 
+    assertCut2();
 }
 
 /**
@@ -398,7 +464,7 @@ function _set_value2multiObj_byDocName(obj, _field_name, _sub_field_names) {
     assertConsole("_field_name-->" + _field_name);
     assertConsole("_sub_field_names-->");
     assertConsole(_sub_field_names);
-    assertConsole("----------}");
+    assertCut1();
     var _fieldObj = Object.create(null) ;
 
     _sub_field_names.forEach(function (element, index) {
@@ -413,7 +479,7 @@ function _set_value2multiObj_byDocName(obj, _field_name, _sub_field_names) {
         _set_value2obj(obj, _field_name, _fieldObj);
     }
 
-
+    assertCut2();
 }
 
 /**

@@ -38,6 +38,8 @@ var _url_r =base_url+"/r/1";//请求地址.
 
 
 var _assert = '1';
+var _assert_cut1 = "=========================";
+var _assert_cut2 = "======================================================";
 
 function assertAlert(message) {
 	if(_assert=='1') {
@@ -48,6 +50,18 @@ function assertAlert(message) {
 function assertConsole(message) {
 	if(_assert=='1'){
 		console.log(message);
+	}
+}
+
+function assertCut1() {
+	if(_assert=='1'){
+		assertConsole(_assert_cut1);
+	}
+}
+
+function assertCut2() {
+	if(_assert=='1'){
+		assertConsole(_assert_cut2);
 	}
 }
 
@@ -68,5 +82,8 @@ function _alertHelp(msg) {
 function go(url) {
 	window.location.href = url;
 }
+
+
+
 
 

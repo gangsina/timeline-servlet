@@ -5,10 +5,48 @@ package com.saguadan.domain;
  * @Date 2019/5/30 13:39.
  */
 public class Media extends _domain {
+    private final static long serialVersionUID = 3464897560410725457L;
     private String caption;
     private String credit;
     private String url;
     private String thumb;
+
+    private String alt;
+    private String title;
+    private String link;
+    private String link_target;
+
+    public String getAlt() {
+        return alt;
+    }
+
+    public void setAlt(String alt) {
+        this.alt = alt;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public String getLink_target() {
+        return link_target;
+    }
+
+    public void setLink_target(String link_target) {
+        this.link_target = link_target;
+    }
 
     public String getCaption() {
         return caption;

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>TimelineJS Example</title>
+    <title>时间轴详情 <!--  TODO 将timeline的text信息显示在这里 --></title>
     <meta charset="utf-8">
     <meta name="description" content="TimelineJS Embed">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -37,6 +37,7 @@
     script(src='https://html5shim.googlecode.com/svn/trunk/html5.js')
     
     -->
+
   </head>
   <body>
   <div id="timeline_wrapper">
@@ -46,6 +47,7 @@
     <script type="text/javascript" src="js/jquery-1.7.1.js"></script>
     <script type="text/javascript" src="js/jquery.hotkeys.js"></script>
     <script type="text/javascript" src="js/jquery.blockUI.js"></script>
+    <script type="text/javascript" src="js/utillib.js"></script>
     <script type="text/javascript" src="js/globalparams.js"></script>
     <script type="text/javascript" src="js/getUrlParam.js"></script>
     <script type="text/javascript" src="js/ajax_abstract.js"></script>
@@ -70,11 +72,11 @@
             <li class="li1">Any text. HTML markup is OK. Blank is also OK.</li>
             <li class="li2">text.text：<input type="text" name="text.text" class="put" value=""></li>
             <li class="li1">Any text. HTML markup is OK. Blank is OK. Not used for era objects.</li>
-            <li class="li2">display_date：<input type="text" name="background" class="put" value=""></li>
+            <li class="li2">display_date：<input type="text" name="display_date" class="put" value=""></li>
             <li class="li1">A string which will be used when Timeline displays the date for this. If used, override's display_date values set on the start or end date for this event, which is useful if you want to control how the two dates relate to each other. </li>
             <li class="li2">autolink：<input type="text" name="autolink" class="put" value=""></li>
             <li class="li1">A boolean value (true or false). Defaults to true, which means that Timeline will scan text fields and automatically add  tags so that links and email addresses are "clickable." If set to false, you may still manually apply the tags in the appropriate fields when you want links. Autolinking applies to the text field in a text object and the caption and credit fields in a media object. </li>
-            <li class="li2">unique_id：<input type="text" name="unique_id" class="put" value=""></li>
+            <li class="li2">unique_id：<input type="text" name="unique_id" class="put" value="" readonly></li>
             <li class="li1">A string value which is unique among all slides in your timeline. If not specified, TimelineJS will construct an ID based on the headline, but if you later edit your headline, the ID will change. Unique IDs are used when the hash_bookmark option is used, and can also be used with the timeline.goToId() method to programmatically move the timeline to a specific slide. </li>
           </ul>
         </div>

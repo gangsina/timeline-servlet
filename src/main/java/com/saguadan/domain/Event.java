@@ -1,6 +1,9 @@
 package com.saguadan.domain;
 
+import com.bentengwu.utillib.UtilConversion;
 import com.bentengwu.utillib.reflection.UtilReflection;
+
+import java.util.Objects;
 
 /**
  * 核心结构模型
@@ -14,6 +17,9 @@ import com.bentengwu.utillib.reflection.UtilReflection;
  */
 
 public class Event extends _domain{
+
+    private final static long serialVersionUID = 3328361178196303011L;
+
     String unique_id = null;
     boolean autolink;
     Background background =null;
@@ -205,4 +211,16 @@ public class Event extends _domain{
 
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Event)) return false;
+        Event event = (Event) o;
+        return unique_id.equals(event.unique_id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(unique_id);
+    }
 }

@@ -110,9 +110,21 @@ event	: 用于回显，当_class = "event"时才有.
 timeline : 用于回显， 当_class = "timeline" 时才有.
 }
 
+js/jquery-1.7.1.js
+js/jquery.hotkeys.js
+js/jquery.blockUI.js
+js/globalparams.js
+js/getUrlParam.js
+js/ajax_abstract.js
+js/timelinejs3/timeline.js
+
 ```
 
+#### 相关字段生成策略
 
+##### unique_id
+
+​	时间+随机长度为6字符串。 格式 yyyy-mm-dd-char(6)
 
 #### 	交互与转发
 
@@ -259,6 +271,7 @@ https://github.com/tzuryby/jquery.hotkeys
 ```
 #构造timelinejs3的几种方法。
 https://timeline.knightlab.com/docs/instantiate-a-timeline.html
+##目前我在使用的时利用自己组装的Json js对象来构造时间轴。
 
 #
 ```
@@ -316,5 +329,12 @@ http://kindeditor.net/doc3.php
 
 ## TODO
 
-- [ ] 提交event data到服务端
-- [ ]
+- [x] 提交event data到服务端
+- [x] unique_id 使用前端机制生成，不要用户自己输入。
+
+- [x] media alt、title、link、link_target； start_date/end_date; display_date; 等没有回显 在编辑的时候。
+- [x] 保存的hour字段丢失。
+- [x] 视频不显示问题。重新刷新地址的时候可以加载，编辑添加后无法显示视频。
+- [x] 编辑event后，保存未成功清理原先的event。note：服务端需要重写hashcode方法。
+- [ ] Ears是个数组
+
