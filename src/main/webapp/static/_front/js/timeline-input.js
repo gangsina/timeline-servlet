@@ -128,6 +128,71 @@ function _input_event2timeline(type) {
 
 }
 
+/**
+ *@description  todo 验证是否能用
+ *  读取eras的内容并提交后台保存。
+ *  通过获取一行数据，拿取它的下面input类型的子元素的数值，子元素通过name属性来区分是属于哪个字段。
+ *@author thender email: bentengwu@163.com
+ *@date 2019/6/27 13:39
+ *@return void
+ **/
+function _save_eras_input_timeline() {
+    var eras = Object.create(null);
+    var eras_array = [];
+
+    //todo change the class
+    $(".change-it").find("input").each(function (idx) {
+        assertConsole(this);
+        if (idx % 3 == '0') {
+            eras_array.push(eras);
+            eras = Object.create(null);
+        }
+        if ($(this).attr("name") == 'start_date.year') {
+            var start_date = Object.create(null);
+            start_date.year = $(this).val();
+            eras.start_date = start_date;
+        }
+        if ($(this).attr("name") == 'end_date.year') {
+            var end_date = Object.create(null);
+            end_date.year = $(this).val();
+            eras.end_date = end_date;
+        }
+        if ($(this).attr("name") == 'text.headline') {
+            var text = Object.create(null);
+            text.headline = $(this).val();
+            eras.text = start_date;
+        }
+    });
+    eras_array.push(eras);
+    assertCut1();
+    assertConsole(eras_array);
+    assertCut2();
+
+
+    //持久化保存.
+    //需要提交的data
+    var p_data = Object.create(null);
+    p_data.filename = $("#h-filename").val();
+    p_data.eras = eras_array;
+    p_data._class = "eras"; // event/timeline 事件数据/整个数据
+
+    //头部参数设定
+    var phData = Object.create(headerData);
+    phData.service_controller = _timelineService;
+    phData.opt = _opt_u;
+
+
+    //提交请求.
+    _ajax_normal(p_data, phData, _save_timeline_callback);
+}
+
+/**
+ *@description 提交event data 到后台保存，成功后加载event到timeline.
+ *@author thender email: bentengwu@163.com
+ *@date 2019/6/20 13:37
+ *@param null	
+ *@return 
+ **/
 function _save_input_timeline() {
     //todo validate
     //code it...
@@ -168,7 +233,7 @@ function _save_input_timeline() {
 }
 
 /**
- *@description  todo 提交保存event数据或者整个timeline的json数据后的回调。
+ *@description   提交保存event数据或者整个timeline的json数据后的回调。
  *@author thender email: bentengwu@163.com
  *@date 2019/6/25 10:44
  *@param retData 服务端返回的数据，json格式。
@@ -181,7 +246,9 @@ function _save_timeline_callback(retData) {
             _add2timeline(retData.data.event);
         }else if (retData.data._class && retData.data._class == 'timeline') {
             _newTimeline(retData.data.timeline);
-        }else {
+        }else if (retData.data._class && retData.data._class == 'eras') {
+            _newTimeline(retData.data.timeline);//重画timeline
+        } else {
             _alertHelp("未知的数据");
         }
         _hide_input_dialog();
@@ -291,9 +358,30 @@ function _assertManualFillData() {
  * @private
  */
 function _display_input_dialog() {
+
+    if (_getPageIndex() != "view") {
+        return;
+    }
     _changePageTo("input");
     $.blockUI({
         message:$("#event_form"),
+        css:{ width: '80%',height:'80%',left:'10%', top: '10%'}
+    });
+}
+
+/**
+ *@description  显示eras的编辑界面
+ *@author thender email: bentengwu@163.com
+ *@date 2019/6/27 18:24
+ *@return void
+ **/
+function _display_eras_input_dialog() {
+    if (_getPageIndex() != "view") {
+        return;
+    }
+    _changePageTo("eras");
+    $.blockUI({
+        message:$("#eras_form"),
         css:{ width: '80%',height:'80%',left:'10%', top: '10%'}
     });
 }
@@ -503,6 +591,15 @@ function _changePageTo(_page_index) {
     assertConsole("__changePage:_page_index-->" + _page_index);
     this._timeline_page_index = _page_index;
 }
+/**
+ *@description  获取当前的页面索引值.
+ *@author thender email: bentengwu@163.com
+ *@date 2019/6/27 18:32
+ *@return
+ **/
+function _getPageIndex() {
+    return this._timeline_page_index;
+}
 
 
 /**
@@ -531,6 +628,7 @@ function _binding_hotkeys() {
         return false;
     });
 
+    jQuery(document).bind('keydown.Alt_i',function (evt){_alt_i_eras_input_timeline();return false;});
     jQuery(document).bind('keydown.Alt_home',function (evt){_alt_home();return false;});
 
     jQuery(document).bind('keydown.esc',function (evt) {
@@ -589,3 +687,16 @@ function _alt_home() {
         go("index.html");
     }
 }
+
+/**
+ *@description  编辑Eras
+ *@author thender email: bentengwu@163.com
+ *@date 2019/6/27 18:25
+ *@param null
+ *@return
+ **/
+function _alt_i_eras_input_timeline() {
+    assertConsole("_alt_i_eras_input_timeline");
+    _display_eras_input_dialog();
+}
+

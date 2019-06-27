@@ -99,15 +99,15 @@ ret_format:"y"
 ###post data
 filename: 对应持久化的文件名。
 event: js object. 从页面元素中读取的所有字段组成的一个js对象。提交前会被转化为json。
-_class:  event/timeline. 当提交event的时候为event，当提交整个timeline的时候，为timeline
+_class:  event/eras/timeline. 当提交event的时候为event，当提交整个timeline的时候，为timeline
 
 
 ##下行（约定下行只对data做描述，除非有必要才对code做描述）
 data:
 {
-_class : 用于回显
+_class  : 用于回显
 event	: 用于回显，当_class = "event"时才有.
-timeline : 用于回显， 当_class = "timeline" 时才有.
+timeline : 用于回显， 当_class = "timeline"或者 "eras" 时才有.
 }
 
 js/jquery-1.7.1.js
@@ -331,10 +331,11 @@ http://kindeditor.net/doc3.php
 
 - [x] 提交event data到服务端
 - [x] unique_id 使用前端机制生成，不要用户自己输入。
-
 - [x] media alt、title、link、link_target； start_date/end_date; display_date; 等没有回显 在编辑的时候。
 - [x] 保存的hour字段丢失。
 - [x] 视频不显示问题。重新刷新地址的时候可以加载，编辑添加后无法显示视频。
 - [x] 编辑event后，保存未成功清理原先的event。note：服务端需要重写hashcode方法。
 - [ ] Ears是个数组
+- [ ] 目前没找到对应的可以直接增加Eras的API，所以目前只能通过重新装载整个timeline的方式来新增Eras。如果要加的话。
+- [ ] 上传文件（视频、图片）
 

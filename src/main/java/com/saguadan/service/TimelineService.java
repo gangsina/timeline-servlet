@@ -3,6 +3,7 @@ package com.saguadan.service;
 import com.bentengwu.utillib.String.StrUtils;
 import com.bentengwu.utillib.UtilLogger;
 import com.bentengwu.utillib.json.JsonUtil;
+import com.bentengwu.utillib.validate.ValidateUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.saguadan.domain.Event;
@@ -29,7 +30,13 @@ public class TimelineService extends CRUDControllerService<Timeline> {
     protected  List<Timeline> list(Object... params) {
         return null;
     }
-
+    
+    /**
+     *@description  
+     *@author thender email: bentengwu@163.com
+     *@param params
+     *@return com.saguadan.domain.Timeline
+     **/
     @Override
     protected Timeline get(Object... params) {
         JSONObject json = JsonUtil.getJSONObject(getParam(String.class, 2, params).getBytes());
@@ -56,27 +63,46 @@ public class TimelineService extends CRUDControllerService<Timeline> {
         if (timelineFix == null) {
             return _help("解析上行数据报错");
         }
-        Timeline timeline = null;
-        if (timelineFix.get_class().equals("event")) {
-            timeline    =   persistenceService.findTimeline(timelineFix.getFilename());
-            if (timeline == null) {
-                timeline = new Timeline();
-                TimelineInfo timelineInfo = persistenceService.find(timelineFix.getFilename());
-                timeline.getTitle().getText().setHeadline(timelineInfo.getTimelineName());
-                timeline.getTitle().getText().setText(timelineInfo.getMemo());
-            }
+        String _class = timelineFix.get_class();
+        String filename =timelineFix.getFilename();
+        Timeline timeline = findTimelineFixNull(filename);
+
+        if (_class.equals("event")) {
             Event event = timelineFix.getEvent();
             if (!timeline.getEvents().add(event)) {
                 timeline.getEvents().remove(event);
                 timeline.getEvents().add(event);
             }
-        } else if (timelineFix.get_class().equals("timeline")) {
+        } else if (_class.equals("timeline")) {
             timeline = timelineFix.getTimeline();
+        }else if(_class.equals("eras")){
+            //修改eras。
+            timeline.setEras(timelineFix.getEras());
+            timelineFix.setTimeline(timeline);
         }else{
             return "-1,非法格式。";
         }
-        persistenceService.flushTimeline(timelineFix.getFilename(), timeline);
+        persistenceService.flushTimeline(filename, timeline);
         return timelineFix;
+    }
+
+    /**
+     *@description  根据文件名获取Timeline实例.
+     *@author thender email: bentengwu@163.com
+     *@date 2019/6/27 12:18
+     *@param filename	文件名
+     *@return com.saguadan.domain.Timeline
+     **/
+    private Timeline findTimelineFixNull(String filename) {
+        ValidateUtils.validateParams(filename);
+        Timeline timeline    =   persistenceService.findTimeline(filename);
+        if (timeline == null) {
+            timeline = new Timeline();
+            TimelineInfo timelineInfo = persistenceService.find(filename);
+            timeline.getTitle().getText().setHeadline(timelineInfo.getTimelineName());
+            timeline.getTitle().getText().setText(timelineInfo.getMemo());
+        }
+        return timeline;
     }
 
     @Override

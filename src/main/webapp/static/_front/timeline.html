@@ -167,12 +167,44 @@
         </div>
       </div>
 
-
-
-
-
       <div id="test-timeline" class="clear"></div>
     </div>
+
+  <div class="eras-input-wrap" id="eras_form" style="display: none">
+    <script>
+      function addline(_addLineBtn) {
+        $(_addLineBtn).parent().after("<tr><td><input type='text' ></td><td><input type='text' ></td><td><input type='text' onkeypress='autoWidth(this)'></td><td class='add' onclick='addline(this)'>+</td></tr>)");
+      }
+      function autoWidth(inputDoc) {
+        var len = $(inputDoc).val().length;
+        $(inputDoc).css('width',len*10+30+ 'px')
+      }
+    </script>
+    <table id="hor-zebra" border="0">
+      <thead>
+      <tr>
+        <th scope="col">开始年</th>
+        <th scope="col">结束年</th>
+        <th scope="col">简述</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td><input type="text" ></td>
+        <td><input type="text" ></td>
+        <td><input type="text" ></td>
+        <td class="add" onclick="addline(this)">+</td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="mmxgBTN2">
+      <button type="button" id="save-eras-input-timeline" onclick="_save_eras_input_timeline()">确&nbsp;认</button>
+      <button type="button" class="qx" id="cancel-eras-input-timeline" onclick="_hide_input_dialog()">取&nbsp;消</button>
+    </div>
+  </div>
+
+
+
   <div style="display: none">
     <input id="h-filename" name="filename" value="-1"/>
   </div>
