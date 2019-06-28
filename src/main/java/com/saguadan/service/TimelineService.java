@@ -1,11 +1,9 @@
 package com.saguadan.service;
 
+import com.bentengwu.utillib.Collection.CollectionUtils;
 import com.bentengwu.utillib.String.StrUtils;
-import com.bentengwu.utillib.UtilLogger;
 import com.bentengwu.utillib.json.JsonUtil;
 import com.bentengwu.utillib.validate.ValidateUtils;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.saguadan.domain.Event;
 import com.saguadan.domain.Timeline;
 import com.saguadan.domain.TimelineFix;
@@ -18,6 +16,9 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 /**
+ * 1:加载timeline的整个事件信息
+ * 2：修改event
+ * 3：修改eras
  * @Author <a href="bentengwu@163.com">thender.xu</a>
  * @Date 2019/6/21 14:33.
  */
@@ -77,6 +78,7 @@ public class TimelineService extends CRUDControllerService<Timeline> {
             timeline = timelineFix.getTimeline();
         }else if(_class.equals("eras")){
             //修改eras。
+            CollectionUtils.clearFieldEmptyElement(timelineFix.getEras(),"start_date,end_date");
             timeline.setEras(timelineFix.getEras());
             timelineFix.setTimeline(timeline);
         }else{

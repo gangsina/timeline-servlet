@@ -50,10 +50,16 @@ function _ajax(p_url,p_type,p_dataType,p_async,p_data,ph_data,_ajax_callback) {
         },
         success:function(data){
             var dataObj = eval(data);
+            assertConsole("+++++++++++++++response data:++++++++++++++++");
+            assertConsole(dataObj);
+            assertConsole("==============================================")
             _ajax_callback(dataObj);
         },
         error:function(data){
             var dataObj = eval(data);
+            assertConsole("+++++++++++++++response data:++++++++++++++++");
+            assertConsole(dataObj);
+            assertConsole("==============================================")
             _ajax_callback(dataObj);
         }
     });

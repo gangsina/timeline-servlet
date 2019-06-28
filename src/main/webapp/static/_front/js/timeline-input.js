@@ -31,6 +31,9 @@ var _timeline = null;
 //用于精确表示操作所处的页面. view : 查看timeline界面； input: 编辑event事件交互界面.
 var _timeline_page_index  = "view";
 
+//timeline默认高度百分比. 初始化的时候使用这个值.
+var _v_height_ = 25;
+
 var _expresses = [{"oldStr":new RegExp("start_date.data.","g"),"newStr":"start_date."},
         {"oldStr":new RegExp("end_date.data.","g"),"newStr":"end_date."}];
 //on ready操作 ----------------------------------------------------------------------------
@@ -49,6 +52,7 @@ $(function () {
 
     // 绑定快捷键.
     _binding_hotkeys();
+
 })
 
 // 业务方法----------------------------------------------------------------------------------
@@ -140,24 +144,26 @@ function _save_eras_input_timeline() {
     var eras = Object.create(null);
     var eras_array = [];
 
-    //todo change the class
-    $(".change-it").find("input").each(function (idx) {
+    $("#hor-zebra").find("input").each(function (idx) {
         assertConsole(this);
         if (idx % 3 == '0') {
-            eras_array.push(eras);
+            if (eras.start_date && eras.start_date.year
+                && eras.end_date && eras.end_date.year) {
+                eras_array.push(eras);
+            }
             eras = Object.create(null);
         }
-        if ($(this).attr("name") == 'start_date.year') {
+        if ($(this).attr("name") == 'eras.start_date.year') {
             var start_date = Object.create(null);
             start_date.year = $(this).val();
             eras.start_date = start_date;
         }
-        if ($(this).attr("name") == 'end_date.year') {
+        if ($(this).attr("name") == 'eras.end_date.year') {
             var end_date = Object.create(null);
             end_date.year = $(this).val();
             eras.end_date = end_date;
         }
-        if ($(this).attr("name") == 'text.headline') {
+        if ($(this).attr("name") == 'eras.text.headline') {
             var text = Object.create(null);
             text.headline = $(this).val();
             eras.text = start_date;
@@ -187,6 +193,36 @@ function _save_eras_input_timeline() {
 }
 
 /**
+ *@description  校验必选框是否为空
+ *@author thender email: bentengwu@163.com
+ *@date 2019/6/28 16:14
+ *@param names 数组. doc input 的 name值
+ *@return true/false
+ **/
+function _validate_byname(names) {
+    var message = "";
+    var ret = true;
+    if (names) {
+        names.forEach(function (value) {
+            var doc_name = value.name;
+            var alert_message = value.message;
+            if (doc_name) {
+                assertConsole(document.getElementsByName(doc_name)[0].nodeValue);
+                var val = getValueByName(doc_name);
+                if (!val) {
+                    message = message + alert_message + "\r\n";
+                }
+            }
+        });
+    }
+    if (message) {
+        alert(message);
+        ret = false;
+    }
+    return ret;
+}
+
+/**
  *@description 提交event data 到后台保存，成功后加载event到timeline.
  *@author thender email: bentengwu@163.com
  *@date 2019/6/20 13:37
@@ -194,7 +230,10 @@ function _save_eras_input_timeline() {
  *@return 
  **/
 function _save_input_timeline() {
-    //todo validate
+    // todo validate
+    if (!_validate_byname([{name:'text.headline',message:'headline不能为空!'},{name:'start_date.year',message:'开始时间不能为空'},{name:'unique_id',message:'unique_id不能为空'}])) {
+        return;
+    }
     //code it...
     //将event写入到timeline对象，关闭对话框，展现timeline信息。
     var newEvent = Object.create(null);
@@ -209,6 +248,8 @@ function _save_input_timeline() {
     _set_value2multiObj_byDocName(newEvent, 'text', ['headline','text']);
     _set_value2multiObj_byDocName(newEvent, 'background', ['color','opacity','url']);
     _set_value2multiObj_byDocName(newEvent, 'media', ['url', 'caption', 'credit', 'thumb', 'alt', 'title', 'link', 'link_target']);
+
+
 
     assertCut1();
     assertConsole("提交的newEventn内容：");
@@ -273,7 +314,8 @@ function _newTimeline(timelineJson) {
     if (timelineJson) {
         _timeline = new TL.Timeline('timeline', timelineJson, {
             theme_color: "#288EC3",
-            ga_property_id: "UA-27829802-4"
+            timenav_height_percentage:_v_height_,
+            is_embed:true
         });
         _timeline.updateDisplay();
     }else{
@@ -281,6 +323,7 @@ function _newTimeline(timelineJson) {
         _alertHelp("用于创建timeline的json数据格式有误");
     }
 }
+
 
 /**
  *@description  将事件加入到页面显示的时间轴中。仅在页面操作，不涉及后台交互。
@@ -291,6 +334,8 @@ function _newTimeline(timelineJson) {
  *@return 
  **/
 function _add2timeline(newEvent) {
+    assertConsole(["_add2timeline:",newEvent]);
+    assertCut1();
     if (_timeline == null) {
         var events = [newEvent];
         var timelineObj = Object.create(null);
@@ -299,11 +344,13 @@ function _add2timeline(newEvent) {
         assertConsole(JSON.stringify(timelineObj));
         _timeline = new TL.Timeline('timeline',  JSON.parse(JSON.stringify(timelineObj)));
     }else {
+        assertConsole("newEvent.unique_id-->"+newEvent.unique_id);
         _deleteEvent(newEvent.unique_id);
         _timeline.add(newEvent);
     }
     _timeline.updateDisplay();
     _timeline.goToId(newEvent.unique_id);
+    assertCut2();
 
 }
 
@@ -315,7 +362,8 @@ function _add2timeline(newEvent) {
  *@return void
  **/
 function _deleteEvent(unique_id) {
-    if (_timeline) {
+    assertConsole(["_deleteEvent : ", unique_id]);
+    if (_timeline && unique_id) {
         _timeline.removeId(unique_id);
     }
 }
@@ -379,11 +427,51 @@ function _display_eras_input_dialog() {
     if (_getPageIndex() != "view") {
         return;
     }
+
+    _fillDataForEras();
+
     _changePageTo("eras");
     $.blockUI({
         message:$("#eras_form"),
         css:{ width: '80%',height:'80%',left:'10%', top: '10%'}
     });
+}
+/**
+ *@description  打开eras编辑界面后，将已有的eras回显到界面上。
+ *@author thender email: bentengwu@163.com
+ *@date 2019/6/28 15:26
+ **/
+function _fillDataForEras() {
+    assertConsole("_fillDataForEras");
+    var $table_tbody = $("#hor-zebra").find("tbody");
+    if (_timeline) {
+        var eras = _timeline.config.eras;
+        if (eras) {
+            $table_tbody.html("");
+            eras.forEach(function (value) {
+                var doc_start_date_year =  "<td><input type='text' name='eras.start_date.year'></td>";
+                if (value.start_date && value.start_date.data && value.start_date.data.year) {
+                    doc_start_date_year =  "<td><input type='text' name='eras.start_date.year' value='"+value.start_date.data.year+"'></td>";
+                }
+
+                var doc_end_date_year =  "<td><input type='text' name='eras.end_date.year'></td>";
+                if (value.end_date && value.end_date.data && value.end_date.data.year) {
+                    doc_end_date_year =  "<td><input type='text' name='eras.end_date.year' value='"+value.end_date.data.year+"'></td>";
+                }
+
+                var doc_text_headline =  "<td><input type='text' name='eras.text.headline'></td>";
+                if (value.text && value.text.data && value.text.data.headline) {
+                    doc_text_headline =  "<td><input type='text' name='eras.text.headline' value='"+value.text.data.headline+"'></td>";
+                }
+
+                var _tr = "<tr>"+doc_start_date_year+doc_end_date_year+doc_text_headline+"<td class='add' onclick='addline(this)'>+</td></tr>";
+
+                assertConsole([value, doc_start_date_year, doc_end_date_year, doc_text_headline, _tr]);
+
+                $table_tbody.prepend($(_tr));
+            });
+        }
+    }
 }
 
 /**
@@ -391,6 +479,7 @@ function _display_eras_input_dialog() {
  * @private
  */
 function _hide_input_dialog() {
+    _unbind_mousewheel();//使用组合快捷键打开的时候,会有一个比较奇葩的地方,会打开鼠标监听.统一在隐藏的时候调用下unbind.
     $.unblockUI({message: "<h1>系统处理中，请稍候...</h1>"});
     _changePageTo("view");
 }
@@ -494,7 +583,7 @@ function _set_value2obj(obj, _field_name, _value) {
     assertConsole("obj-->");
     assertConsole(obj);
     assertConsole("_field_name-->" + _field_name);
-    assertConsole("_input_name-->" );
+    assertConsole("_input_value-->" );
     assertConsole(_value);
     assertCut1();
 
@@ -526,13 +615,14 @@ function _set_value2obj_byDocName(obj, _field_name, _input_name) {
     assertConsole("_input_name-->" + _input_name);
     assertCut1();
 
-    var _value = $("input[name='" + _input_name + "']").val();
+    var docs = $("[name='" + _input_name + "']");
+    if (docs.length > 1) {
+        assertConsole("waring:读值可能有问题，因为检索到多个相同name属性值的document对象");
+    }
 
-    // if (_value) {
-        _set_value2obj(obj, _field_name, _value);
-    // } else{
-    //     assertConsole("pass !!  "+_input_name+" 's value is empty " );
-    // }
+    var _value =  $("[name='" + _input_name + "']").val();
+
+    _set_value2obj(obj, _field_name, _value);
 
     assertCut2();
 }
@@ -602,8 +692,8 @@ function _getPageIndex() {
 }
 
 
+
 /**
- *@description  提取一个公用的方法用于绑定热键
  * 参考开源项目:jquery.hotkeys
  *@author thender email: bentengwu@163.com
  *@date 2019/6/25 18:06
@@ -611,30 +701,40 @@ function _getPageIndex() {
  * @param _callback 回调的方法.
  *@return void
  **/
-function _binding_hotkey(key,_callback) {
-    jQuery(document).bind(key,
-        function (evt){
-            _callback();
-            return false;
-        });
-}
-
-/* hotkey opt*/
 function _binding_hotkeys() {
+    //alt+e 编辑当前选中的event.
     jQuery(document).bind('keydown.Alt_e',function (evt){_alt_e_input_timeline_data(); return false;});
 
+    //alt+c 新建新的event
     jQuery(document).bind('keydown.Alt_c',function (evt) {
         _alt_c_input_timeline_data();
         return false;
     });
 
+    //alt+i 编辑Eras
     jQuery(document).bind('keydown.Alt_i',function (evt){_alt_i_eras_input_timeline();return false;});
+
+    //alt+home 返回主页
     jQuery(document).bind('keydown.Alt_home',function (evt){_alt_home();return false;});
 
+    //esc 退出编辑/退出timeline
     jQuery(document).bind('keydown.esc',function (evt) {
         _esc_input_timeline_data();
         return false;
     });
+
+    //alt+鼠标滚动  :  timeline nav zoom 热键.
+    jQuery(document).bind('keydown.Alt_up',function (evt){_hotkey_alt_down();return false;});
+    jQuery(document).bind('keyup.Alt_down',function (evt){_hotkey_alt_up();return false;});
+    jQuery(document).bind('keydown.Alt',function (evt){_keydown_alt_mouse();return false;});
+    jQuery(document).bind('keyup.Alt',function (evt){_unbind_mousewheel();return false;});
+
+    //shift+鼠标滚动 || alt+x/s :  timeline nav 高度调整热键
+    jQuery(document).bind('keydown.Alt_x',function (evt){_hotkey_alt_x();return false;});
+    jQuery(document).bind('keydown.Alt_s',function (evt){_hotkey_alt_s();return false;});
+    jQuery(document).bind('keydown.Shift',function (evt){_keydown_shift_mouse();return false;});
+    jQuery(document).bind('keyup.Shift',function (evt){_unbind_mousewheel();return false;});
+
 }
 
 /**
@@ -699,4 +799,112 @@ function _alt_i_eras_input_timeline() {
     assertConsole("_alt_i_eras_input_timeline");
     _display_eras_input_dialog();
 }
+
+
+function _hotkey_alt_up() {
+    assertConsole("_alt_zoomin");
+    _timeline_zoom(-1);
+    _unbind_mousewheel();
+}
+
+function _hotkey_alt_down() {
+    assertConsole("_alt_zoomOut");
+    _timeline_zoom(1);
+    _unbind_mousewheel();
+}
+
+function _hotkey_alt_s() {
+    // 布局变小,内容模块变大
+    _timenev_height(-1);
+    _unbind_mousewheel();
+}
+
+
+function _hotkey_alt_x() {
+    // 布局变大,内容模块变小
+    _timenev_height(1);
+    _unbind_mousewheel();
+}
+
+/**
+ *@author thender email: bentengwu@163.com
+ *@date 2019/6/28 20:03
+ *@param type 1 增高 -1 缩小
+ *@return
+ **/
+function _timenev_height(type) {
+    if (type >0) {//增大
+        if (_v_height_ >= 90) {
+            return;
+        }
+        _v_height_ += 10;
+    }else{//缩小
+        if (_v_height_ <= 10) {
+            return;
+        }
+        _v_height_ -= 10;
+    }
+    _newTimeline(_timeline.config);
+}
+
+/**
+ *
+ *@author thender email: bentengwu@163.com
+ *@date 2019/6/28 20:11
+ *@param type  -1 放大明细   1 缩小明细
+ *@return
+ **/
+function _timeline_zoom(type) {
+    if (!_timeline) {
+        return;
+    }
+    if (type > 0) {
+        _timeline.zoomIn();
+    }else{
+        _timeline.zoomOut();
+    }
+
+}
+
+/**
+ *@description  按下alt时,绑定mouse的事件
+ *@author thender email: bentengwu@163.com
+ *@date 2019/6/28 19:10
+ *@param null	
+ *@return 
+ **/
+function _keydown_alt_mouse() {
+    $("#timeline_wrapper").mousewheel(function(event, delta) {
+        _timeline_zoom(delta);
+        return false; // prevent default
+    });
+}
+
+/**
+ *移除mousewheel的事件.
+ * 在alt keyup 和 shift keyup的时候调用.
+ *@author thender email: bentengwu@163.com
+ *@date 2019/6/28 19:11
+ *@return
+ **/
+function _unbind_mousewheel() {
+    assertConsole("_unbind_mousewheel");
+    $("#timeline_wrapper").unbind("mousewheel");
+}
+
+/**
+ * 用于增加鼠标滚轮监听事件,用于调整timeline nav 的高度
+ *@author thender email: bentengwu@163.com
+ *@date 2019/6/28 19:28
+ **/
+function _keydown_shift_mouse() {
+    $("#timeline_wrapper").mousewheel(function(event, delta) {
+        _timenev_height(delta);
+        return false; // prevent default
+    });
+}
+
+
+
+
 

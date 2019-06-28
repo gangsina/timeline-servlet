@@ -56,3 +56,15 @@ function _getCurrentDate(){
     }
     return date.getFullYear() + seperator + nowMonth + seperator + strDate;
 }
+
+/**
+ *@description  根据属性名来获取name;
+ * note: 如果有多个的情况下,取第一个.
+ *@author thender email: bentengwu@163.com
+ *@date 2019/6/28 16:03
+ *@param unique_name 全局唯一的名字
+ *@return 对应document中element的值.
+ **/
+function getValueByName(unique_name) {
+    return document.getElementsByName(unique_name)[0].value;
+}

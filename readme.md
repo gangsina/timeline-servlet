@@ -239,8 +239,6 @@ https://timeline.knightlab.com/docs/json-format.html#json-slide
             "type": "overview"
         }
 
-
-
 ```
 
 
@@ -253,6 +251,19 @@ https://timeline.knightlab.com/docs/json-format.html#json-slide
 | -1     | 处理失败。                                                   |
 | -2     | 业务处理返回null时候，系统检测到null值后，统一设置返回码为-2 |
 |        |                                                              |
+
+### 快捷键
+
+| 快捷键                      | 作用                                         | 作用范围     |
+| --------------------------- | -------------------------------------------- | ------------ |
+| alt+e                       | 触发编辑当前选中的event                      | 时间轴详情页 |
+| alt+c                       | 触发创建新的event                            | 时间轴详情页 |
+| alt+i                       | 触发创建/编辑 Eras                           | 时间轴详情页 |
+| alt+up \|\| alt+鼠标滚动+   | timline navigate zoom in(放大明细)           | 时间轴详情页 |
+| alt+down\|\| alt+鼠标滚动-  | timline navigate zoom out(缩小明细/忽略明细) | 时间轴详情页 |
+| alt+x  \|\| shift+鼠标滚动+ | timline navigate 高度变大                    | 时间轴详情页 |
+| alt+s \|\| shift+鼠标滚动-  | timline navigate 高度变小                    | 时间轴详情页 |
+|                             |                                              |              |
 
 
 
@@ -268,27 +279,51 @@ https://github.com/tzuryby/jquery.hotkeys
 
 ##### timeline
 
-```
-#构造timelinejs3的几种方法。
+###### 构造timelinejs3的几种方法。
+
 https://timeline.knightlab.com/docs/instantiate-a-timeline.html
-##目前我在使用的时利用自己组装的Json js对象来构造时间轴。
+目前我在使用的时利用自己组装的Json js对象来构造时间轴。
 
-#
+###### 获取timeline实例中eras的js
+
+console.log(timeline.config.eras);
+timeline.config.eras 这个是个数组.
+
+###### 重新布局
+
+这个目前没有找到合适的办法,只能先重新构造!!
+
+```js
+      var timeline_01 = new TL.Timeline('timeline1', 'marktwain_juked.json', {
+      	timenav_height_percentage:50,
+      	is_embed:true
+      });
+      var timeline_02 = new TL.Timeline('timeline2', 'marktwain_juked.json', {
+      	timenav_height_percentage:75,
+      	is_embed:true
+      });
+      var timeline_03 = new TL.Timeline('timeline3', 'marktwain_juked.json', {
+      	timenav_height_percentage:25,
+      	is_embed:true
+      });
+
 ```
 
-###### 采用的富文本编辑器参考地址 .
+
+
+##### 采用的富文本编辑器参考地址 .
 
 http://kindeditor.net/doc3.php
 
 
 
-###### 右击事件参考
+##### 右击事件参考
 
 <http://www.jq22.com/yanshi2747>  ![1561038911173](readme.assets/1561038911173.png)
 
 
 
-###### 编辑选择事件参考
+##### 编辑选择事件参考
 
 <http://www.jq22.com/yanshi15758>
 
@@ -335,7 +370,25 @@ http://kindeditor.net/doc3.php
 - [x] 保存的hour字段丢失。
 - [x] 视频不显示问题。重新刷新地址的时候可以加载，编辑添加后无法显示视频。
 - [x] 编辑event后，保存未成功清理原先的event。note：服务端需要重写hashcode方法。
-- [ ] Ears是个数组
-- [ ] 目前没找到对应的可以直接增加Eras的API，所以目前只能通过重新装载整个timeline的方式来新增Eras。如果要加的话。
+- [x] Ears是个数组
+- [x] 
+  目前没找到对应的可以直接增加Eras的API，所以目前只能通过重新装载整个timeline的方式来新增Eras。如果要加的话。2019年6月27日23:57:32   note:添加1个正常，多个的时候报如下错误，估计是js循环遍历逻辑有点小问题。 后台收到的json串是这样的：{"filename":"g02k72e8t0","eras":[{"start_date":{"year":"1981"},"end_date":{"year":"1990"}},{},{},{}],"_class":"eras"}
+  ![1561651037892](readme.assets/1561651037892.png)，
+  + [x] 后台增加一个Set集合的非空校验。
+  + [x] 同时在前端优化下循环代码。(猜测错误，是因为name属性没有导致的。)
 - [ ] 上传文件（视频、图片）
+- [x] 添加timeline中的event有字段丢失，目前是year和headline，查下原因明天。
+  这个原因是新增的eras代码中存在和原先name同名的问题，导致js不知道具体用哪个值
+- [ ] 将编辑事件界面优化下，便于操作。
+- [ ] 增加主界面的几个快捷键，方便操作。
+- [x] Eras没有回显.
+- [x] 表单的非空校验。
+  event，start_date.year、text.headline.
 
+
+
+
+
+## NOTE
+
++ 页面引入js的时候，需要把timeline.js插件放到jquery前面，否则会导致一些timeline的支持错误，比如无法正常根据unique_id来删除event.

@@ -53,6 +53,7 @@ function assertConsole(message) {
 	}
 }
 
+
 function assertCut1() {
 	if(_assert=='1'){
 		assertConsole(_assert_cut1);

@@ -44,22 +44,23 @@
     <div id="timeline"></div>
   </div>
     <!-- JavaScript-->
+    <script type="text/javascript" src="js/timelinejs3/timeline.js"></script>
     <script type="text/javascript" src="js/jquery-1.7.1.js"></script>
+    <script type="text/javascript" src="js/jquery.mousewheel.js"></script>
     <script type="text/javascript" src="js/jquery.hotkeys.js"></script>
     <script type="text/javascript" src="js/jquery.blockUI.js"></script>
     <script type="text/javascript" src="js/utillib.js"></script>
     <script type="text/javascript" src="js/globalparams.js"></script>
     <script type="text/javascript" src="js/getUrlParam.js"></script>
     <script type="text/javascript" src="js/ajax_abstract.js"></script>
-    <script src="js/timelinejs3/timeline.js"></script>
     <script type="text/javascript" src="js/timeline-input.js"></script>
 
     <!-- input event html-->
     <link type="text/css" href="css/base-pc1.css" rel="stylesheet" media="screen">
     <link type="text/css" href="css/timeline.html.css" rel="stylesheet" media="screen">
+
+    <!--  event data-->
     <div id="event_form" class="main" style="display: none">
-
-
       <div class="right timeline-1">
         <div class="title">
           <h3>xx事件-group/text/autolink/unique_id</h3>
@@ -68,14 +69,18 @@
           <ul>
             <li class="li2">group：<input type="text" name="group" class="put" value=""></li>
             <li class="li1">Any text. If present, Timeline will organize events with the same value for group to be in the same row or adjacent rows, separate from events in other groups. The common value for the group will be shown as a label at the left edge of the navigation.</li>
+
             <li class="li2">text.headline：<input type="text" name="text.headline" class="put" value=""></li>
             <li class="li1">Any text. HTML markup is OK. Blank is also OK.</li>
             <li class="li2">text.text：<input type="text" name="text.text" class="put" value=""></li>
             <li class="li1">Any text. HTML markup is OK. Blank is OK. Not used for era objects.</li>
+
             <li class="li2">display_date：<input type="text" name="display_date" class="put" value=""></li>
             <li class="li1">A string which will be used when Timeline displays the date for this. If used, override's display_date values set on the start or end date for this event, which is useful if you want to control how the two dates relate to each other. </li>
+
             <li class="li2">autolink：<input type="text" name="autolink" class="put" value=""></li>
             <li class="li1">A boolean value (true or false). Defaults to true, which means that Timeline will scan text fields and automatically add  tags so that links and email addresses are "clickable." If set to false, you may still manually apply the tags in the appropriate fields when you want links. Autolinking applies to the text field in a text object and the caption and credit fields in a media object. </li>
+
             <li class="li2">unique_id：<input type="text" name="unique_id" class="put" value="" readonly></li>
             <li class="li1">A string value which is unique among all slides in your timeline. If not specified, TimelineJS will construct an ID based on the headline, but if you later edit your headline, the ID will change. Unique IDs are used when the hash_bookmark option is used, and can also be used with the timeline.goToId() method to programmatically move the timeline to a specific slide. </li>
           </ul>
@@ -89,18 +94,25 @@
           <ul>
             <li class="li2">year(*)：<input type="text" name="start_date.year" class="put start_date" value=""></li>
             <li class="li1">A number. Don't use commas. BCE years should be negative numbers. Don't use the letters "BC", "BCE" or any others. eg: 1900</li>
+
             <li class="li2">month：<input type="text" name="start_date.month" class="put start_date" value=""></li>
             <li class="li1">A number from 1-12 (Javascript experts don't outsmart yourselves: Timeline corrects for Javascript's strange use of "0" for "January", etc.) eg: 12</li>
+
             <li class="li2">day：<input type="text" name="start_date.day" class="put start_date" value=""></li>
             <li class="li1">A number eg: 31</li>
+
             <li class="li2">hour：<input type="text" name="start_date.hour" class="put start_date" value=""></li>
             <li class="li1">A number from 0-23，[0,24)</li>
+
             <li class="li2">minute：<input type="text" name="start_date.minute" class="put start_date" value=""></li>
             <li class="li1">A number from 0-59,[0,59]</li>
+
             <li class="li2">second：<input type="text" name="start_date.second" class="put start_date" value=""></li>
             <li class="li1">A number from 0-59, [0,59)</li>
+
             <li class="li2">millisecond：<input type="text" name="start_date.millisecond" class="put start_date" value=""></li>
             <li class="li1">A number</li>
+
             <li class="li2">format：<input type="text" name="start_date.format" class="put start_date" value="yyyy-mm-dd"></li>
             <li class="li1">[display_date] A string for presenting the date. Useful if Timeline's date formatting doesn't fit your needs.，eg: yyyy-mm-dd</li>
           </ul>
@@ -173,7 +185,7 @@
   <div class="eras-input-wrap" id="eras_form" style="display: none">
     <script>
       function addline(_addLineBtn) {
-        $(_addLineBtn).parent().after("<tr><td><input type='text' ></td><td><input type='text' ></td><td><input type='text' onkeypress='autoWidth(this)'></td><td class='add' onclick='addline(this)'>+</td></tr>)");
+        $(_addLineBtn).parent().after("<tr><td><input type='text' name='eras.start_date.year'></td><td><input type='text' name='eras.end_date.year' ></td><td><input type='text' name='eras.text.headline'></td><td class='add' onclick='addline(this)'>+</td></tr>)");
       }
       function autoWidth(inputDoc) {
         var len = $(inputDoc).val().length;
@@ -190,10 +202,10 @@
       </thead>
       <tbody>
       <tr>
-        <td><input type="text" ></td>
-        <td><input type="text" ></td>
-        <td><input type="text" ></td>
-        <td class="add" onclick="addline(this)">+</td>
+        <td><input type="text" name="eras.start_date.year"></td>
+        <td><input type="text" name="eras.end_date.year"></td>
+        <td class="eras-text-headline"><input type="text" name="eras.text.headline"></td>
+        <td  onclick="addline(this)">+</td>
       </tr>
       </tbody>
     </table>
