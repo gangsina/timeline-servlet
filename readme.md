@@ -384,6 +384,7 @@ http://kindeditor.net/doc3.php
 - [x] Eras没有回显.
 - [x] 表单的非空校验。
   event，start_date.year、text.headline.
+- [ ] 原先的有个input变为textarea,这会导致取值方式发生了改变.
 
 
 

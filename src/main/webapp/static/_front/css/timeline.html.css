@@ -1,10 +1,52 @@
 @charset "utf-8";
 /* CSS Document */
 
+#event_form {
+    font-family: 微软雅黑, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: #333;
+    background: #f4f4f4;
+    padding: 0;
+    width: 80%;
+    height: 80%;
+    margin: 0 auto;
+    overflow: auto
+}
+
+#event_form ul li {
+    list-style: none;
+
+}
+
+#event_form input {
+    vertical-align: middle;
+
+}
+
+
+.right {
+    width: 100%;
+    height: 75em;
+    float: left;
+    background: #fff;
+    padding-bottom: 70px;
+    box-shadow: 0px 5px 6px #cbcbcb;
+    position: relative;
+    overflow: hidden;
+}
+
+.right .title{ height:72px; line-height:72px; border-bottom:1px solid #efefef;background-color: #5bc0de; text-align: center;}
+.right .title h3{ display: inline-block;font-size:26px; margin-left:26px;
+    margin-top: auto; font-weight:normal;}
+.right .title span{ display: inline-block; padding-right:40px; font-size:13px; color:#999}
+.right .title span a{color:#999}
+.right .title span i{ font-style:normal}
+
+
 
 .timeline-1 {
     width: 100%;
-    height: 100em;
+    height: 55em;
     float: left;
     background: #fff;
     padding-bottom: 70px;
@@ -12,19 +54,195 @@
     position: relative;
 }
 .timeline-date1{
-    height: 80em;
+    height: 40em;
 }
 .timeline-date2 {
     height: 50em;
 }
 .timeline-media {
-    height: 100em;
+    height: 70em;
 }
 
 .timeline-background {
-    height: 25em;
+    height: auto;
 }
 
+/*
+二行布局
+*/
+.mmcent-2 {
+    display: flex;
+    width :100%;
+    max-height: 700px;
+    min-height: 200px;
+}
+
+.mmcent-2 div {
+    float: left;
+}
+
+.mmcent-2 .mmcent-2-left{ width:600px; margin:1px 1px}
+.mmcent-2 .mmcent-2-left ul li.li2 {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    width: 525px;
+    height: 54px;
+    background: #fafafa;
+    margin: 5px auto;
+    line-height: 54px;
+    padding-left: 25px;
+    color: #333;
+    box-shadow: inset 0px 0px 3px #e3e3e3;
+    font-size: 16px;
+    color: #333
+}
+.mmcent-2 .mmcent-2-left ul li.li2 .put{ width:400px; height:40px; padding-left:10px; border:none; background:#fafafa;font-size:16px; color:#666;font-family:"微软雅黑"}
+.mmcent-2 .mmcent-2-left ul li.li2 .put.long{ width: 120px; box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);}
+.mmcent-2 .mmcent-2-left ul li.li2 .put.normal{ width: 60px; box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);}
+.mmcent-2 .mmcent-2-left ul li.li1{ font-size:12px; padding-left:20px; color:#666; line-height:24px;}
+
+
+
+.mmcent-2 div.mmcent-2-right {
+    min-width: 300px;
+    max-width: 600px;
+}
+
+.mmcent-2 .mmcent-2-right ul li.li1{ font-size:12px; padding-left:20px; color:#666; line-height:24px;}
+
+.mmcent-2 div.mmcent-2-right ul li.li2 {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    max-width: 525px;
+    width: 450px;
+    min-width: 250px;
+    height: 54px;
+    background: #fafafa;
+    margin: 5px auto;
+    line-height: 54px;
+    padding-left: 15px;
+    color: #333;
+    box-shadow: inset 0px 0px 3px #e3e3e3;
+    font-size: 16px;
+    color: #333;
+}
+
+.mmcent-2 div.mmcent-2-right ul li.li2 .put {
+    width: 300px;
+    /*min-width: 225px;*/
+    height: 40px;
+    padding-left: 10px;
+    border: none;
+    background: #fafafa;
+    font-size: 16px;
+    color: #666;
+    font-family: "微软雅黑";
+}
+
+.mmcent-2 div.mmcent-2-right ul li.li2 .put.long{ width: 120px; box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);}
+.mmcent-2 div.mmcent-2-right ul li.li2 .put.normal{ width: 60px; box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);}
+
+
+
+.mmcent-2 div.mmcent-2-right ul li.li3 {
+    max-width: 525px;
+    width: 450px;
+    height: 400px;
+    min-width: 250px;
+    min-height: 100px;
+    max-height: 500px;
+    background: #fafafa;
+    margin: 5px auto;
+    padding-left: 15px;
+    color: #333;
+    box-shadow: inset 0px 0px 3px #e3e3e3;
+    font-size: 16px;
+    color: #333;
+}
+
+.mmcent-2 div.mmcent-2-right ul li.li3 .putTextArea {
+    width: 410px;
+    height: 350px;
+    min-width: 225px;
+    padding-left: 10px;
+    border: none;
+    background: #fafafa;
+    font-size: 16px;
+    color: #666;
+    font-family: "微软雅黑";
+}
+
+.mmcent-2 .mmcent-2-right .mmcent-2-video{
+    max-height: 300px;
+}
+
+/*
+三行布局
+*/
+.mmcent-3 {
+    display: flex;
+    width :100%;
+    max-height: 500px;
+    min-height: 200px;
+}
+
+.mmcent-3 div {
+    float: left;
+}
+
+.mmcent-3 div.mmcent-3-cl1{
+    width: 250px;
+}
+
+.mmcent-3 img{
+    max-height: 300px;
+}
+
+.mmcent-3 a {
+    display: inline-block;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    padding: 3px;
+    transition: 0.3s;
+}
+
+.mmcent-3 a:hover {
+    box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
+
+.mmcent-3 .mmcent-3-cl2{ width:600px; margin:1px 1px}
+.mmcent-3 .mmcent-3-cl2 ul li.li2{ width:525px; height:54px; background:#fafafa; margin:5px auto; line-height:54px; padding-left:25px; color:#333; box-shadow:inset 0px 0px 3px #e3e3e3;font-size:16px; color:#333}
+.mmcent-3 .mmcent-3-cl2 ul li.li2 .put{ width:400px; height:40px; padding-left:10px; border:none; background:#fafafa;font-size:16px; color:#666;font-family:"微软雅黑"}
+.mmcent-3 .mmcent-3-cl2 ul li.li1{ font-size:12px; padding-left:20px; color:#666; line-height:24px;}
+
+
+
+.mmcent{ width:600px; margin: 1px 50px 1px 1px;}
+.mmcent ul li.li2{ width:525px; height:54px; background:#fafafa; margin:5px auto; line-height:54px; padding-left:25px; color:#333; box-shadow:inset 0px 0px 3px #e3e3e3;font-size:16px; color:#333}
+.mmcent ul li.li2 .put{ width:400px; height:40px; padding-left:10px; border:none; background:#fafafa;font-size:16px; color:#666;font-family:"微软雅黑"}
+.mmcent ul li.li1{ font-size:12px; padding-left:20px; color:#666; line-height:24px;}
+
+
+.mmxgBTN2{
+    position: absolute;
+    bottom: 150px;
+    margin: auto auto 10px auto;
+    width:1000px;
+    text-align:center;
+    z-index: 100;
+}
+.mmxgBTN2 button{width:80px; height:29px; border:1px solid #5caed3;border-radius:5px; color:#fff; background:#45aad8; font-size:14px;font-family:"微软雅黑"; }
+.mmxgBTN2 button.qx{ background:#969696;border:1px solid #969696;}
+.mmxgBTN2 button:hover{background:#1f6686;}
+
+
+
+
+
+
+/* eras 输入界面布局 */
 
 .eras-input-wrap{
     width:100%;

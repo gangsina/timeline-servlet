@@ -303,6 +303,26 @@ function _save_timeline_callback(retData) {
 }
 
 /**
+ *@description  TODO 点击图片,触发修改背景图片并上传背景图片
+ *@author thender email: bentengwu@163.com
+ *@date 2019/7/2 18:00
+ *@return
+ **/
+function _save_upload_backgroud_pic() {
+    
+}
+
+/**
+ *@description  TODO 点击上传图片或者视频作为media
+ *@author thender email: bentengwu@163.com
+ *@date 2019/7/2 18:03
+ *@return
+ **/
+function _save_upload_media_stuff() {
+    
+}
+
+/**
  *@description  在进入时间轴展示页、手动重新加载、手动重新保存时间轴 会调用此方法构建或重新构建时间轴.
  *@author thender email: bentengwu@163.com
  *@date 2019/6/25 12:05

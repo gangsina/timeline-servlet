@@ -80,21 +80,31 @@
 	<session-config>
 		<session-timeout>30</session-timeout>
 	</session-config>
-	
-    
+
+    <servlet>
+        <servlet-name>UploadServlet</servlet-name>
+        <servlet-class>com.saguadan.servlet.UploadServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+    	<servlet-name>UploadServlet</servlet-name>
+    	<url-pattern>/upload</url-pattern>
+    </servlet-mapping>
+
+
     <welcome-file-list>
         <welcome-file>/static/1.html</welcome-file>
     </welcome-file-list>
 
 	<!-- tell the web server the index page is  not default .-->
-    <error-page>
-        <error-code>505</error-code>
-        <location>/static/front/html/error.jsp</location>
-    </error-page>
-    <error-page>
-        <error-code>404</error-code>
-        <location>/static/front/html/error.jsp</location>
-    </error-page>
+<!--    <error-page>-->
+<!--        <error-code>505</error-code>-->
+<!--        <location>/static/front/html/error.jsp</location>-->
+<!--    </error-page>-->
+<!--    <error-page>-->
+<!--        <error-code>404</error-code>-->
+<!--        <location>/static/front/html/error.jsp</location>-->
+<!--    </error-page>-->
 
     <distributable/>
    
