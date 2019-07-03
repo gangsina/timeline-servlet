@@ -3,12 +3,15 @@ package com.saguadan;
 import com.bentengwu.utillib.file.PathUtil;
 import com.bentengwu.utillib.map.SplitCt;
 
+import java.io.File;
+
 /**
  * 软件的配置参数在这个类中进行配置
  */
 public abstract class SoftProperties {
     public static final String USER_DIR = PathUtil.getDir();
     public static final String SOFTNAME = "timeline";
+
     public static final String period = SplitCt.period;
     public  static final String sep = PathUtil.getFileSeparator();
     public static final String support_email = "bentengwu@163.com";
@@ -27,6 +30,9 @@ public abstract class SoftProperties {
      * 所有timeline的信息的序列化文件地址.
      */
     public static final String TIMELINE_INFOS_FILEPATH = WORK_DIR + sep  + TIMELINE_INFOS_FILENAME;
+
+
+    public static final String STUFF_PATH = WORK_DIR + File.separator +  "stuff"; //存放附件内容.
 
 
     public static final String _help(String msg) {

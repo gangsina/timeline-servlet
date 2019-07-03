@@ -143,7 +143,6 @@ public class MainServlet extends HttpServlet {
                 retStr = CommonUtils.mapper.writeValueAsString(result);
             }
             logger.info("Response : {}",retStr);
-            System.out.println(retStr);
             resp.setContentType("text/html; charset=utf-8");
             resp.getWriter().write(retStr);
             resp.getWriter().flush();
