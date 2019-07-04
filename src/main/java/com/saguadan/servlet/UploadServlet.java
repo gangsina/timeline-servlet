@@ -4,6 +4,7 @@ import com.bentengwu.utillib.CommonUtils;
 import com.bentengwu.utillib.String.StrUtils;
 import com.bentengwu.utillib.code.EncodeUtils;
 import com.bentengwu.utillib.date.DateUtil;
+import com.bentengwu.utillib.http.ContentType;
 import com.bentengwu.utillib.servlet.AjaxUploadSupport;
 import com.bentengwu.utillib.servlet.Writer;
 import com.bentengwu.utillib.stream.StreamUtil;
@@ -39,9 +40,9 @@ public class UploadServlet extends HttpServlet {
         String suffix = new String(EncodeUtils.hexDecode(FilenameUtils.getBaseName(id)));
         String _savePath = SoftProperties.STUFF_PATH + File.separator + suffix;
         System.out.println(_savePath);
-        //todo 根据文件后缀确定文件的content-type类型.
-        String contentType = "";
-        Writer.write(resp,FileUtils.readFileToByteArray(new File(_savePath)),contentType);
+        // 根据文件后缀确定文件的content-type类型.
+//        String contentType = "image/png";
+        Writer.write(resp,FileUtils.readFileToByteArray(new File(_savePath)), ContentType.findContentType(FilenameUtils.getExtension(_savePath)));
     }
 
     /**
