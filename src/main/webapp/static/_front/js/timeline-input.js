@@ -309,17 +309,181 @@ function _save_timeline_callback(retData) {
  *@return
  **/
 function _save_upload_backgroud_pic() {
-    
+    assertConsole('_save_upload_backgroud_pic');
+    assertCut1();
+    //上传
+    var formData = new FormData();
+    formData.append("file", document.getElementById('background-pic').files[0]);
+    formData.append("token", $("#h-filename").val());
+    $.ajax({
+        url: "/timeline/upload",
+        type: "POST",
+        data: formData,
+        processData: false, // 不要对data参数进行序列化处理，默认为true
+        contentType: false, // 不要设置Content-Type请求头，因为文件数据是以 multipart/form-data 来编码
+        xhr: function(){
+            myXhr = $.ajaxSettings.xhr();
+            if(myXhr.upload){
+                myXhr.upload.addEventListener('progress',function(e) {
+                    $("#background-url-preview:only-child").html("<progress style=\"width: 300px;height: 50px\"/>");
+                    if (e.lengthComputable) {
+                        var percent = Math.floor(e.loaded/e.total*100);
+                        if(percent <= 100) {
+                            console.log(percent); //TODO 可视化显示
+                        } else {
+                            console.log("success");
+                        }
+                    }
+                }, false);
+            }
+            return myXhr;
+        },
+        success: function(res){
+            // 请求成功
+            assertConsole(res);
+            var retData = JSON.parse(res);
+            if (retData.code && retData.code == '1') {
+                //回显
+                var preview_url = base_url+ "/upload?id=" + retData.data
+                $("input[name='background.url']").val(preview_url);
+                onchangeBackgroudPic();
+            }else{
+                if (retData.message) {
+                    alert(retData.message);
+                }else {
+                    alert("上传失败,请重试!");
+                }
+            }
+
+        },
+        error: function(res) {
+            // 请求失败
+            console.log(res);
+            alert("上传失败,请重试!");
+        }
+    });
 }
 
+//用于背景地址改动后修改预览
+function onchangeBackgroudPic() {
+    var preview_url = $("input[name='background.url']").val();
+    $("#background-url-preview:only-child").html("<img src='"+preview_url+"' />");
+    $("#background-url-preview").css("display", "block");
+}
+
+
 /**
- *@description  TODO 点击上传图片或者视频作为media
+ *@description  点击上传图片或者视频作为media
  *@author thender email: bentengwu@163.com
  *@date 2019/7/2 18:03
  *@return
  **/
 function _save_upload_media_stuff() {
-    
+    assertConsole('_save_upload_media_stuff');
+    assertCut1();
+    //上传
+    var inputDoc = "_save_upload_media_stuff_id";//todo 上传文件的doc ele
+    var inputDocName = "media.url"; //todo 显示远程访问路径的input输入框的name属性值
+    var formData = new FormData();
+    formData.append("file", document.getElementById(inputDoc).files[0]);
+    formData.append("token", $("#h-filename").val());
+    $.ajax({
+        url: "/timeline/upload",
+        type: "POST",
+        data: formData,
+        processData: false, // 不要对data参数进行序列化处理，默认为true
+        contentType: false, // 不要设置Content-Type请求头，因为文件数据是以 multipart/form-data 来编码
+        xhr: function(){
+            myXhr = $.ajaxSettings.xhr();
+            if(myXhr.upload){
+                myXhr.upload.addEventListener('progress',function(e) {
+                    $("#preview-video-or-pic").html("<progress style=\"width: 300px;height: 50px\"/>");
+                    if (e.lengthComputable) {
+                        var percent = Math.floor(e.loaded/e.total*100);
+                        if(percent <= 100) {
+                            console.log(percent); //TODO 可视化显示
+                        } else {
+                            console.log("success");
+                        }
+                    }
+                }, false);
+            }
+            return myXhr;
+        },
+        success: function(res){
+            // 请求成功
+            assertConsole(res);
+            var retData = JSON.parse(res);
+            if (retData.code && retData.code == '1') {
+                //回显
+                var preview_url = base_url+ "/upload?id=" + retData.data
+                $("input[name='"+inputDocName+"']").val(preview_url);
+                onchangeMediaUrl(1);
+            }else{
+                if (retData.message) {
+                    alert(retData.message);
+                }else {
+                    alert("上传失败,请重试!");
+                }
+            }
+
+        },
+        error: function(res) {
+            // 请求失败
+            console.log(res);
+            alert("上传失败,请重试!");
+        }
+    });
+
+    assertCut2();
+}
+
+/**
+ *@description 用于预览图片或者视频.
+ *@author thender email: bentengwu@163.com
+ *@date 2019/7/5 15:06
+ *@param _class "pic"/"video"/"null"
+ *  null这种情况是手动写入,需要人为自己判断.这个时候比较难判断.
+ *@return
+ **/
+function onchangeMediaUrl(_pclass) {
+    assertConsole(["onchangeMediaUrl",_pclass]);
+    assertCut1();
+
+    var preview = $("input[name='media.url']").val();
+
+    assertConsole([preview,base_url,preview.indexOf(base_url) >= 0]);
+
+    if (preview == '' || preview == undefined) {
+        return;
+    }
+
+    var pic = "<img src='"+preview+"' style='width: 410px;height: 350px;' />";
+
+    var video = "<video  class=\"mmcent-2-video\" controls=\"controls\" ><source src=\""+preview+"\" type=\"video/mp4\"></video> " ;
+
+    var _class = _pclass;
+
+    var _isVedio = isVedio(preview);
+
+    if (_isVedio==true) {
+        _class = 'video';
+    } else if(_isVedio==false) {
+        _class = 'pic';
+    } else if (_isVedio == undefined) {
+        _class = '1';
+    }
+
+    assertConsole([preview,base_url,preview.indexOf(base_url) >= 0,_isVedio,_class]);
+
+    if (_class == 'pic') {
+        $("#preview-video-or-pic").html(pic);
+    }else if (_class == 'video') {
+        $("#preview-video-or-pic").html(video);
+    }else{
+        //不确定是图片还是视频的情况下,怎么办?
+        $("#preview-video-or-pic").html(pic + video);
+    }
 }
 
 /**

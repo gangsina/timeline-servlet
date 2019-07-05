@@ -136,10 +136,8 @@ public class MainServlet extends HttpServlet {
             //Object --> json string
             String retStr = "";
             if (afterRet != null) {
-//                retStr = JsonUtil.toJsonStr(afterRet);
                 retStr = CommonUtils.mapper.writeValueAsString(afterRet);
             }else{
-//                retStr = JsonUtil.toJsonStr(result);
                 retStr = CommonUtils.mapper.writeValueAsString(result);
             }
             logger.info("Response : {}",retStr);
