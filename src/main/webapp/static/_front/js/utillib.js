@@ -68,3 +68,54 @@ function _getCurrentDate(){
 function getValueByName(unique_name) {
     return document.getElementsByName(unique_name)[0].value;
 }
+
+/**
+ * @param _url 判断url是否为视频类型. 需要跨域支持,如果网址不一样的时候.
+ * @returns {boolean}
+ */
+function isVedio(_url) {
+    try {
+        var ret = false;
+
+        //本地先判断,如果本地无法判断,再使用远程路径获取header,进行判断. 需要注意的是不支持跨域.
+        var video_suffixs = ['.mp4'];
+        var images_suffix = ['.png', '.jpg', '.jpeg', '.ico', '.fax', '.gif', '.jpe', '.net', '.rp', '.tif', '.tiff', '.jtif', '.wbmp', '.bmp'];
+
+        images_suffix.forEach(function (value) {
+            console.log(value,_url.endsWith(value));
+            if (_url.endsWith(value)) {
+                ret = true;
+            }
+        });
+
+        if (ret == true) {
+            return false;
+        }
+
+        video_suffixs.forEach(function (value) {
+            console.log(value,_url.endsWith(value));
+            if (_url.endsWith(value)) {
+                ret = true;
+            }
+        });
+
+        if (ret == true) {
+            return true;
+        }
+
+        var req = new XMLHttpRequest();
+        req.open('GET', _url, false);
+        req.send(null);
+        var contenttype = req.getResponseHeader("content-type");
+        var videos = ['video/mpeg4'];
+        videos.forEach(function (value) {
+            console.log([value,contenttype,value==contenttype]);
+            if (value == contenttype) {
+                ret =  true;
+            }
+        });
+        return ret;
+    }catch (e) {
+        return undefined;
+    }
+}

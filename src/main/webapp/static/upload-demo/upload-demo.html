@@ -40,6 +40,11 @@
                 success: function(res){
                     // 请求成功
                     console.log(res);
+                    console.log(typeof res);
+                   // var resData =  eval("'"+res +";");
+                    var resData = JSON.parse(res);
+                    console.log(typeof resData);
+                    console.log(resData);
                 },
                 error: function(res) {
                     // 请求失败

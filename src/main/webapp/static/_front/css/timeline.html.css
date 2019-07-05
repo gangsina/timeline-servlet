@@ -238,7 +238,9 @@
 .mmxgBTN2 button:hover{background:#1f6686;}
 
 
-
+#event_form input.file-upload-input {
+    width: 75px;
+}
 
 
 

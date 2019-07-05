@@ -83,6 +83,7 @@
               <li class="li1">A string value which is unique among all slides in your timeline. If not specified, TimelineJS will construct an ID based on the headline, but if you later edit your headline, the ID will change. Unique IDs are used when the hash_bookmark option is used, and can also be used with the timeline.goToId() method to programmatically move the timeline to a specific slide. </li>
             </ul>
           </div>
+
           <div class="mmcent-2-right">
             <ul>
               <li class="li2">text.headline：<input type="text" name="text.headline" class="put" value=""></li>
@@ -171,12 +172,12 @@
             <ul>
               <li class="li2">color：<input type="text" name="background.color" class="put" value=""><input type="button" value="取色"/> </li>
               <li class="li2">opacity：<input type="text" name="background.opacity" class="put" value=""></li>
-              <li class="li2">url：<input type="text" name="background.url" class="put" value=""></li>
+              <li class="li2">url：<input type="text" name="background.url" class="put" value="" onchange="onchangeBackgroudPic()"><input type="file" id="background-pic" onchange="_save_upload_backgroud_pic()" class="file-upload-input"></li>
             </ul>
           </div>
           <div class="mmcent-3-cl3">
-            <a target="_blank" onclick="_save_upload_backgroud_pic()">
-              <img src="../qq/images/1.JPG" alt="Paris">
+            <a id="background-url-preview" target="_blank" style="display: none">
+
             </a>
           </div>
         </div>
@@ -192,7 +193,7 @@
         <div class="mmcent-2">
           <div class="mmcent-2-left">
             <ul>
-              <li class="li2">url：<input type="text" name="media.url" class="put media" value=""></li>
+              <li class="li2">url：<input type="text" name="media.url" onchange="onchangeMediaUrl(1)" class="put media" value=""><input type="file" id="_save_upload_media_stuff_id" onchange="_save_upload_media_stuff()" class="file-upload-input"></li>
               <li class="li1">(optional*) In most cases, a URL (see media type documentation for complete details)</li>
               <li class="li2">caption：<input type="text" name="media.caption" class="put media" value=""></li>
               <li class="li1">Any text. HTML markup is OK.</li>
@@ -210,11 +211,7 @@
               <li class="li1">Optional target to be associated with link if used.</li>
             </ul>
           </div>
-          <div class="mmcent-2-right">
-            <video class="mmcent-2-video" controls="controls">
-              <source src="http://192.168.2.224:8888/bbsstuff/1.mp4" type="video/mp4">
-              Your browser does not support the video tag.
-            </video>
+          <div class="mmcent-2-right" id="preview-video-or-pic">
           </div>
         </div>
       </div>

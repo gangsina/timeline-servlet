@@ -42,7 +42,8 @@ public class UploadServlet extends HttpServlet {
         System.out.println(_savePath);
         // 根据文件后缀确定文件的content-type类型.
 //        String contentType = "image/png";
-        Writer.write(resp,FileUtils.readFileToByteArray(new File(_savePath)), ContentType.findContentType(FilenameUtils.getExtension(_savePath)));
+        String contentType = ContentType.findContentType(FilenameUtils.getExtension(_savePath));
+        Writer.write(resp,FileUtils.readFileToByteArray(new File(_savePath)), contentType);
     }
 
     /**
@@ -61,8 +62,10 @@ public class UploadServlet extends HttpServlet {
         AjaxUploadSupport.saveServletInputStreamToFile(req.getInputStream(), savePath, true);
         String _r_savePath = retMap.get(AjaxUploadSupport._key_savePath);
         String retStr = currentDate + "/" + FilenameUtils.getName(_r_savePath);
+//        String url = req.getRequestURL().toString().replaceAll("http:","http--").replaceAll("https:","https--") + "?id=";
+        retStr = EncodeUtils.hexEncode(retStr.getBytes());
         retStr = CommonUtils.mapper.writeValueAsString(new Ret("1")
-                                                            .setData(EncodeUtils.hexEncode(retStr.getBytes()))
+                                                            .setData(retStr)
                                                             );
         System.out.println(retStr);
         Writer.writeStr(resp,retStr);
