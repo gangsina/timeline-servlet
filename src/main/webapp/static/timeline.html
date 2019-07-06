@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="description" content="TimelineJS Embed">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <!-- CSS-->
+    <link rel="stylesheet" href="css/timeline.css">
+    <!--FONT-->
+    <link rel="stylesheet" href="css/fonts/font.bevan-pontanosans.css">
+    <!-- Style-->
+    <style>
+      html, body {
+      	height:100%;
+      	width:100%;
+      	padding: 0px;
+      	margin: 0px;
+      }
+      #timeline_wrapper {
+        position: absolute;
+        top: 1px;
+        left: 1px;
+        right: 1px;
+        bottom: 1px;
+      }
+      .tl-timeline {
+        /*height: 100%;*/
+        /*width: 100%;*/
+      }
+      
+    </style>
+    <!-- HTML5 shim, for IE6-8 support of HTML elements-->
+    <!--if lt IE 9
+    script(src='https://html5shim.googlecode.com/svn/trunk/html5.js')
+    
+    -->
+
+  </head>
+  <body>
+  <div id="timeline_wrapper">
+    <div id="timeline"></div>
+  </div>
+    <!-- JavaScript-->
+    <script type="text/javascript" src="js/rgbcolor-netget.js"></script>
+    <script type="text/javascript" src="js/timelinejs3/timeline.js"></script>
+    <script type="text/javascript" src="js/jquery-1.7.1.js"></script>
+    <script type="text/javascript" src="js/jquery.mousewheel.js"></script>
+    <script type="text/javascript" src="js/jquery.hotkeys.js"></script>
+    <script type="text/javascript" src="js/jquery.blockUI.js"></script>
+    <script type="text/javascript" src="js/utillib.js"></script>
+    <script type="text/javascript" src="js/globalparams.js"></script>
+    <script type="text/javascript" src="js/getUrlParam.js"></script>
+    <script type="text/javascript" src="js/ajax_abstract.js"></script>
+    <script type="text/javascript" src="js/timeline-input.js"></script>
+
+    <!-- input event html-->
+    <link type="text/css" href="css/timeline.html.css" rel="stylesheet" media="screen">
+
+    <!--  event data-->
+    <div id="event_form" class="main" style="display: none">
+
+<!--      第一部分  group/text/autolink/unique_id-->
+      <div class="right timeline-1">
+        <div class="title">
+          <h3>group/text/autolink/unique_id</h3>
+        </div>
+        <div class="mmcent-2">
+          <div class="mmcent-2-left">
+            <ul>
+              <li class="li2">group：<input type="text" name="group" class="put" value=""></li>
+              <li class="li1">Any text. If present, Timeline will organize events with the same value for group to be in the same row or adjacent rows, separate from events in other groups. The common value for the group will be shown as a label at the left edge of the navigation.</li>
+
+              <li class="li2">display_date：<input type="text" name="display_date" class="put" value=""></li>
+              <li class="li1">A string which will be used when Timeline displays the date for this. If used, override's display_date values set on the start or end date for this event, which is useful if you want to control how the two dates relate to each other. </li>
+
+              <li class="li2">autolink：<input type="text" name="autolink" class="put" value=""></li>
+              <li class="li1">A boolean value (true or false). Defaults to true, which means that Timeline will scan text fields and automatically add  tags so that links and email addresses are "clickable." If set to false, you may still manually apply the tags in the appropriate fields when you want links. Autolinking applies to the text field in a text object and the caption and credit fields in a media object. </li>
+
+              <li class="li2">unique_id：<input type="text" name="unique_id" class="put" value="" readonly></li>
+              <li class="li1">A string value which is unique among all slides in your timeline. If not specified, TimelineJS will construct an ID based on the headline, but if you later edit your headline, the ID will change. Unique IDs are used when the hash_bookmark option is used, and can also be used with the timeline.goToId() method to programmatically move the timeline to a specific slide. </li>
+            </ul>
+          </div>
+
+          <div class="mmcent-2-right">
+            <ul>
+              <li class="li2">text.headline：<input type="text" name="text.headline" class="put" value=""></li>
+              <li class="li1">Any text. HTML markup is OK. Blank is also OK.</li>
+              <li class="li3">text.text：<textarea type="text" name="text.text" class="putTextArea"></textarea>   </li>
+              <li class="li1">Any text. HTML markup is OK. Blank is OK. Not used for era objects.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+<!--      第二部分 开始时间和结束时间-->
+      <div class="right timeline-date1">
+        <div class="title">
+          <h3>start_date(*)/end_date</h3>
+        </div>
+        <div class="mmcent-2">
+          <div class="mmcent-2-left">
+            <ul>
+              <li class="li2">
+                &nbsp;year(*)：<input type="text" name="start_date.year" class="put start_date long" value="">
+                &nbsp;month：<input type="text" name="start_date.month" class="put start_date normal" value="">
+                &nbsp;day：<input type="text" name="start_date.day" class="put start_date normal" value="">
+              </li>
+              <li class="li1">
+                year(*): A number. Don't use commas. BCE years should be negative numbers. Don't use the letters "BC", "BCE" or any others. eg: 1900;
+                <br/>month  : A number from 1-12 (Javascript experts don't outsmart yourselves: Timeline corrects for Javascript's strange use of "0" for "January", etc.) eg: 12;
+                <br/>day    : A number eg: 31.
+              </li>
+
+              <li class="li2">
+                &nbsp;hour：<input type="text" name="start_date.hour" class="put start_date normal" value="">
+                &nbsp;minute：<input type="text" name="start_date.minute" class="put start_date normal" value="">
+                &nbsp;second：<input type="text" name="start_date.second" class="put start_date normal" value="">
+              </li>
+              <li class="li1">
+                hour：A number from 0-23，[0,24);
+                <br/>minute：A number from 0-59,[0,59];
+                <br/>second：A number from 0-59, [0,59)
+              </li>
+
+              <li class="li2">
+                &nbsp;millisecond：<input type="text" name="start_date.millisecond" class="put start_date long" value="">
+                &nbsp;format：<input type="text" name="start_date.format" class="put start_date long" value="yyyy-mm-dd">
+              </li>
+              <li class="li1">[display_date] A string for presenting the date. Useful if Timeline's date formatting doesn't fit your needs.，eg: yyyy-mm-dd</li>
+            </ul>
+          </div>
+          <div class="mmcent mmcent-2-right">
+            <ul>
+              <li class="li2">
+                &nbsp;year：<input type="text" name="end_date.year" class="put end_date long" value="" />
+                &nbsp;month：<input type="text" name="end_date.month" class="put end_date normal" value=""/>
+                &nbsp;day：<input type="text" name="end_date.day" class="put end_date normal" value=""/>
+              </li>
+              <li class="li2">
+                &nbsp;hour：<input type="text" name="end_date.hour" class="put end_date normal" value=""/>
+                &nbsp;minute：<input type="text" name="end_date.minute" class="put end_date normal" value=""/>
+                &nbsp;second：<input type="text" name="end_date.second" class="put end_date normal" value=""/>
+              </li>
+              <li class="li2">
+                &nbsp;millisecond：<input type="text" name="end_date.millisecond" class="put end_date long" value="" />
+                &nbsp;format：<input type="text" name="end_date.format" class="put end_date long" value="yyyy-mm-dd"/>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+<!--      第三部分 背景颜色或者图片设置-->
+      <div class="right timeline-background">
+        <div class="title">
+          <h3>background</h3>
+        </div>
+        <div class="mmcent-3">
+          <div class="mmcent-3-cl1">
+            <div>
+              <div>
+                <div>
+                </div>
+                <input type="text" id="background.color.temp" class="color" value="" size="8" style="display: none">
+              </div>
+            </div>
+          </div>
+          <div class="mmcent-3-cl2" id="div.background.color.preview">
+            <ul>
+              <li class="li2">color：<input type="text" id="background.color" name="background.color" class="put" value=""></li>
+              <li class="li2">opacity：<input type="text" name="background.opacity" class="put" value=""></li>
+              <li class="li2">url：<input type="text" name="background.url" class="put" value="" onchange="onchangeBackgroudPic()"><input type="file" id="background-pic" onchange="_save_upload_backgroud_pic()" class="file-upload-input"></li>
+            </ul>
+          </div>
+          <div class="mmcent-3-cl3">
+            <a id="background-url-preview" target="_blank" style="display: none">
+
+            </a>
+          </div>
+        </div>
+      </div>
+
+<!--      第四部分   媒体信息-->
+      <div class="right timeline-media">
+        <div class="title">
+          <h3>media(optional)</h3>
+
+          <div class="clear"></div>
+        </div>
+        <div class="mmcent-2">
+          <div class="mmcent-2-left">
+            <ul>
+              <li class="li2">url：<input type="text" name="media.url" onchange="onchangeMediaUrl(1)" class="put media" value=""><input type="file" id="_save_upload_media_stuff_id" onchange="_save_upload_media_stuff()" class="file-upload-input"></li>
+              <li class="li1">(optional*) In most cases, a URL (see media type documentation for complete details)</li>
+              <li class="li2">caption：<input type="text" name="media.caption" class="put media" value=""></li>
+              <li class="li1">Any text. HTML markup is OK.</li>
+              <li class="li2">credit：<input type="text" name="media.credit" class="put media" value=""></li>
+              <li class="li1">Any text. HTML markup is OK.</li>
+              <li class="li2">thumb：<input type="text" name="media.thumb" class="put media" value=""></li>
+              <li class="li1">[thumbnail] A URL for an image to use in the timenav marker for this event. If omitted, Timeline will use an icon based on the type of media. Not relevant for title slides, because they do not have a marker.</li>
+              <li class="li2">alt：<input type="text" name="media.alt" class="put media" value=""></li>
+              <li class="li1">An alt tag for your image. If none is provided, the caption, if any, will be used.</li>
+              <li class="li2">title：<input type="text" name="media.title" class="put media" value=""></li>
+              <li class="li1">A title for your image. If none is provided, the caption, if any, will be used.</li>
+              <li class="li2">link：<input type="text" name="media.link" class="put media" value=""></li>
+              <li class="li1">Optional URL to use as the href for wrapping the media with an < a > tag</li>
+              <li class="li2">link_target：<input type="text" name="media.link_target" class="put media" value=""></li>
+              <li class="li1">Optional target to be associated with link if used.</li>
+            </ul>
+          </div>
+          <div class="mmcent-2-right" id="preview-video-or-pic">
+          </div>
+        </div>
+      </div>
+
+<!--    第五部分  按钮 提交和取消-->
+      <div class="mmxgBTN2">
+        <button type="button" id="save-input-timeline" onclick="_save_input_timeline()">确&nbsp;认</button>
+        <button type="button" class="qx" id="cancel-input-timeline" onclick="_hide_input_dialog()">取&nbsp;消</button>
+      </div>
+
+      <div id="test-timeline" class="clear"></div>
+    </div>
+
+  <div class="eras-input-wrap" id="eras_form" style="display: none">
+    <script>
+      function addline(_addLineBtn) {
+        $(_addLineBtn).parent().after("<tr><td><input type='text' name='eras.start_date.year'></td><td><input type='text' name='eras.end_date.year' ></td><td><input type='text' name='eras.text.headline'></td><td class='add' onclick='addline(this)'>+</td></tr>)");
+      }
+      function autoWidth(inputDoc) {
+        var len = $(inputDoc).val().length;
+        $(inputDoc).css('width',len*10+30+ 'px')
+      }
+    </script>
+    <table id="hor-zebra" border="0">
+      <thead>
+      <tr>
+        <th scope="col">开始年</th>
+        <th scope="col">结束年</th>
+        <th scope="col">简述</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td><input type="text" name="eras.start_date.year"></td>
+        <td><input type="text" name="eras.end_date.year"></td>
+        <td class="eras-text-headline"><input type="text" name="eras.text.headline"></td>
+        <td  onclick="addline(this)">+</td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="mmxgBTN2">
+      <button type="button" id="save-eras-input-timeline" onclick="_save_eras_input_timeline()">确&nbsp;认</button>
+      <button type="button" class="qx" id="cancel-eras-input-timeline" onclick="_hide_input_dialog()">取&nbsp;消</button>
+    </div>
+  </div>
+
+
+
+  <div style="display: none">
+    <input id="h-filename" name="filename" value="-1"/>
+  </div>
+  </body>
+</html>

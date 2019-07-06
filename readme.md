@@ -130,6 +130,10 @@ js/timelinejs3/timeline.js
 
 ​	MainServlet 从http head中提取头参数 serviceController 来定位 提供服务器的**业务控制器**. **业务控制器**,类似于struct2的控制器,用来处理一些简单的业务和整合服务资源.
 
+##### 取色设定
+
+ 打开编辑页面的时候,自动取值到对应的色值.	直接同步联动即可,不需要再重新点击按钮取色了.
+
 
 
 #### 开发命名规范
@@ -377,7 +381,7 @@ http://kindeditor.net/doc3.php
   + [x] 后台增加一个Set集合的非空校验。
   + [x] 同时在前端优化下循环代码。(猜测错误，是因为name属性没有导致的。)
 - [x] 上传文件（视频、图片）
-  - [ ] 打开时也要加载图片和视频.
+  - [x] 打开时也要加载图片和视频.
 - [x] 添加timeline中的event有字段丢失，目前是year和headline，查下原因明天。
   这个原因是新增的eras代码中存在和原先name同名的问题，导致js不知道具体用哪个值
 - [ ] 将编辑事件界面优化下，便于操作。
@@ -385,8 +389,10 @@ http://kindeditor.net/doc3.php
 - [x] Eras没有回显.
 - [x] 表单的非空校验。
   event，start_date.year、text.headline.
-- [ ] 原先的有个input变为textarea,这会导致取值方式发生了改变.
-- [ ] 取色器的取值和定位有问题,需要调整.
+- [x] 原先的有个input变为textarea,这会导致取值方式发生了改变.
+- [x] 取色器的取值和定位有问题,需要调整. ps: 原先的算法有问题,在计算offsetTop的时候没有减去scrollTop.
+- [x] 去除其他不用的多余文件
+- [ ] 去除界面上的一些不合理的图片和文字
 
 
 

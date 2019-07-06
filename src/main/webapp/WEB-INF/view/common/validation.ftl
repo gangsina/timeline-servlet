@@ -1,3 +1,0 @@
-<link rel="stylesheet" href="${ctx}/static/common/js/jQuery-Validation/css/validationEngine.jquery.css" type="text/css"/>
-<script src="${ctx}/static/common/js/jQuery-Validation/js/languages/jquery.validationEngine-zh_CN.js" type="text/javascript" charset="utf-8"></script>
-<script src="${ctx}/static/common/js/jQuery-Validation/js/jquery.validationEngine.js" type="text/javascript" charset="utf-8"></script>
