@@ -10,6 +10,7 @@ import java.util.Date;
  * @Date 2019/5/30 13:46.
  */
 public class TimelineDatetime extends _domain {
+    private static final long serialVersionUID = -4437762881236600870L;
     private String year;
     private String month;
     private String day;

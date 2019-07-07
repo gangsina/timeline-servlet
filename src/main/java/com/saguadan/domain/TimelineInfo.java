@@ -10,6 +10,7 @@ import java.util.Date;
  * @Date 2019/6/3 15:57.
  */
 public class TimelineInfo extends   _domain{
+    private static final long serialVersionUID = 2238243064152568118L;
     private String timelineName = "默认时间线";
     private String fileName = StrUtils.getRandomNumLetters(10);
     private Date createDate = new Date();
@@ -17,6 +18,7 @@ public class TimelineInfo extends   _domain{
     private long size=0;
     private int eventCounts=0;
     private String memo = "";//用来备注下,这个是用来干嘛用的.
+    private String coverImage = "";//新增个背景图片,用于显示在列表页.
 
     public TimelineInfo() {
 
@@ -78,5 +80,13 @@ public class TimelineInfo extends   _domain{
     public TimelineInfo setEventCounts(int eventCounts) {
         this.eventCounts = eventCounts;
         return this;
+    }
+
+    public String getCoverImage() {
+        return coverImage;
+    }
+
+    public void setCoverImage(String coverImage) {
+        this.coverImage = coverImage;
     }
 }

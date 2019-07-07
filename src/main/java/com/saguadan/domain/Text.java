@@ -5,6 +5,7 @@ package com.saguadan.domain;
  * @Date 2019/5/30 13:40.
  */
 public class Text extends _domain {
+    private static final long serialVersionUID = 3498127549622960716L;
     private String headline;
     private String text;
 

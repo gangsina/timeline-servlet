@@ -15,6 +15,7 @@ import java.util.Set;
 public class Timelines implements java.io.Serializable {
 
 
+    private static final long serialVersionUID = -232436961718736447L;
     private int timelineCount = 0; //timeliness的个数
 
     private Map<String, TimelineInfo> timelines = new HashMap<>(); //timelines内容列表. 用文件名作为key值

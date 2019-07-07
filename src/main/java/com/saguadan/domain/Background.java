@@ -5,6 +5,7 @@ package com.saguadan.domain;
  * @Date 2019/5/30 14:00.
  */
 public class Background extends _domain{
+    private static final long serialVersionUID = 7055975724073428132L;
     private String color;
     private String opacity;
     private String url;

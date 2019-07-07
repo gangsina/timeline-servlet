@@ -7,6 +7,7 @@ import com.bentengwu.utillib.reflection.UtilReflection;
  * @Date 2019/6/21 14:46.
  */
 public class Eras extends _domain {
+    private static final long serialVersionUID = -2045208606222814953L;
     private TimelineDatetime start_date;
     private TimelineDatetime end_date;
     private Text text;

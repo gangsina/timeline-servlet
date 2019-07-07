@@ -112,17 +112,28 @@ textarea {display: block;}
          <div class="bxzt">
               <div class="tit_06"><a href="index.html">saguadan</a> ›  <a href="index.html">时间轴</a> › 编辑基本信息 </div>
               <div class="bxEditor">
+                  <div id="timelineinfo-detail" class="demo" style="display: none"> <!-- class="demo" to show it -->
+                      <i>事件数:   &nbsp;&nbsp;</i><span name="eventCounts"></span><i> ;&nbsp;  </i>
+                      <i>修改次数:  &nbsp;&nbsp;</i><span name="updateTimes"></span><i> ;&nbsp; </i>
+                      <i>大小:     &nbsp;&nbsp; </i><span name="size"></span><i>; &nbsp; </i>
+                      <i>创建时间: &nbsp;&nbsp; </i><span name="createDate"></span><i>;&nbsp; </i>
+                  </div>
                   <div class="demo">
                     <dl class="label1">
                         <dt>给我取个名字吧:</dt>
                     </dl>
                     <div class="inPut"><input type="text" name="timelineName" placeholder="" autofocus class="put" /><span>还可以输入80以内个字符</span></div>
                   </div>
-                  <div id="timelineinfo-detail" class="demo" style="display: none"> <!-- class="demo" to show it -->
-                      <i>事件数:   &nbsp;&nbsp;</i><span name="eventCounts"></span><i> ;&nbsp;  </i>
-                      <i>修改次数:  &nbsp;&nbsp;</i><span name="updateTimes"></span><i> ;&nbsp; </i>
-                      <i>大小:     &nbsp;&nbsp; </i><span name="size"></span><i>; &nbsp; </i>
-                      <i>创建时间: &nbsp;&nbsp; </i><span name="createDate"></span><i>;&nbsp; </i>
+                  <div class="demo">
+                      <dl class="label1">
+                          <dt>给我设置个封面吧:</dt>
+                      </dl>
+                      <div class="inPut"><input type="file"  placeholder=""  class="put" onchange="_save_upload_cover_image(this)"/><span>请选择一张图来做封面图片</span>
+                          <input type="text" id="coverImage" style="display: none"/>
+                      </div>
+                  </div>
+                  <div class="img_01" id="preview-cover-image" style="display: none">
+
                   </div>
                   <div class="img_01">
                         <textarea name="memo" style="width:938px;height:210px;visibility:hidden;"></textarea>

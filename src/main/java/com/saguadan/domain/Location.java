@@ -13,6 +13,7 @@ package com.saguadan.domain;
  * @Date 2019/5/30 14:12.
  */
 public class Location extends  _domain{
+    private static final long serialVersionUID = -5224242632666829026L;
     String icon;
     String lat;
     String line;
