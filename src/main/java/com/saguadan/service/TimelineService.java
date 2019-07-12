@@ -46,7 +46,10 @@ public class TimelineService extends CRUDControllerService<Timeline> {
         if (StrUtils.isEmpty(filename)) {
             return null;
         }else{
-            return persistenceService.findTimeline(filename);
+            Timeline timeline =  persistenceService.findTimeline(filename);
+            CollectionUtils.clearFieldEmptyElement(timeline.getEras(),"start_date.year,end_date.year");
+            CollectionUtils.clearFieldEmptyElement(timeline.getEvents(),"start_date.year");
+            return timeline;
         }
     }
 

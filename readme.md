@@ -12,12 +12,28 @@
 
 Tomcat
 
+#### 系统资源
+
+##### 接听端口
+
+51122 监听服务端口
+
+51123 监听关闭端口
+
+##### 内存配置
+
+```shell
+-Xms128m -Xmx512m -XX:PermSize=64m -XX:MaxPermSize=256m
+```
+
+
+
 ## 存储
 
 timelines.serialzation 统一存放所有的时间线信息(用序列化存储,避免解析带来的麻烦). 类似一个索引文件,存放所有的时间线信息.
 不同的时间线信息放在根目录的其他文件中.一个时间线一个文件.
 
-\'${user.dir}\'/.timeline/timelines.serialzation
+\'${catlina_home}\'/.timeline/timelines.serialzation
 
 
 ## 代码结构
@@ -32,8 +48,6 @@ com.saguadan.jdbc
 ```
 
 
-
-### 
 
 ### 软件加载流程
 
@@ -392,7 +406,10 @@ http://kindeditor.net/doc3.php
 - [x] 原先的有个input变为textarea,这会导致取值方式发生了改变.
 - [x] 取色器的取值和定位有问题,需要调整. ps: 原先的算法有问题,在计算offsetTop的时候没有减去scrollTop.
 - [x] 去除其他不用的多余文件
-- [ ] 去除界面上的一些不合理的图片和文字
+- [x] 去除界面上的一些不合理的图片和文字
+- [x] 当没有任何年份的时候,没有任何地方可以插入行,我说的是eras
+- [ ] 弄个快捷键来设置底部的滚动条.
+- [ ] 弄个快捷键来快速的填入当前时间.
 
 
 

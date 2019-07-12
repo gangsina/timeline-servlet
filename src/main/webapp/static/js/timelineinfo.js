@@ -73,7 +73,7 @@ function _save_upload_cover_image(node) {
             assertConsole(["success: function(res)",res, typeof res]);
             var resData = JSON.parse(res);
             if (resData && resData.code == '1') {
-                var url = base_url + "/upload?id=" +resData.data;
+                var url = getBaseUrl() + "/upload?id=" +resData.data;
                 $("#coverImage").val(url);
                 $("#preview-cover-image").html('<img src="'+url+'" />');
                 $("#preview-cover-image").css("display", "block");
@@ -129,6 +129,13 @@ function _load_timelineinfo_success(data) {
             $("input[name='timelineName']").val(retData.timelineName);
             editor.html(retData.memo);
             $("#timelineinfo-detail").css("display","block");
+
+            // 回显图片信息
+            if (retData.coverImage) {
+                $("#coverImage").val(retData.coverImage);
+                $("#preview-cover-image").html('<img src="'+retData.coverImage+'" />');
+                $("#preview-cover-image").css("display", "block");
+            }
         }else{
             //todo 没有数据.
         }
@@ -171,7 +178,7 @@ function _load_list(service) {
                         }
 
                         var filename = element.fileName;
-                        var coverImage = "images/03.png";
+                        var coverImage = "images/03.jpg";
                         if (element.coverImage) {
                             coverImage = element.coverImage;
                         }

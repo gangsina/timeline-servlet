@@ -148,6 +148,12 @@
                 &nbsp;millisecond：<input type="text" name="end_date.millisecond" class="put end_date long" value="" />
                 &nbsp;format：<input type="text" name="end_date.format" class="put end_date long" value="yyyy-mm-dd"/>
               </li>
+              <li class="li2">
+                &nbsp;<input type="text" class="put1 normal" style="cursor:pointer" onclick="_insert_timestamp('day','yes')" value="today" readonly/>
+                &nbsp;<input type="text" class="put1 normal" style="cursor:pointer"  onclick="_insert_timestamp('second','yes')" value="today-sec" readonly/>
+                &nbsp;<input type="text"  class="put1 normal" style="cursor:pointer"  onclick="_fill_enddata_1231()" value="最后一天" readonly/>
+                &nbsp;<input type="text"  class="put1 normal" style="cursor:pointer"  onclick="_clear_dates()" value="clear" readonly/>
+              </li>
             </ul>
           </div>
         </div>

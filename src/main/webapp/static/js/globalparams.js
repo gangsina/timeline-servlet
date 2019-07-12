@@ -1,12 +1,19 @@
+var _assert = '1'; //全局调试控制台日志开关.
+var _develop_tag = '1'; //打开将使用开发环境的地址.
 /**
 	这个js文件用于定义全局的变量
 	这个文件中的所有变量都需要在后台生成
 */
-var base_url = "http://localhost/timeline";
-var image_url="http://localhost/timeline";
+var base_url = "http://localhost:51122";
+var image_url="http://localhost:51122";
+
+var develop_base_url = "http://localhost/timeline";
+var develop_image_url="http://localhost/timeline";
+
+
 var tag_url = "user/tagcontent_list.html?tagId=";//"page/p/user/label";
-var p_s_url = base_url +  "/p";
-var m_s_url = base_url +  "/m";
+var p_s_url = getBaseUrl() +  "/p";
+var m_s_url = getBaseUrl() +  "/m";
 
 /*method*/
 var _method_post = "post";
@@ -33,13 +40,29 @@ var _opt_u = "u";
 var _opt_d = "d";
 
 
-var _url_r =base_url+"/r/1";//请求地址.
+var _url_r =getBaseUrl()+"/r/1";//请求地址.
 
 
-
-var _assert = '1';
 var _assert_cut1 = "=========================";
 var _assert_cut2 = "======================================================";
+
+
+function getBaseUrl() {
+	if (_develop_tag == '1') {
+		return develop_base_url;
+	}else{
+		return base_url;
+	}
+}
+
+
+function getImageUrl() {
+	if (_develop_tag == '1') {
+		return develop_image_url;
+	}else{
+		return image_url;
+	}
+}
 
 function assertAlert(message) {
 	if(_assert=='1') {

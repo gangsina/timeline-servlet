@@ -222,6 +222,7 @@
 .mmcent{ width:600px; margin: 1px 50px 1px 1px;}
 .mmcent ul li.li2{ width:525px; height:54px; background:#fafafa; margin:5px auto; line-height:54px; padding-left:25px; color:#333; box-shadow:inset 0px 0px 3px #e3e3e3;font-size:16px; color:#333}
 .mmcent ul li.li2 .put{ width:400px; height:40px; padding-left:10px; border:none; background:#fafafa;font-size:16px; color:#666;font-family:"微软雅黑"}
+.mmcent ul li.li2 .put1{ width:100px; height:40px; padding-left:10px; border:none; box-shadow:inset 0px 0px 3px #e3e3e3; background:#fafafa;font-size:16px; color:#666;font-family:"微软雅黑"}
 .mmcent ul li.li1{ font-size:12px; padding-left:20px; color:#666; line-height:24px;}
 
 

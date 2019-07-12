@@ -22,16 +22,9 @@ function _ajax_normal(p_data, ph_data,_ajax_callback) {
  */
 function _ajax(p_url,p_type,p_dataType,p_async,p_data,ph_data,_ajax_callback) {
     assertConsole("+++++++++++++++request info:++++++++++++++++");
-    assertConsole("p_url-->"+p_url);
-    assertConsole("p_type-->" + p_type);
-    assertConsole("p_dataType-->" + p_dataType);
-    assertConsole("p_async-->" + p_async);
-    assertConsole("p_data-->");
-    assertConsole(p_data);
-    assertConsole("ph_data-->" );
-    assertConsole(ph_data);
-    assertConsole("_ajax_callback-->" + _ajax_callback);
-    assertConsole("=============================================");
+    assertConsole(['function _ajax(p_url,p_type,p_dataType,p_async,p_data,ph_data,_ajax_callback)',
+        p_url,p_type,p_dataType,p_async,p_data,ph_data,_ajax_callback])
+    assertCut1();
 
 
     $.ajax({

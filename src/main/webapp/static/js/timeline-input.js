@@ -85,7 +85,11 @@ function view_ajax_callback(retData) {
     if (retData.code && retData.code == '1') {
         // 渲染 timeline界面
         if (retData.data) {
-            _newTimeline(retData.data);
+            if (retData.data.eventCount == '0') {
+                _input_event2timeline(0);
+            }else {
+                _newTimeline(retData.data);
+            }
         }else{
             _alertHelp("加载有误");
         }
@@ -322,7 +326,7 @@ function _save_upload_backgroud_pic() {
     formData.append("file", document.getElementById('background-pic').files[0]);
     formData.append("token", $("#h-filename").val());
     $.ajax({
-        url: "/timeline/upload",
+        url: getBaseUrl()+"/upload",
         type: "POST",
         data: formData,
         processData: false, // 不要对data参数进行序列化处理，默认为true
@@ -350,7 +354,7 @@ function _save_upload_backgroud_pic() {
             var retData = JSON.parse(res);
             if (retData.code && retData.code == '1') {
                 //回显
-                var preview_url = base_url+ "/upload?id=" + retData.data
+                var preview_url = getBaseUrl()+ "/upload?id=" + retData.data
                 $("input[name='background.url']").val(preview_url);
                 onchangeBackgroudPic();
             }else{
@@ -406,7 +410,7 @@ function _save_upload_media_stuff() {
     formData.append("file", document.getElementById(inputDoc).files[0]);
     formData.append("token", $("#h-filename").val());
     $.ajax({
-        url: "/timeline/upload",
+        url: getBaseUrl() + "/upload",
         type: "POST",
         data: formData,
         processData: false, // 不要对data参数进行序列化处理，默认为true
@@ -434,7 +438,7 @@ function _save_upload_media_stuff() {
             var retData = JSON.parse(res);
             if (retData.code && retData.code == '1') {
                 //回显
-                var preview_url = base_url+ "/upload?id=" + retData.data
+                var preview_url = getBaseUrl()+ "/upload?id=" + retData.data
                 $("input[name='"+inputDocName+"']").val(preview_url);
                 onchangeMediaUrl(1);
             }else{
@@ -470,7 +474,7 @@ function onchangeMediaUrl(_pclass) {
 
     var preview = $("input[name='media.url']").val();
 
-    assertConsole([preview,base_url,preview.indexOf(base_url) >= 0]);
+    assertConsole([preview,getBaseUrl(),preview.indexOf(base_url) >= 0]);
 
     if (preview == '' || preview == undefined) {
         return;
@@ -492,7 +496,7 @@ function onchangeMediaUrl(_pclass) {
         _class = '1';
     }
 
-    assertConsole([preview,base_url,preview.indexOf(base_url) >= 0,_isVedio,_class]);
+    assertConsole([preview,getBaseUrl(),preview.indexOf(getBaseUrl()) >= 0,_isVedio,_class]);
 
     if (_class == 'pic') {
         $("#preview-video-or-pic").html(pic);
@@ -654,7 +658,12 @@ function _fillDataForEras() {
     if (_timeline) {
         var eras = _timeline.config.eras;
         if (eras) {
-            $table_tbody.html("");
+            $table_tbody.html("<tr>\n" +
+                "        <td><input type=\"text\" name=\"eras.start_date.year\"></td>\n" +
+                "        <td><input type=\"text\" name=\"eras.end_date.year\"></td>\n" +
+                "        <td class=\"eras-text-headline\"><input type=\"text\" name=\"eras.text.headline\"></td>\n" +
+                "        <td  onclick=\"addline(this)\">+</td>\n" +
+                "      </tr>");
             eras.forEach(function (value) {
                 var doc_start_date_year =  "<td><input type='text' name='eras.start_date.year'></td>";
                 if (value.start_date && value.start_date.data && value.start_date.data.year) {
@@ -878,7 +887,107 @@ function _getPageIndex() {
     return this._timeline_page_index;
 }
 
+/**
+ *@description
+ *@author thender email: bentengwu@163.com
+ *@date 2019/7/12 23:44
+ *@param type 'day' 设置今天的日期和结束日期.  'year' , 'month', 'second'
+ * @param both 'yes'/'no'
+ *@return
+ **/
+function _insert_timestamp(type, both) {
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth()+1;
+    var day = date.getDate();
+    var hour = date.getHours();
+    var minute = date.getMinutes();
+    var second = date.getSeconds();
 
+    if (type == 'year') {
+        _set_value2doc_byname('start_date.year', year);
+        if (both == 'yes') {
+            _set_value2doc_byname('end_date.year', year);
+        }
+    }else
+
+    if (type == 'month') {
+        _set_value2doc_byname('start_date.year', year);
+        _set_value2doc_byname('start_date.month', month);
+        if (both == 'yes') {
+            _set_value2doc_byname('end_date.year', year);
+            _set_value2doc_byname('end_date.month', month);
+        }
+    }else
+
+    if (type == 'day') {
+        _set_value2doc_byname('start_date.year', year);
+        _set_value2doc_byname('start_date.month', month);
+        _set_value2doc_byname('start_date.day', day);
+        if (both == 'yes') {
+            _set_value2doc_byname('end_date.year', year);
+            _set_value2doc_byname('end_date.month', month);
+            _set_value2doc_byname('end_date.day', day);
+        }
+    }else
+
+
+    if (type == 'second') {
+        _set_value2doc_byname('start_date.year', year);
+        _set_value2doc_byname('start_date.month', month);
+        _set_value2doc_byname('start_date.day', day);
+        _set_value2doc_byname('start_date.hour', hour);
+        _set_value2doc_byname('start_date.minute', minute);
+        _set_value2doc_byname('start_date.second', second);
+        if (both == 'yes') {
+            _set_value2doc_byname('end_date.year', year);
+            _set_value2doc_byname('end_date.month', month);
+            _set_value2doc_byname('end_date.day', day);
+            _set_value2doc_byname('end_date.hour', hour);
+            _set_value2doc_byname('end_date.minute', minute);
+            _set_value2doc_byname('end_date.second', second);
+        }
+    }
+}
+
+/**
+ *@description 将结束时间的日期设置为最后一天.
+ *@author thender email: bentengwu@163.com
+ *@date 2019/7/12 23:58
+ *@return
+ **/
+function _fill_enddata_1231() {
+    _set_value2doc_byname('end_date.month', 12);
+    _set_value2doc_byname('end_date.day', 31);
+}
+
+/**
+ * 2019年7月12日23:38:21
+ * 清除输入框中的内容.
+ */
+function _clear_dates() {
+    _set_value2doc_byname('start_date.year', '');
+    _set_value2doc_byname('start_date.month', '');
+    _set_value2doc_byname('start_date.day', '');
+    _set_value2doc_byname('start_date.hour', '');
+    _set_value2doc_byname('start_date.minute', '');
+    _set_value2doc_byname('start_date.second', '');
+    _set_value2doc_byname('start_date.millisecond', '');
+
+    _set_value2doc_byname('end_date.year', '');
+    _set_value2doc_byname('end_date.month', '');
+    _set_value2doc_byname('end_date.day', '');
+    _set_value2doc_byname('end_date.hour', '');
+    _set_value2doc_byname('end_date.minute', '');
+    _set_value2doc_byname('end_date.second', '');
+    _set_value2doc_byname('end_date.millisecond', '');
+
+    $("input[name='start_date.format']").val("yyyy-mm-dd");
+    $("input[name='end_date.format']").val("yyyy-mm-dd");
+}
+
+
+/*----------------------------------------------hotkey and event**/
 
 /**
  * 参考开源项目:jquery.hotkeys
@@ -921,6 +1030,11 @@ function _binding_hotkeys() {
     jQuery(document).bind('keydown.Alt_s',function (evt){_hotkey_alt_s();return false;});
     jQuery(document).bind('keydown.Shift',function (evt){_keydown_shift_mouse();return false;});
     jQuery(document).bind('keyup.Shift',function (evt){_unbind_mousewheel();return false;});
+
+
+    // _keyup_alt_shift
+    jQuery(document).bind('keydown.Ctrl_shift',function (evt){_keydown_ctrl_shift();return false;});
+    jQuery(document).bind('keyup.Ctrl_shift',function (evt){_keyup_ctrl_shift();return false;});
 
 }
 
@@ -1035,7 +1149,6 @@ function _timenev_height(type) {
 }
 
 /**
- *
  *@author thender email: bentengwu@163.com
  *@date 2019/6/28 20:11
  *@param type  -1 放大明细   1 缩小明细
@@ -1050,7 +1163,17 @@ function _timeline_zoom(type) {
     }else{
         _timeline.zoomOut();
     }
+}
 
+/** 滚动下方时间轴的滚动条(虚拟)
+ * 2019年7月12日23:06:35
+ * @author thender email: bentengwu@163.com
+ * @param num 正负滚动方向相反. 推荐值为50 或者负50
+ */
+function _timeline_nav_scroll(num) {
+    var oldV = $(".tl-timenav-slider").css("left");
+    var newV = parseInt(oldV,10) - num;
+    $(".tl-timenav-slider").css("left", newV);
 }
 
 /**
@@ -1061,6 +1184,7 @@ function _timeline_zoom(type) {
  *@return 
  **/
 function _keydown_alt_mouse() {
+    assertConsole("_keydown_alt_mouse");
     $("#timeline_wrapper").mousewheel(function(event, delta) {
         _timeline_zoom(delta);
         return false; // prevent default
@@ -1079,12 +1203,46 @@ function _unbind_mousewheel() {
     $("#timeline_wrapper").unbind("mousewheel");
 }
 
+
 /**
- * 用于增加鼠标滚轮监听事件,用于调整timeline nav 的高度
+ * 用来改变下方timeline nav滚动条的位置.
  *@author thender email: bentengwu@163.com
  *@date 2019/6/28 19:28
  **/
 function _keydown_shift_mouse() {
+    assertConsole("_keydown_shift_mouse");
+    $("#timeline_wrapper").mousewheel(function(event, delta) {
+        assertConsole(delta);
+        if (delta < 0) {
+            _timeline_nav_scroll(50);
+        }else {
+            _timeline_nav_scroll(-50);
+        }
+        return false; // prevent default
+    });
+}
+
+/**
+ *@description  解绑绑定的滚动事件.
+ *@author thender email: bentengwu@163.com
+ *@date 2019/7/12 23:11
+ *@return
+ **/
+function _keyup_ctrl_shift() {
+    assertConsole("_keyup_ctrl_shift");
+    _unbind_mousewheel();
+}
+
+/**
+ *@description  ctrl + shift 热键触发的方法.
+ * 目前打算用于修改下方时间轴的高度,原先的用于修改高度的改成用来修改滚动条的位置.
+ * 用于增加鼠标滚轮监听事件,用于调整timeline nav 的高度
+ *@author thender email: bentengwu@163.com
+ *@date 2019/7/12 22:24
+ *@return
+ **/
+function _keydown_ctrl_shift() {
+    assertConsole("_keydown_ctrl_shift");
     $("#timeline_wrapper").mousewheel(function(event, delta) {
         _timenev_height(delta);
         return false; // prevent default
