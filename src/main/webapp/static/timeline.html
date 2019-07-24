@@ -149,10 +149,16 @@
                 &nbsp;format：<input type="text" name="end_date.format" class="put end_date long" value="yyyy-mm-dd"/>
               </li>
               <li class="li2">
-                &nbsp;<input type="text" class="put1 normal" style="cursor:pointer" onclick="_insert_timestamp('day','yes')" value="today" readonly/>
-                &nbsp;<input type="text" class="put1 normal" style="cursor:pointer"  onclick="_insert_timestamp('second','yes')" value="today-sec" readonly/>
-                &nbsp;<input type="text"  class="put1 normal" style="cursor:pointer"  onclick="_fill_enddata_1231()" value="最后一天" readonly/>
-                &nbsp;<input type="text"  class="put1 normal" style="cursor:pointer"  onclick="_clear_dates()" value="clear" readonly/>
+                &nbsp;<button type="button" onclick="_insert_timestamp('day','yes')">today</button>&nbsp;
+                &nbsp;<button type="button" onclick="_insert_timestamp('second','yes')">today-sec</button>&nbsp;
+                &nbsp;<button type="button" onclick="_fill_enddata_1231()">最后一天</button>&nbsp;
+                &nbsp;<button type="button" onclick="_clear_dates()">clear</button>
+              </li>
+              <li class="li2">
+                &nbsp;<button type="text" onclick="_date_dispaly('yyyy-mm-dd HH:MM')" title="yyyy-mm-dd HH:MM" >YMDHMI</button>&nbsp;
+                &nbsp;<button type="text" onclick="_date_dispaly('yyyy-mm-dd')" title="yyyy-mm-dd" >YMD</button>&nbsp;
+                &nbsp;<button type="text" onclick="_date_dispaly('yyyy-mm')" title="yyyy-mm" >YM</button>&nbsp;
+                &nbsp;<button type="text"  onclick="_date_dispaly('yyyy')" title="yyyy">Y</button>
               </li>
             </ul>
           </div>
@@ -176,9 +182,14 @@
           </div>
           <div class="mmcent-3-cl2" id="div.background.color.preview">
             <ul>
-              <li class="li2">color：<input type="text" id="background.color" name="background.color" class="put" value=""></li>
+              <li class="li2">color：<input type="text" id="background.color" name="background.color" onchange="onchangeBackgroundcolor()" class="put" value=""></li>
               <li class="li2">opacity：<input type="text" name="background.opacity" class="put" value=""></li>
-              <li class="li2">url：<input type="text" name="background.url" class="put" value="" onchange="onchangeBackgroudPic()"><input type="file" id="background-pic" onchange="_save_upload_backgroud_pic()" class="file-upload-input"></li>
+              <li class="li2">url：<input type="text" name="background.url" class="put" value="" onchange="onchangeBackgroudPic()">
+                <span class="file-upload-span">
+                  <span>上传</span>
+                  <input type="file" id="background-pic" onchange="_save_upload_backgroud_pic()" class="file-upload-input">
+                </span>
+              </li>
             </ul>
           </div>
           <div class="mmcent-3-cl3">
@@ -199,7 +210,13 @@
         <div class="mmcent-2">
           <div class="mmcent-2-left">
             <ul>
-              <li class="li2">url：<input type="text" name="media.url" onchange="onchangeMediaUrl(1)" class="put media" value=""><input type="file" id="_save_upload_media_stuff_id" onchange="_save_upload_media_stuff()" class="file-upload-input"></li>
+              <li class="li2">
+                url：<input type="text" name="media.url" onchange="onchangeMediaUrl(1)" class="put media" value="">
+                <span class="file-upload-span">
+                  <span>上传</span>
+                  <input type="file" id="_save_upload_media_stuff_id" onchange="_save_upload_media_stuff()" class="file-upload-input">
+                </span>
+              </li>
               <li class="li1">(optional*) In most cases, a URL (see media type documentation for complete details)</li>
               <li class="li2">caption：<input type="text" name="media.caption" class="put media" value=""></li>
               <li class="li1">Any text. HTML markup is OK.</li>

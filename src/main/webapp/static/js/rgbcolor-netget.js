@@ -349,7 +349,7 @@ function makeColorSelector(inputBox) {
         inputBox.value = hex;
         document.getElementById("background.color").value = inputBox.value;
         document.getElementById("div.background.color.preview").style.background=inputBox.value;
-        console.log("div.background.color.preview change2")
+        console.log("div.background.color.preview change2");
         satValDiv.style.background = hueHex;
         crossHairs.style.left = ((hsv.v * 199) - 10).toString() + 'px';
         crossHairs.style.top = (((1 - hsv.s) * 199) - 10).toString() + 'px';

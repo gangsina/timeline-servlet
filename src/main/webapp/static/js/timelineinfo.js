@@ -46,7 +46,7 @@ function _save_upload_cover_image(node) {
     formData.append("token", "cover-image");
 
     $.ajax({
-        url: "/timeline/upload",
+        url: getBaseUrl() + "/upload",
         type: "POST",
         data: formData,
         processData: false, // 不要对data参数进行序列化处理，默认为true

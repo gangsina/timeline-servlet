@@ -375,12 +375,14 @@ function _save_upload_backgroud_pic() {
 }
 
 function onchangeBackgroundcolor() {
+    assertConsole('function onchangeBackgroundcolor()');
     var colorVal = $("input[name='background.color']").val();
+    var previewNode = document.getElementById("div.background.color.preview");
     if (colorVal) {
-        $("#background.color.temp").val(colorVal);
+        document.getElementById('background.color.temp').value = colorVal;
+        previewNode.style.background = colorVal;
     }else {
-        assertConsole("div.background.color.preview change 1")
-        document.getElementById("div.background.color.preview").style.background = '#fafafa';
+        previewNode.style.background = '#fafafa';
     }
 
     assertConsole(["color",colorVal,$("#background.color.temp").val()]);
@@ -929,6 +931,13 @@ function _insert_timestamp(type, both) {
             _set_value2doc_byname('end_date.month', month);
             _set_value2doc_byname('end_date.day', day);
         }
+        _set_value2doc_byname('start_date.hour', 0);
+        _set_value2doc_byname('start_date.minute', 0);
+        _set_value2doc_byname('start_date.second', 0);
+        _set_value2doc_byname('end_date.hour', 23);
+        _set_value2doc_byname('end_date.minute', 59);
+        _set_value2doc_byname('end_date.second', 59);
+
     }else
 
 
@@ -945,10 +954,11 @@ function _insert_timestamp(type, both) {
             _set_value2doc_byname('end_date.day', day);
             _set_value2doc_byname('end_date.hour', hour);
             _set_value2doc_byname('end_date.minute', minute);
-            _set_value2doc_byname('end_date.second', second);
+            _set_value2doc_byname('end_date.second', second+1);
         }
     }
 }
+
 
 /**
  *@description 将结束时间的日期设置为最后一天.
@@ -982,12 +992,24 @@ function _clear_dates() {
     _set_value2doc_byname('end_date.second', '');
     _set_value2doc_byname('end_date.millisecond', '');
 
-    $("input[name='start_date.format']").val("yyyy-mm-dd");
-    $("input[name='end_date.format']").val("yyyy-mm-dd");
+    _date_dispaly("yyyy-mm-dd HH:MM");
+}
+
+/**
+ * 设置时间显示时间的格式.
+ *@author thender email: bentengwu@163.com
+ *@date 2019/7/17 18:18
+ *@param _display
+ *@return void
+ **/
+function _date_dispaly(_display) {
+    assertConsole(['function _date_dispaly(_display)', _display]);
+    $("input[name='start_date.format']").val(_display);
+    $("input[name='end_date.format']").val(_display);
 }
 
 
-/*----------------------------------------------hotkey and event**/
+/*----------------------------------------------hotkey and event--------------**/
 
 /**
  * 参考开源项目:jquery.hotkeys
@@ -1002,7 +1024,7 @@ function _binding_hotkeys() {
     jQuery(document).bind('keydown.Alt_e',function (evt){_alt_e_input_timeline_data(); return false;});
 
     //alt+c 新建新的event
-    jQuery(document).bind('keydown.Alt_c',function (evt) {
+    jQuery(document).bind('keydown.Alt_t',function (evt) {
         _alt_c_input_timeline_data();
         return false;
     });

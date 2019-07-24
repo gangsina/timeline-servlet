@@ -213,8 +213,13 @@
 }
 
 .mmcent-3 .mmcent-3-cl2{ width:600px; margin:1px 1px}
-.mmcent-3 .mmcent-3-cl2 ul li.li2{ width:525px; height:54px; background:#fafafa; margin:5px auto; line-height:54px; padding-left:25px; color:#333; box-shadow:inset 0px 0px 3px #e3e3e3;font-size:16px; color:#333}
+.mmcent-3 .mmcent-3-cl2 ul li.li2{     display: flex;
+    align-items: center; width:525px;
+    height:54px; background:#fafafa; margin:5px auto;
+    line-height:54px; padding-left:25px; color:#333;
+    box-shadow:inset 0px 0px 3px #e3e3e3;font-size:16px; color:#333}
 .mmcent-3 .mmcent-3-cl2 ul li.li2 .put{ width:400px; height:40px; padding-left:10px; border:none; background:#fafafa;font-size:16px; color:#666;font-family:"微软雅黑"}
+
 .mmcent-3 .mmcent-3-cl2 ul li.li1{ font-size:12px; padding-left:20px; color:#666; line-height:24px;}
 
 
@@ -222,7 +227,12 @@
 .mmcent{ width:600px; margin: 1px 50px 1px 1px;}
 .mmcent ul li.li2{ width:525px; height:54px; background:#fafafa; margin:5px auto; line-height:54px; padding-left:25px; color:#333; box-shadow:inset 0px 0px 3px #e3e3e3;font-size:16px; color:#333}
 .mmcent ul li.li2 .put{ width:400px; height:40px; padding-left:10px; border:none; background:#fafafa;font-size:16px; color:#666;font-family:"微软雅黑"}
-.mmcent ul li.li2 .put1{ width:100px; height:40px; padding-left:10px; border:none; box-shadow:inset 0px 0px 3px #e3e3e3; background:#fafafa;font-size:16px; color:#666;font-family:"微软雅黑"}
+
+.li2 button{width:80px; height:29px; border:1px solid #5caed3;border-radius:5px; color:#fff; background:#45aad8; font-size:14px;font-family:"微软雅黑"; }
+.li2 button:hover {
+    background:#1f6686;
+}
+
 .mmcent ul li.li1{ font-size:12px; padding-left:20px; color:#666; line-height:24px;}
 
 
@@ -239,10 +249,37 @@
 .mmxgBTN2 button:hover{background:#1f6686;}
 
 
-#event_form input.file-upload-input {
+span.file-upload-span {
+    position: relative;
+    border: 1px solid #5caed3;
+    border-radius: 5px;
     width: 75px;
+    height: 30px;
+    font-size: 14px;
+    font-family: "微软雅黑";
 }
 
+span.file-upload-span span{
+    width: 75px;
+    height: 30px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    line-height: 2;
+}
+
+span.file-upload-span:hover{
+    box-shadow: 0 0 3px 2px #55acee;
+}
+
+#event_form input.file-upload-input {
+    position: absolute;
+    right: 0;
+    top: 0;
+    opacity: 0;
+    width: 75px;
+    height: 30px;
+}
 
 
 /* eras 输入界面布局 */
