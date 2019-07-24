@@ -482,32 +482,40 @@ function onchangeMediaUrl(_pclass) {
         return;
     }
 
-    var pic = "<img src='"+preview+"' style='width: 410px;height: 350px;' />";
 
-    var video = "<video  class=\"mmcent-2-video\" controls=\"controls\" ><source src=\""+preview+"\" type=\"video/mp4\"></video> " ;
+    // var pic = "<img src='"+preview+"' style='width: 410px;height: 350px;' />";
+    //
+    // var video = "<video  class=\"mmcent-2-video\" controls=\"controls\" ><source src=\""+preview+"\" type=\"video/mp4\"></video> " ;
+    //
+    // var _class = _pclass;
+    //
+    // var _isVedio = isVedio(preview);
+    //
+    // if (_isVedio==true) {
+    //     _class = 'video';
+    // } else if(_isVedio==false) {
+    //     _class = 'pic';
+    // } else if (_isVedio == undefined) {
+    //     _class = '1';
+    // }
+    //
+    // assertConsole([preview,getBaseUrl(),preview.indexOf(getBaseUrl()) >= 0,_isVedio,_class]);
+    //
+    // if (_class == 'pic') {
+    //     $("#preview-video-or-pic").html(pic);
+    // }else if (_class == 'video') {
+    //     $("#preview-video-or-pic").html(video);
+    // }else{
+    //     //不确定是图片还是视频的情况下,怎么办?
+    //     $("#preview-video-or-pic").html(pic + video);
+    // }
 
-    var _class = _pclass;
-
-    var _isVedio = isVedio(preview);
-
-    if (_isVedio==true) {
-        _class = 'video';
-    } else if(_isVedio==false) {
-        _class = 'pic';
-    } else if (_isVedio == undefined) {
-        _class = '1';
-    }
-
-    assertConsole([preview,getBaseUrl(),preview.indexOf(getBaseUrl()) >= 0,_isVedio,_class]);
-
-    if (_class == 'pic') {
-        $("#preview-video-or-pic").html(pic);
-    }else if (_class == 'video') {
-        $("#preview-video-or-pic").html(video);
-    }else{
-        //不确定是图片还是视频的情况下,怎么办?
-        $("#preview-video-or-pic").html(pic + video);
-    }
+    // 2019年7月24日23:20:27 改用iframe来显示,这样可以不用区分图片或者视频.
+    var node ="<iframe frameborder=\"0\" allowfullscreen=\"1\"\n" +
+        "                                 allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\"" +
+        "                                 width=\"540\" height=\"360\"\n" +
+        "                                 src=\""+preview+"\"></iframe>";
+    $("#preview-video-or-pic").html(node);
 }
 
 /**
