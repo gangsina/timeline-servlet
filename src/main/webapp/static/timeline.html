@@ -62,40 +62,7 @@
     <!--  event data-->
     <div id="event_form" class="main" style="display: none">
 
-<!--      第一部分  group/text/autolink/unique_id-->
-      <div class="right timeline-1">
-        <div class="title">
-          <h3>group/text/autolink/unique_id</h3>
-        </div>
-        <div class="mmcent-2">
-          <div class="mmcent-2-left">
-            <ul>
-              <li class="li2">group：<input type="text" name="group" class="put" value=""></li>
-              <li class="li1">Any text. If present, Timeline will organize events with the same value for group to be in the same row or adjacent rows, separate from events in other groups. The common value for the group will be shown as a label at the left edge of the navigation.</li>
-
-              <li class="li2">display_date：<input type="text" name="display_date" class="put" value=""></li>
-              <li class="li1">A string which will be used when Timeline displays the date for this. If used, override's display_date values set on the start or end date for this event, which is useful if you want to control how the two dates relate to each other. </li>
-
-              <li class="li2">autolink：<input type="text" name="autolink" class="put" value=""></li>
-              <li class="li1">A boolean value (true or false). Defaults to true, which means that Timeline will scan text fields and automatically add  tags so that links and email addresses are "clickable." If set to false, you may still manually apply the tags in the appropriate fields when you want links. Autolinking applies to the text field in a text object and the caption and credit fields in a media object. </li>
-
-              <li class="li2">unique_id：<input type="text" name="unique_id" class="put" value="" readonly></li>
-              <li class="li1">A string value which is unique among all slides in your timeline. If not specified, TimelineJS will construct an ID based on the headline, but if you later edit your headline, the ID will change. Unique IDs are used when the hash_bookmark option is used, and can also be used with the timeline.goToId() method to programmatically move the timeline to a specific slide. </li>
-            </ul>
-          </div>
-
-          <div class="mmcent-2-right">
-            <ul>
-              <li class="li2">text.headline：<input type="text" name="text.headline" class="put" value=""></li>
-              <li class="li1">Any text. HTML markup is OK. Blank is also OK.</li>
-              <li class="li3">text.text：<textarea type="text" name="text.text" class="putTextArea"></textarea>   </li>
-              <li class="li1">Any text. HTML markup is OK. Blank is OK. Not used for era objects.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-<!--      第二部分 开始时间和结束时间-->
+      <!--      第二部分 开始时间和结束时间-->
       <div class="right timeline-date1">
         <div class="title">
           <h3>start_date(*)/end_date</h3>
@@ -151,19 +118,52 @@
               <li class="li2">
                 &nbsp;<button type="button" onclick="_insert_timestamp('day','yes')">today</button>&nbsp;
                 &nbsp;<button type="button" onclick="_insert_timestamp('second','yes')">today-sec</button>&nbsp;
-                &nbsp;<button type="button" onclick="_fill_enddata_1231()">最后一天</button>&nbsp;
+                &nbsp;<button type="button" onclick="_fill_enddate_1231()">最后一天</button>&nbsp;
                 &nbsp;<button type="button" onclick="_clear_dates()">clear</button>
               </li>
               <li class="li2">
-                &nbsp;<button type="text" onclick="_date_dispaly('yyyy-mm-dd HH:MM')" title="yyyy-mm-dd HH:MM" >YMDHMI</button>&nbsp;
-                &nbsp;<button type="text" onclick="_date_dispaly('yyyy-mm-dd')" title="yyyy-mm-dd" >YMD</button>&nbsp;
-                &nbsp;<button type="text" onclick="_date_dispaly('yyyy-mm')" title="yyyy-mm" >YM</button>&nbsp;
-                &nbsp;<button type="text"  onclick="_date_dispaly('yyyy')" title="yyyy">Y</button>
+                &nbsp;<button type="text" onclick="_date_display('yyyy-mm-dd HH:MM')" title="yyyy-mm-dd HH:MM" >YMDHMI</button>&nbsp;
+                &nbsp;<button type="text" onclick="_date_display('yyyy-mm-dd')" title="yyyy-mm-dd" >YMD</button>&nbsp;
+                &nbsp;<button type="text" onclick="_date_display('yyyy-mm')" title="yyyy-mm" >YM</button>&nbsp;
+                &nbsp;<button type="text" onclick="_date_display('yyyy')" title="yyyy">Y</button>
               </li>
             </ul>
           </div>
         </div>
       </div>
+
+<!--      第一部分  group/text/autolink/unique_id-->
+      <div class="right timeline-1">
+        <div class="title">
+          <h3>group/text</h3>
+        </div>
+        <div class="mmcent-2">
+          <div class="mmcent-2-left">
+            <ul>
+              <li class="li2">group：<input type="text" name="group" class="put" value=""></li>
+              <li class="li1" >Any text. If present, Timeline will organize events with the same value for group to be in the same row or adjacent rows, separate from events in other groups. The common value for the group will be shown as a label at the left edge of the navigation.</li>
+              <li class="li2">text.headline：<input type="text" name="text.headline" class="put" value=""></li>
+              <li class="li1">Any text. HTML markup is OK. Blank is also OK.</li>
+              <li class="li2" style="display: none;">display_date：<input type="text" name="display_date" class="put" value=""></li>
+              <li class="li1" style="display: none;">A string which will be used when Timeline displays the date for this. If used, override's display_date values set on the start or end date for this event, which is useful if you want to control how the two dates relate to each other. </li>
+
+              <li class="li2" style="display: none;">autolink：<input type="text" name="autolink" class="put" value=""></li>
+              <li class="li1" style="display: none;">A boolean value (true or false). Defaults to true, which means that Timeline will scan text fields and automatically add  tags so that links and email addresses are "clickable." If set to false, you may still manually apply the tags in the appropriate fields when you want links. Autolinking applies to the text field in a text object and the caption and credit fields in a media object. </li>
+
+              <li class="li2" style="display: none;">unique_id：<input type="text" name="unique_id" class="put" value="" readonly></li>
+              <li class="li1" style="display: none;">A string value which is unique among all slides in your timeline. If not specified, TimelineJS will construct an ID based on the headline, but if you later edit your headline, the ID will change. Unique IDs are used when the hash_bookmark option is used, and can also be used with the timeline.goToId() method to programmatically move the timeline to a specific slide. </li>
+            </ul>
+          </div>
+
+          <div class="mmcent-2-right">
+            <ul>
+              <li class="li3">text.text：<textarea type="text" name="text.text" class="putTextArea"></textarea>   </li>
+              <li class="li1">Any text. HTML markup is OK. Blank is OK. Not used for era objects.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
 
 <!--      第三部分 背景颜色或者图片设置-->
       <div class="right timeline-background">
@@ -182,7 +182,17 @@
           </div>
           <div class="mmcent-3-cl2" id="div.background.color.preview">
             <ul>
-              <li class="li2">color：<input type="text" id="background.color" name="background.color" onchange="onchangeBackgroundcolor()" class="put" value=""></li>
+              <li class="li2">
+                color：<input type="text" id="background.color" name="background.color" onchange="onchangeBackgroundcolor()" onclick="_click_view_menu('color_menu','1')" class="put" value="">
+                <ul id="color_menu">
+                  <li class="list-color-menu list1" value="FFA500">不确定的历史时间</li>
+                  <li class="list-color-menu list2" value="20B2AA">河水颜色统一使用</li>
+                  <li class="list-color-menu list3" value="427B73">休息和旅游</li>
+                  <li class="list-color-menu list4" value="320505">等待的时间</li>
+                  <li class="list-color-menu list5" value="414141">新闻时事</li>
+                  <li class="list-color-menu list6" value="A03B3B">会议&工作</li>
+                </ul>
+              </li>
               <li class="li2">opacity：<input type="text" name="background.opacity" class="put" value=""></li>
               <li class="li2">url：<input type="text" name="background.url" class="put" value="" onchange="onchangeBackgroudPic()">
                 <span class="file-upload-span">
@@ -220,7 +230,12 @@
               <li class="li1">(optional*) In most cases, a URL (see media type documentation for complete details)</li>
               <li class="li2">caption：<input type="text" name="media.caption" class="put media" value=""></li>
               <li class="li1">Any text. HTML markup is OK.</li>
-              <li class="li2">credit：<input type="text" name="media.credit" class="put media" value=""></li>
+              <li class="li2">credit：<input type="text" id="media.credit" name="media.credit" class="put media" value="" onclick="_click_view_menu('credit_menu','1')">
+                <ul id="credit_menu">
+                  <li class="list-credit-menu list1" value="银雾影社">银雾影社</li>
+                  <li class="list-credit-menu list2" value="环华十年">环华十年(培根)</li>
+                </ul>
+              </li>
               <li class="li1">Any text. HTML markup is OK.</li>
               <li class="li2">thumb：<input type="text" name="media.thumb" class="put media" value=""></li>
               <li class="li1">[thumbnail] A URL for an image to use in the timenav marker for this event. If omitted, Timeline will use an icon based on the type of media. Not relevant for title slides, because they do not have a marker.</li>

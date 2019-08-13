@@ -1,5 +1,5 @@
-var _assert = '1'; //全局调试控制台日志开关.
-var _develop_tag = '1'; //打开将使用开发环境的地址.
+var _assert = '1'; //全局调试控制台日志开关.  1 为打开,其他值为关闭!
+var _develop_tag = '1'; //打开将使用开发环境的地址. 1位打开, 其他值为关闭
 /**
 	这个js文件用于定义全局的变量
 	这个文件中的所有变量都需要在后台生成
@@ -39,8 +39,16 @@ var _opt_c = "c";
 var _opt_u = "u";
 var _opt_d = "d";
 
+/*date format*/
+var format_y = 'yyyy';
+var format_ym = 'yyyy-mm';
+var format_ymd = 'yyyy-mm-dd';
+var format_ymdhm = 'yyyy-mm-dd HH:MM';
+var format_ymdhms = 'yyyy-mm-dd HH:MM:ss';
+
 
 var _url_r =getBaseUrl()+"/r/1";//请求地址.
+var _url_config = getBaseUrl() + "/static/json/config.json";
 
 
 var _assert_cut1 = "=========================";

@@ -219,7 +219,7 @@
     line-height:54px; padding-left:25px; color:#333;
     box-shadow:inset 0px 0px 3px #e3e3e3;font-size:16px; color:#333}
 .mmcent-3 .mmcent-3-cl2 ul li.li2 .put{ width:400px; height:40px; padding-left:10px; border:none; background:#fafafa;font-size:16px; color:#666;font-family:"微软雅黑"}
-
+.mmcent-3 .mmcent-3-cl2 ul li.li2 .put.long{ width: 120px; box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);}
 .mmcent-3 .mmcent-3-cl2 ul li.li1{ font-size:12px; padding-left:20px; color:#666; line-height:24px;}
 
 
@@ -337,4 +337,50 @@ span.file-upload-span:hover{
     background: transparent;
 }
 
+
+#color_menu{
+    display: none;
+    border:1px solid #e6e8e9;
+    position: absolute;
+    top: 135px;
+    left: 360px;
+    width: 120px;
+    background: white;
+    padding-inline-start: 29px;
+}
+
+.list-color-menu{
+    display: flex;
+    font-size: 10px;
+    padding: 10px 0;
+    height: 21px;
+    line-height: 2;
+}
+
+.list-color-menu:hover{
+    background: #e8edff;
+}
+
+#credit_menu{
+    display: none;
+    border:1px solid #e6e8e9;
+    position: absolute;
+    top: 315px;
+    left: 110px;
+    width: 120px;
+    background: white;
+    padding-inline-start: 29px;
+}
+
+.list-credit-menu{
+    display: flex;
+    font-size: 10px;
+    padding: 10px 0;
+    height: 21px;
+    line-height: 2;
+}
+
+.list-credit-menu:hover{
+    background: #e8edff;
+}
 

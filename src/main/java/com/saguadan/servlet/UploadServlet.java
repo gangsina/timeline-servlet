@@ -7,7 +7,6 @@ import com.bentengwu.utillib.date.DateUtil;
 import com.bentengwu.utillib.http.ContentType;
 import com.bentengwu.utillib.servlet.AjaxUploadSupport;
 import com.bentengwu.utillib.servlet.Writer;
-import com.bentengwu.utillib.stream.StreamUtil;
 import com.saguadan.Ret;
 import com.saguadan.SoftProperties;
 import org.apache.commons.io.FileUtils;
@@ -42,8 +41,16 @@ public class UploadServlet extends HttpServlet {
         System.out.println(_savePath);
         // 根据文件后缀确定文件的content-type类型.
 //        String contentType = "image/png";
-        String contentType = ContentType.findContentType(FilenameUtils.getExtension(_savePath));
-        Writer.write(resp,FileUtils.readFileToByteArray(new File(_savePath)), contentType);
+        String contentType = "text/html";
+
+        try {
+            contentType = ContentType.findContentType(FilenameUtils.getExtension(_savePath));
+            Writer.write(resp,FileUtils.readFileToByteArray(new File(_savePath)), contentType);
+        } catch (NullPointerException ex) {
+            ex.printStackTrace();
+            String message = "不支持该类型的文件预览 : "+FilenameUtils.getExtension(_savePath) ;
+            Writer.write(resp,message.getBytes(), contentType);
+        }
     }
 
     /**
@@ -62,7 +69,6 @@ public class UploadServlet extends HttpServlet {
         AjaxUploadSupport.saveServletInputStreamToFile(req.getInputStream(), savePath, true);
         String _r_savePath = retMap.get(AjaxUploadSupport._key_savePath);
         String retStr = currentDate + "/" + FilenameUtils.getName(_r_savePath);
-//        String url = req.getRequestURL().toString().replaceAll("http:","http--").replaceAll("https:","https--") + "?id=";
         retStr = EncodeUtils.hexEncode(retStr.getBytes());
         retStr = CommonUtils.mapper.writeValueAsString(new Ret("1")
                                                             .setData(retStr)

@@ -1,0 +1,22 @@
+{
+  "colors": [
+    {"title": "河流的颜色","value": "#20B2AA"},
+    {"title": "不确定的历史时间","value": "#FFA500"},
+    {"title": "休息和旅游","value": "#427B73"},
+    {"title": "等待的时间","value": "#320505"},
+    {"title": "新闻时事","value": "#414141"},
+    {"title": "会议&工作","value": "#A03B3B"}],
+  "credits": [
+    {"value": "银雾影社"},
+    {"value": "环华十年(培根)"},
+    {"value": "越哥说电影"},
+    {"value": "ytb地址"},
+    {"value": "local:图片"},
+    {"value": "local:视频"},
+    {"value": "家用NAS:图片"},
+    {"value": "家用NAS:视频剪辑"},
+    {"value": "第三方:图片"},
+    {"value": "第三方:视频"},
+    {"value": "第三方:网址"}
+  ]
+}

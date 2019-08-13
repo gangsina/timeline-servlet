@@ -383,36 +383,96 @@ http://kindeditor.net/doc3.php
 ## TODO
 
 - [x] 提交event data到服务端
+
 - [x] unique_id 使用前端机制生成，不要用户自己输入。
+
 - [x] media alt、title、link、link_target； start_date/end_date; display_date; 等没有回显 在编辑的时候。
+
 - [x] 保存的hour字段丢失。
+
 - [x] 视频不显示问题。重新刷新地址的时候可以加载，编辑添加后无法显示视频。
+
 - [x] 编辑event后，保存未成功清理原先的event。note：服务端需要重写hashcode方法。
+
 - [x] Ears是个数组
+
 - [x] 
   目前没找到对应的可以直接增加Eras的API，所以目前只能通过重新装载整个timeline的方式来新增Eras。如果要加的话。2019年6月27日23:57:32   note:添加1个正常，多个的时候报如下错误，估计是js循环遍历逻辑有点小问题。 后台收到的json串是这样的：{"filename":"g02k72e8t0","eras":[{"start_date":{"year":"1981"},"end_date":{"year":"1990"}},{},{},{}],"_class":"eras"}
   ![1561651037892](readme.assets/1561651037892.png)，
   + [x] 后台增加一个Set集合的非空校验。
   + [x] 同时在前端优化下循环代码。(猜测错误，是因为name属性没有导致的。)
+  
 - [x] 上传文件（视频、图片）
+  
   - [x] 打开时也要加载图片和视频.
+  
 - [x] 添加timeline中的event有字段丢失，目前是year和headline，查下原因明天。
   这个原因是新增的eras代码中存在和原先name同名的问题，导致js不知道具体用哪个值
-- [ ] 将编辑事件界面优化下，便于操作。
+  
+- [x] 将编辑事件界面优化下，便于操作。
+
 - [x] 增加主界面的几个快捷键，方便操作。
+
 - [x] Eras没有回显.
+
 - [x] 表单的非空校验。
   event，start_date.year、text.headline.
+  
 - [x] 原先的有个input变为textarea,这会导致取值方式发生了改变.
+
 - [x] 取色器的取值和定位有问题,需要调整. ps: 原先的算法有问题,在计算offsetTop的时候没有减去scrollTop.
+
 - [x] 去除其他不用的多余文件
+
 - [x] 去除界面上的一些不合理的图片和文字
+
 - [x] 当没有任何年份的时候,没有任何地方可以插入行,我说的是eras
+
 - [x] 弄个快捷键来设置底部的滚动条.
+
 - [x] 弄个快捷键来快速的填入当前时间. note:*改成了使用按钮.*
+
 - [x] 修改hotkey,将原先的alt+c改为alt+t
+
 - [x] 增加一个设置时间样式的按钮.
-- [ ] media的外链新增对视频网站的网址的过滤. 比如说: 优酷或者youtube等就用对应远程网址的方式来展示.
+
+- [x] media的外链新增对视频网站的网址的过滤. 比如说: 优酷或者youtube等就用对应远程网址的方式来展示. 使用iframe的方式来显示,所以无需区分对应的文件类型.
+
+- [ ] 将时间放到最前面,并隐藏毫秒显示.因为没必要,基本上用不上.
+
+- [x] 时间格式默认采用显示到小时,而不是天.
+
+- [ ] 写一个自动发布脚本,将编译后的内容发布到指定目录中.
+
+- [x] 当出现不存在的头文件类型时报错问题. 改成了不显示,提示不支持对应的文件格式.
+
+- [x] 将常用的颜色和credit写入配置.  配置存放在static/json/config.json中. 格式如下:
+
+```json
+/*colors 背景颜色  credits: */
+{
+  "colors": [{"title": "河流的颜色","value": "#20B2AA"},{"title": "不确定的历史时间","value": "#FFA500"}],
+  "credits": [{"value": "银雾影社"}]
+}
+```
+
+- [ ] 
+
+
+
+#### BUG
+
+
+
++ [x] ```Java
+  //上传无法获取content-type的时候将出现报错的情况.
+  //2019年8月13日21:45:56 被我改成了不支持对应的文件格式.
+  java.lang.NullPointerException
+  	com.bentengwu.utillib.http.ContentType.findContentType(ContentType.java:35)
+  	com.saguadan.servlet.UploadServlet.doGet(UploadServlet.java:45)
+  	javax.servlet.http.HttpServlet.service(HttpServlet.java:617)
+  	javax.servlet.http.HttpServlet.service(HttpServlet.java:717)
+  ```
 
 
 

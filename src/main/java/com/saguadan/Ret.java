@@ -8,6 +8,7 @@ import com.bentengwu.utillib.String.StrUtils;
  * @Date 2019/6/5 12:58.
  */
 public class Ret implements java.io.Serializable{
+    private static final long serialVersionUID = 3095240028142588664L;
     private String code ;
     private String message;
 

@@ -1,9 +1,26 @@
+function _ajax_get(p_url, _ajax_callback) {
+    var p_data = {};
+    var ph_data = {};
+    _ajax(p_url,"get","json","true",p_data,ph_data,_ajax_callback);
+}
+
+function _ajax_post(p_url, _ajax_callback) {
+    var p_data = {};
+    var ph_data = {};
+    _ajax(p_url,"post","json","true",p_data,ph_data,_ajax_callback);
+}
+
 /*
 * 提取请求
 * */
 function _ajax_normal(p_data, ph_data,_ajax_callback) {
     _ajax(_url_r,_method_post,_data_type_json,true,p_data, ph_data, _ajax_callback);
 }
+
+function _ajax_normal_url(p_url,p_data, ph_data,_ajax_callback) {
+    _ajax(p_url,_method_post,_data_type_json,true,p_data, ph_data, _ajax_callback);
+}
+
 
 
 /**

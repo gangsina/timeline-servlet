@@ -53,9 +53,77 @@ $(function () {
     // 绑定快捷键.
     _binding_hotkeys();
 
+    //加载配置,目前配置信息直接放在json中给终端下载.
+    _load_config_json();
 })
 
 // 业务方法----------------------------------------------------------------------------------
+
+function _load_config_json() {
+    var config_json_url = _url_config;
+    _ajax_get(config_json_url, _load_config_json_callback);
+}
+
+function _load_config_json_callback(retData) {
+    if (retData) {
+        _fill_color_menu_config(retData);
+        _fill_credit_menu_config(retData);
+    }
+}
+// 填充常用颜色配置
+function _fill_color_menu_config(retData) {
+    assertConsole(["function _fill_color_menu_config(retData)", retData]);
+    if (retData.colors) {
+        //fixme 确认是否正确, 修改下拉框
+        $("#color_menu").html("");
+        for (var idx in retData.colors) {
+            var val = retData.colors[idx].value;
+            var htmlDoc = "<li class=\"list-color-menu list\""+idx+" onclick='_fillInputValueAndHideMenu(\""+val+"\",\"background.color\",\"color_menu\")' value=\""+val+"\">"+retData.colors[idx].title+"</li>";
+            $("#color_menu").append(htmlDoc);
+        }
+    }
+}
+// 填充常用credit配置
+function _fill_credit_menu_config(retData) {
+    assertConsole(["function _fill_credit_menu_config(retData)", retData]);
+    if (retData.credits) {
+        //fixme 确认是否正确, 修改下拉框
+        $("#credit_menu").html("");
+        for (var idx in retData.credits) {
+            var val= retData.credits[idx].value;
+            var htmlDoc = "<li class=\"list-credit-menu list\""+idx+" onclick='_fillInputValueAndHideMenu(\""+val+"\",\"media.credit\",\"credit_menu\")' value=\""+val+"\">"+retData.credits[idx].value+"</li>";
+            $("#credit_menu").append(htmlDoc);
+        }
+    }
+}
+//todo 隐藏下拉menu && 将值写入input && 设置背景颜色.
+function _fillInputValueAndHideMenu(val, inputId,menuDocId) {
+    assertConsole(["function _fillInputValueAndHideMenu(val,inputId, menuDocId) ", val,inputId,menuDocId]);
+    // $("#" + inputId).val(val);
+    document.getElementById(inputId).value = val;
+    _click_view_menu(menuDocId, 2);
+    if (inputId == 'background.color') {
+        onchangeBackgroundcolor();
+    }
+}
+
+
+/**
+ *@description  点击需要下拉框的控件触发显示对应下拉框元素
+ *@author thender email: bentengwu@163.com
+ *@date 2019/8/13 17:13
+ *@param menuDocId
+ * @param viewType  1 显示  2 隐藏
+ *@return 
+ **/
+function _click_view_menu(menuDocId, viewType) {
+    assertConsole("function _click_view_menu(menuDocId,viewType)", menuDocId,viewType);
+    if (viewType == '1') {
+        $("#" + menuDocId).css("display","block");
+    }else {
+        $("#" + menuDocId).css("display","none");
+    }
+}
 
 //加载时间线 2019年6月20日15:02:07
 function _load_timeline(filename){
@@ -593,8 +661,9 @@ function _clear_event_form() {
     //清理#event_form下input的所有值。
     $("input.put").val("");
     $("textarea.putTextArea").val("");
-    $("input[name='start_date.format']").val("yyyy-mm-dd");
-    $("input[name='end_date.format']").val("yyyy-mm-dd");
+    _date_display(format_ymdhm);//todo
+    // $("input[name='start_date.format']").val("yyyy-mm-dd");
+    // $("input[name='end_date.format']").val("yyyy-mm-dd");
 
     $("#background-url-preview").html("");
     $("#preview-video-or-pic").html("");
@@ -974,7 +1043,7 @@ function _insert_timestamp(type, both) {
  *@date 2019/7/12 23:58
  *@return
  **/
-function _fill_enddata_1231() {
+function _fill_enddate_1231() {
     _set_value2doc_byname('end_date.month', 12);
     _set_value2doc_byname('end_date.day', 31);
 }
@@ -1000,7 +1069,7 @@ function _clear_dates() {
     _set_value2doc_byname('end_date.second', '');
     _set_value2doc_byname('end_date.millisecond', '');
 
-    _date_dispaly("yyyy-mm-dd HH:MM");
+    _date_display("yyyy-mm-dd HH:MM");
 }
 
 /**
@@ -1010,7 +1079,7 @@ function _clear_dates() {
  *@param _display
  *@return void
  **/
-function _date_dispaly(_display) {
+function _date_display(_display) {
     assertConsole(['function _date_dispaly(_display)', _display]);
     $("input[name='start_date.format']").val(_display);
     $("input[name='end_date.format']").val(_display);
